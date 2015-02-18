@@ -23,7 +23,7 @@ for keyword in keywordlist:
 	tokens.append(name)
 
 tokens = tuple(tokens) + (
-		'ARROW','EQEQUAL','NOTEQUAL','LESSEQUAL','LEFTSHIFT','GREATEREQUAL',
+		'EQEQUAL','NOTEQUAL','LESSEQUAL','LEFTSHIFT','GREATEREQUAL',
 		'RIGHTSHIFT','PLUSEQUAL','MINEQUAL','STAREQUAL','SLASHEQUAL','PERCENTEQUAL',
 		'COLON','COMMA','SEMI','PLUS','MINUS','STAR','SLASH','VBAR','AMPER','LESS',
 		'GREATER','EQUAL','DOT','PERCENT','BACKQUOTE','CIRCUMFLEX','TILDE',	'AT',
@@ -42,8 +42,6 @@ tokens = tuple(tokens) + (
 	)
 
 # Regular expression rules for simple tokens
-t_ARROW          = '->'
-
 t_EQEQUAL = r'=='
 t_NOTEQUAL =  r'!='
 t_LESSEQUAL = r'<='
@@ -205,11 +203,7 @@ def identifyIndenations(lexer, token_stream):
 	saw_colon = False
 	for token in token_stream:
 		token.atLineStart = atLineStart
-		if token.type == "ARROW":
-			atLineStart = False
-			indent = MAY_INDENT
-			token.must_indent = False
-		elif token.type == "COLON":
+		if token.type == "COLON":
 			atLineStart = False
 			indent = MAY_INDENT
 			token.must_indent = False
