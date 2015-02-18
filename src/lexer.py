@@ -272,9 +272,46 @@ def assignIndentations(token_stream):
 		for z in range(1, len(levels)):
 			yield DEDENT(token.lineno)
 
+# This filter was in main() of previous lexer
+def filter(lexer, addEndMarker = True):
+	token_stream = iter(lexer.token, None)
+	token_stream = identifyIndenations(lexer, token_stream)
+	token_stream = assignIndentations(token_stream)
+	tok = None
+	for tok in token_stream:
+		yield tok
+	if addEndMarker:
+		lineno = 1
+		if tok is not None:
+			lineno = tok.lineno
+		yield newToken("ENDMARKER", lineno)
+
+# To merge ply's lexer with indent feature
+# Built from previous main()
+class G1Lexer(object): 
+	def __init__(self):
+		self.lexer = lex.lex()
+		self.token_stream = None
+	def input(self, data, addEndMarker=True):
+		self.lexer.parenthesisCount = 0
+		self.lexer.input(data)
+		self.token_stream = filter(self.lexer, addEndMarker)
+	def token(self):
+		try:
+			return self.token_stream.next()
+		except StopIteration:
+			return None
+
+g1 = G1Lexer()
+data = open('../test/test1.py').read()
+g1.input(data)
+t = g1.token()
+while t:
+	print t
+	t = g1.token()
 # Build the lexer
-lexer = lex.lex()
-lexer.parenthesisCount = 0
+# lexer = lex.lex()
+# lexer.parenthesisCount = 0
 
 # get from command line arg
 # filename = sys.argv[1]
