@@ -25,6 +25,7 @@ for keyword in keywordlist:
 tokens = tuple(tokens) + (
 		'EQEQUAL','NOTEQUAL','LESSEQUAL','LEFTSHIFT','GREATEREQUAL',
 		'RIGHTSHIFT','PLUSEQUAL','MINEQUAL','STAREQUAL','SLASHEQUAL','PERCENTEQUAL',
+		'STARSTAR','SLASHSLASH',
 		'COLON','COMMA','SEMI','PLUS','MINUS','STAR','SLASH','VBAR','AMPER','LESS',
 		'GREATER','EQUAL','DOT','PERCENT','BACKQUOTE','CIRCUMFLEX','TILDE',	'AT',
 
@@ -53,6 +54,8 @@ t_MINEQUAL = r'-='
 t_STAREQUAL = r'\*='
 t_SLASHEQUAL = r'/='
 t_PERCENTEQUAL = r'%='
+t_STARSTAR = r'\*\*'
+t_SLASHSLASH = r'//'
 
 t_COLON = r':'
 t_COMMA = r','
