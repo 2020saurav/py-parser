@@ -302,24 +302,10 @@ class G1Lexer(object):
 		except StopIteration:
 			return None
 
-g1 = G1Lexer()
-data = open('../test/test1.py').read()
-g1.input(data)
-t = g1.token()
-while t:
-	print t
-	t = g1.token()
-# Build the lexer
-# lexer = lex.lex()
-# lexer.parenthesisCount = 0
-
-# get from command line arg
-# filename = sys.argv[1]
-# sourcefile = open(filename)
-# data = sourcefile.read()
-# lexer.input(data)
-# #Tokenize
-# token_stream = iter(lexer.token, None)
-# token_stream = identifyIndenations(lexer, token_stream)
-# token_stream = assignIndentations(token_stream)
-# tok = token_stream.next()
+# g1 = G1Lexer()
+# data = open('../test/test1.py').read()
+# g1.input(data)
+# t = g1.token()
+# while t:
+# 	print t
+# 	t = g1.token()
