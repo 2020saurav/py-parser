@@ -1,22 +1,8 @@
-from compiler import ast
+import ourAST as ast
 import yacc
 import lexer # our lexer
 tokens = lexer.tokens
-def Assign(left, right):
-	names = []
-	if isinstance(left, ast.Name):
-		return ast.Assign([ast.AssName(left.name, 'OP_ASSIGN')], right)
-	elif isinstance(left, ast.Tuple):
-		names = []
-		for child in left.getChildren():
-			if not isinstance(child, ast.Name):
-				raise SyntaxError("Assignment not supported")
-			names.append(child.name)
-		ass_list = [ast.AssName(name, 'OP_ASSIGN') for name in names]
-		return ast.Assign([ast.AssTuple(ass_list)], right)
-	else:
-		raise SyntaxError("Cant do that")	
-
+	
 def p_program(p):
 	"""
 		program  :  file_input_star ENDMARKER
@@ -90,7 +76,7 @@ def p_small_stmt_2(p):
 		small_stmt : trailer_item
 	"""
 	if not (p[1].v2 is not None and p[1].v2.ts[-1].op == '('):
-		self._p_error("small_stmt is not func_call")
+		p_error("small_stmt is not func_call")
 	else:
 		p[0] = ast.Stmt('fcall',p[1])
 
@@ -195,7 +181,6 @@ def p_small_assign_stmt(p):
 		small_assign_stmt : trailer_item EQUAL small_expression
 	"""
 	p[0] = ast.Stmt('assign',[p[1],p[3]])
-	self._insert_symbol_table(self.gen.visit(p[1]),'name')
 
 def p_small_expression(p):
 	"""
@@ -208,7 +193,7 @@ def p_complex_stmt(p):
 		complex_stmt : trailer_item EQUAL complex_expression
 	"""
 	p[0] = ast.Stmt('classFunc',[p[1],p[3]])
-	self._scope_stack[-1]['type'] = p[3].type
+	_scope_stack[-1]['type'] = p[3].type
 
 def p_complex_expression_1(p):
 	"""
@@ -449,22 +434,32 @@ def p_empty(p):
 
 def p_error(p):
 	if p:
-		self._parse_error(
-			'before: %s' % p.value,
-			'')
+		print p
+		# parse_error(
+		# 	'before: %s' % p.value,
+		# 	'')
 	else:
-		self._parse_error('At end of input', '')
-
+		print p
+		# parse_error('At end of input', '')
 class G1Parser(object):
 	def __init__(self, mlexer=None):
 		if mlexer is None:
 			mlexer = lexer.G1Lexer()
-		self.mlexer = lexer
+		self.mlexer = mlexer
 		self.parser = yacc.yacc(start="program")
 	def parse(self, code):
 		self.mlexer.input(code)
 		result = self.parser.parse(lexer = self.mlexer)
-		return ast.Module(None, result)
+		return result
 
 z = G1Parser()
+data = open('../test/test1.py')
+# I dont know how to print content from this AST
+t =  z.parse(data.read())
+# print dir(t)
+p = (t.__class__.__name__)
+print p
+# print dir(t.stmts)
+# print z.parse("a=4")
+# print z.mlexer.input("a=4")
 
