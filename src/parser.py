@@ -166,27 +166,27 @@ def p_param_3(p):
 	"""
 	p[0] = ast.Param('direct',p[1])
 
-def p_calLPARENamlist_1(p):
+def p_callparamlist_1(p):
 	"""
-		calLPARENamlist : calLPARENamlist COMMA calLPARENam
+		callparamlist : callparamlist COMMA callparam
 	"""
 	p[0] = p[1].add(p[3])
 
-def p_calLPARENamlist_2(p):
+def p_callparamlist_2(p):
 	"""
-		calLPARENamlist :  calLPARENam
+		callparamlist :  callparam
 	"""
 	p[0] = ast.ParamList(p[1])
 
-def p_calLPARENam_1(p):
+def p_callparam_1(p):
 	"""
-		calLPARENam   : NAME EQUAL arith_expression
+		callparam   : NAME EQUAL arith_expression
 	"""
 	p[0] = ast.Param('value',p[1],p[3])
 
-def p_calLPARENam_2(p):
+def p_callparam_2(p):
 	"""
-		calLPARENam : arith_expression
+		callparam : arith_expression
 	"""
 	p[0] = ast.Param('default',p[1])
 
@@ -390,7 +390,7 @@ def p_trailer_2(p):
 
 def p_trailer_3(p):
 	"""
-		trailer : LPAREN calLPARENamlist RPAREN
+		trailer : LPAREN callparamlist RPAREN
 	"""
 	p[0] = ast.Trailer('(',p[2])
 

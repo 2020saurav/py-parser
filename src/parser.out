@@ -74,10 +74,10 @@ Rule 21    paramlist -> param
 Rule 22    param -> NAME EQUAL constants
 Rule 23    param -> NAME
 Rule 24    param -> constants
-Rule 25    calLPARENamlist -> calLPARENamlist COMMA calLPARENam
-Rule 26    calLPARENamlist -> calLPARENam
-Rule 27    calLPARENam -> NAME EQUAL arith_expression
-Rule 28    calLPARENam -> arith_expression
+Rule 25    callparamlist -> callparamlist COMMA callparam
+Rule 26    callparamlist -> callparam
+Rule 27    callparam -> NAME EQUAL arith_expression
+Rule 28    callparam -> arith_expression
 Rule 29    small_assign_stmt -> trailer_item EQUAL small_expression
 Rule 30    small_expression -> arith_expression
 Rule 31    complex_stmt -> trailer_item EQUAL complex_expression
@@ -122,7 +122,7 @@ Rule 69    cmp_op -> GREATER
 Rule 70    trailer -> DOT NAME
 Rule 71    trailer -> LSQB subscript RSQB
 Rule 72    trailer -> LPAREN RPAREN
-Rule 73    trailer -> LPAREN calLPARENamlist RPAREN
+Rule 73    trailer -> LPAREN callparamlist RPAREN
 Rule 74    trailer_star -> trailer
 Rule 75    trailer_star -> trailer_star trailer
 Rule 76    trailer_item -> atom
@@ -226,8 +226,8 @@ Nonterminals, with rules where they appear
 arith_expression     : 27 28 30 43 62 62 63
 atom                 : 76 77
 break_stmt           : 15
-calLPARENam          : 25 26
-calLPARENamlist      : 25 73
+callparam            : 25 26
+callparamlist        : 25 73
 cmp_op               : 62
 complex_expression   : 31
 complex_stmt         : 9
@@ -379,7 +379,7 @@ state 3
     (70) trailer -> . DOT NAME
     (71) trailer -> . LSQB subscript RSQB
     (72) trailer -> . LPAREN RPAREN
-    (73) trailer -> . LPAREN calLPARENamlist RPAREN
+    (73) trailer -> . LPAREN callparamlist RPAREN
 
     STAR            reduce using rule 76 (trailer_item -> atom .)
     SLASH           reduce using rule 76 (trailer_item -> atom .)
@@ -1036,7 +1036,7 @@ state 32
     (70) trailer -> . DOT NAME
     (71) trailer -> . LSQB subscript RSQB
     (72) trailer -> . LPAREN RPAREN
-    (73) trailer -> . LPAREN calLPARENamlist RPAREN
+    (73) trailer -> . LPAREN callparamlist RPAREN
 
     STAR            reduce using rule 77 (trailer_item -> atom trailer_star .)
     SLASH           reduce using rule 77 (trailer_item -> atom trailer_star .)
@@ -1090,11 +1090,11 @@ state 33
 state 34
 
     (72) trailer -> LPAREN . RPAREN
-    (73) trailer -> LPAREN . calLPARENamlist RPAREN
-    (25) calLPARENamlist -> . calLPARENamlist COMMA calLPARENam
-    (26) calLPARENamlist -> . calLPARENam
-    (27) calLPARENam -> . NAME EQUAL arith_expression
-    (28) calLPARENam -> . arith_expression
+    (73) trailer -> LPAREN . callparamlist RPAREN
+    (25) callparamlist -> . callparamlist COMMA callparam
+    (26) callparamlist -> . callparam
+    (27) callparam -> . NAME EQUAL arith_expression
+    (28) callparam -> . arith_expression
     (36) arith_expression -> . term PLUS term
     (37) arith_expression -> . term MINUS term
     (38) arith_expression -> . term
@@ -1111,20 +1111,20 @@ state 34
     (45) constants -> . NUMBER
     (46) constants -> . STRING
 
-    RPAREN          shift and go to state 60
-    NAME            shift and go to state 61
+    RPAREN          shift and go to state 61
+    NAME            shift and go to state 62
     LPAREN          shift and go to state 44
     AT              shift and go to state 22
     NUMBER          shift and go to state 30
     STRING          shift and go to state 15
 
-    term                           shift and go to state 46
-    calLPARENam                    shift and go to state 62
+    callparamlist                  shift and go to state 60
     atom                           shift and go to state 3
+    term                           shift and go to state 46
     trailer_item                   shift and go to state 38
-    arith_expression               shift and go to state 63
+    callparam                      shift and go to state 63
+    arith_expression               shift and go to state 64
     factor                         shift and go to state 41
-    calLPARENamlist                shift and go to state 64
     constants                      shift and go to state 23
 
 state 35
@@ -1225,9 +1225,9 @@ state 41
     OR              reduce using rule 41 (term -> factor .)
     COLON           reduce using rule 41 (term -> factor .)
     NEWLINE         reduce using rule 41 (term -> factor .)
+    AND             reduce using rule 41 (term -> factor .)
     RPAREN          reduce using rule 41 (term -> factor .)
     COMMA           reduce using rule 41 (term -> factor .)
-    AND             reduce using rule 41 (term -> factor .)
 
 
 state 42
@@ -1296,11 +1296,11 @@ state 46
 
     PLUS            shift and go to state 81
     MINUS           shift and go to state 82
-    RPAREN          reduce using rule 38 (arith_expression -> term .)
-    COMMA           reduce using rule 38 (arith_expression -> term .)
     OR              reduce using rule 38 (arith_expression -> term .)
     AND             reduce using rule 38 (arith_expression -> term .)
     COLON           reduce using rule 38 (arith_expression -> term .)
+    RPAREN          reduce using rule 38 (arith_expression -> term .)
+    COMMA           reduce using rule 38 (arith_expression -> term .)
     EQEQUAL         reduce using rule 38 (arith_expression -> term .)
     NOTEQUAL        reduce using rule 38 (arith_expression -> term .)
     LESSEQUAL       reduce using rule 38 (arith_expression -> term .)
@@ -1607,6 +1607,15 @@ state 59
 
 state 60
 
+    (73) trailer -> LPAREN callparamlist . RPAREN
+    (25) callparamlist -> callparamlist . COMMA callparam
+
+    RPAREN          shift and go to state 91
+    COMMA           shift and go to state 90
+
+
+state 61
+
     (72) trailer -> LPAREN RPAREN .
 
     DOT             reduce using rule 72 (trailer -> LPAREN RPAREN .)
@@ -1631,12 +1640,12 @@ state 60
     COMMA           reduce using rule 72 (trailer -> LPAREN RPAREN .)
 
 
-state 61
+state 62
 
-    (27) calLPARENam -> NAME . EQUAL arith_expression
+    (27) callparam -> NAME . EQUAL arith_expression
     (79) atom -> NAME .
 
-    EQUAL           shift and go to state 90
+    EQUAL           shift and go to state 92
     DOT             reduce using rule 79 (atom -> NAME .)
     LSQB            reduce using rule 79 (atom -> NAME .)
     LPAREN          reduce using rule 79 (atom -> NAME .)
@@ -1648,29 +1657,20 @@ state 61
     COMMA           reduce using rule 79 (atom -> NAME .)
 
 
-state 62
-
-    (26) calLPARENamlist -> calLPARENam .
-
-    RPAREN          reduce using rule 26 (calLPARENamlist -> calLPARENam .)
-    COMMA           reduce using rule 26 (calLPARENamlist -> calLPARENam .)
-
-
 state 63
 
-    (28) calLPARENam -> arith_expression .
+    (26) callparamlist -> callparam .
 
-    RPAREN          reduce using rule 28 (calLPARENam -> arith_expression .)
-    COMMA           reduce using rule 28 (calLPARENam -> arith_expression .)
+    RPAREN          reduce using rule 26 (callparamlist -> callparam .)
+    COMMA           reduce using rule 26 (callparamlist -> callparam .)
 
 
 state 64
 
-    (73) trailer -> LPAREN calLPARENamlist . RPAREN
-    (25) calLPARENamlist -> calLPARENamlist . COMMA calLPARENam
+    (28) callparam -> arith_expression .
 
-    RPAREN          shift and go to state 92
-    COMMA           shift and go to state 91
+    RPAREN          reduce using rule 28 (callparam -> arith_expression .)
+    COMMA           reduce using rule 28 (callparam -> arith_expression .)
 
 
 state 65
@@ -2135,7 +2135,68 @@ state 89
 
 state 90
 
-    (27) calLPARENam -> NAME EQUAL . arith_expression
+    (25) callparamlist -> callparamlist COMMA . callparam
+    (27) callparam -> . NAME EQUAL arith_expression
+    (28) callparam -> . arith_expression
+    (36) arith_expression -> . term PLUS term
+    (37) arith_expression -> . term MINUS term
+    (38) arith_expression -> . term
+    (39) term -> . factor STAR factor
+    (40) term -> . factor SLASH factor
+    (41) term -> . factor
+    (42) factor -> . trailer_item
+    (43) factor -> . LPAREN arith_expression RPAREN
+    (76) trailer_item -> . atom
+    (77) trailer_item -> . atom trailer_star
+    (78) atom -> . AT NAME
+    (79) atom -> . NAME
+    (80) atom -> . constants
+    (45) constants -> . NUMBER
+    (46) constants -> . STRING
+
+    NAME            shift and go to state 62
+    LPAREN          shift and go to state 44
+    AT              shift and go to state 22
+    NUMBER          shift and go to state 30
+    STRING          shift and go to state 15
+
+    atom                           shift and go to state 3
+    term                           shift and go to state 46
+    trailer_item                   shift and go to state 38
+    callparam                      shift and go to state 106
+    arith_expression               shift and go to state 64
+    factor                         shift and go to state 41
+    constants                      shift and go to state 23
+
+state 91
+
+    (73) trailer -> LPAREN callparamlist RPAREN .
+
+    DOT             reduce using rule 73 (trailer -> LPAREN callparamlist RPAREN .)
+    LSQB            reduce using rule 73 (trailer -> LPAREN callparamlist RPAREN .)
+    LPAREN          reduce using rule 73 (trailer -> LPAREN callparamlist RPAREN .)
+    EQUAL           reduce using rule 73 (trailer -> LPAREN callparamlist RPAREN .)
+    NEWLINE         reduce using rule 73 (trailer -> LPAREN callparamlist RPAREN .)
+    STAR            reduce using rule 73 (trailer -> LPAREN callparamlist RPAREN .)
+    SLASH           reduce using rule 73 (trailer -> LPAREN callparamlist RPAREN .)
+    PLUS            reduce using rule 73 (trailer -> LPAREN callparamlist RPAREN .)
+    MINUS           reduce using rule 73 (trailer -> LPAREN callparamlist RPAREN .)
+    EQEQUAL         reduce using rule 73 (trailer -> LPAREN callparamlist RPAREN .)
+    NOTEQUAL        reduce using rule 73 (trailer -> LPAREN callparamlist RPAREN .)
+    LESSEQUAL       reduce using rule 73 (trailer -> LPAREN callparamlist RPAREN .)
+    GREATEREQUAL    reduce using rule 73 (trailer -> LPAREN callparamlist RPAREN .)
+    LESS            reduce using rule 73 (trailer -> LPAREN callparamlist RPAREN .)
+    GREATER         reduce using rule 73 (trailer -> LPAREN callparamlist RPAREN .)
+    OR              reduce using rule 73 (trailer -> LPAREN callparamlist RPAREN .)
+    AND             reduce using rule 73 (trailer -> LPAREN callparamlist RPAREN .)
+    COLON           reduce using rule 73 (trailer -> LPAREN callparamlist RPAREN .)
+    RPAREN          reduce using rule 73 (trailer -> LPAREN callparamlist RPAREN .)
+    COMMA           reduce using rule 73 (trailer -> LPAREN callparamlist RPAREN .)
+
+
+state 92
+
+    (27) callparam -> NAME EQUAL . arith_expression
     (36) arith_expression -> . term PLUS term
     (37) arith_expression -> . term MINUS term
     (38) arith_expression -> . term
@@ -2161,70 +2222,9 @@ state 90
     term                           shift and go to state 46
     factor                         shift and go to state 41
     trailer_item                   shift and go to state 38
-    arith_expression               shift and go to state 106
+    arith_expression               shift and go to state 107
     atom                           shift and go to state 3
     constants                      shift and go to state 23
-
-state 91
-
-    (25) calLPARENamlist -> calLPARENamlist COMMA . calLPARENam
-    (27) calLPARENam -> . NAME EQUAL arith_expression
-    (28) calLPARENam -> . arith_expression
-    (36) arith_expression -> . term PLUS term
-    (37) arith_expression -> . term MINUS term
-    (38) arith_expression -> . term
-    (39) term -> . factor STAR factor
-    (40) term -> . factor SLASH factor
-    (41) term -> . factor
-    (42) factor -> . trailer_item
-    (43) factor -> . LPAREN arith_expression RPAREN
-    (76) trailer_item -> . atom
-    (77) trailer_item -> . atom trailer_star
-    (78) atom -> . AT NAME
-    (79) atom -> . NAME
-    (80) atom -> . constants
-    (45) constants -> . NUMBER
-    (46) constants -> . STRING
-
-    NAME            shift and go to state 61
-    LPAREN          shift and go to state 44
-    AT              shift and go to state 22
-    NUMBER          shift and go to state 30
-    STRING          shift and go to state 15
-
-    term                           shift and go to state 46
-    calLPARENam                    shift and go to state 107
-    atom                           shift and go to state 3
-    trailer_item                   shift and go to state 38
-    arith_expression               shift and go to state 63
-    factor                         shift and go to state 41
-    constants                      shift and go to state 23
-
-state 92
-
-    (73) trailer -> LPAREN calLPARENamlist RPAREN .
-
-    DOT             reduce using rule 73 (trailer -> LPAREN calLPARENamlist RPAREN .)
-    LSQB            reduce using rule 73 (trailer -> LPAREN calLPARENamlist RPAREN .)
-    LPAREN          reduce using rule 73 (trailer -> LPAREN calLPARENamlist RPAREN .)
-    EQUAL           reduce using rule 73 (trailer -> LPAREN calLPARENamlist RPAREN .)
-    NEWLINE         reduce using rule 73 (trailer -> LPAREN calLPARENamlist RPAREN .)
-    STAR            reduce using rule 73 (trailer -> LPAREN calLPARENamlist RPAREN .)
-    SLASH           reduce using rule 73 (trailer -> LPAREN calLPARENamlist RPAREN .)
-    PLUS            reduce using rule 73 (trailer -> LPAREN calLPARENamlist RPAREN .)
-    MINUS           reduce using rule 73 (trailer -> LPAREN calLPARENamlist RPAREN .)
-    EQEQUAL         reduce using rule 73 (trailer -> LPAREN calLPARENamlist RPAREN .)
-    NOTEQUAL        reduce using rule 73 (trailer -> LPAREN calLPARENamlist RPAREN .)
-    LESSEQUAL       reduce using rule 73 (trailer -> LPAREN calLPARENamlist RPAREN .)
-    GREATEREQUAL    reduce using rule 73 (trailer -> LPAREN calLPARENamlist RPAREN .)
-    LESS            reduce using rule 73 (trailer -> LPAREN calLPARENamlist RPAREN .)
-    GREATER         reduce using rule 73 (trailer -> LPAREN calLPARENamlist RPAREN .)
-    OR              reduce using rule 73 (trailer -> LPAREN calLPARENamlist RPAREN .)
-    AND             reduce using rule 73 (trailer -> LPAREN calLPARENamlist RPAREN .)
-    COLON           reduce using rule 73 (trailer -> LPAREN calLPARENamlist RPAREN .)
-    RPAREN          reduce using rule 73 (trailer -> LPAREN calLPARENamlist RPAREN .)
-    COMMA           reduce using rule 73 (trailer -> LPAREN calLPARENamlist RPAREN .)
-
 
 state 93
 
@@ -2283,9 +2283,9 @@ state 96
     OR              reduce using rule 39 (term -> factor STAR factor .)
     COLON           reduce using rule 39 (term -> factor STAR factor .)
     NEWLINE         reduce using rule 39 (term -> factor STAR factor .)
+    AND             reduce using rule 39 (term -> factor STAR factor .)
     RPAREN          reduce using rule 39 (term -> factor STAR factor .)
     COMMA           reduce using rule 39 (term -> factor STAR factor .)
-    AND             reduce using rule 39 (term -> factor STAR factor .)
 
 
 state 97
@@ -2303,9 +2303,9 @@ state 97
     OR              reduce using rule 40 (term -> factor SLASH factor .)
     COLON           reduce using rule 40 (term -> factor SLASH factor .)
     NEWLINE         reduce using rule 40 (term -> factor SLASH factor .)
+    AND             reduce using rule 40 (term -> factor SLASH factor .)
     RPAREN          reduce using rule 40 (term -> factor SLASH factor .)
     COMMA           reduce using rule 40 (term -> factor SLASH factor .)
-    AND             reduce using rule 40 (term -> factor SLASH factor .)
 
 
 state 98
@@ -2319,7 +2319,6 @@ state 99
 
     (52) while_stmt -> WHILE test COLON suite .
 
-    DEDENT          reduce using rule 52 (while_stmt -> WHILE test COLON suite .)
     IF              reduce using rule 52 (while_stmt -> WHILE test COLON suite .)
     FOR             reduce using rule 52 (while_stmt -> WHILE test COLON suite .)
     WHILE           reduce using rule 52 (while_stmt -> WHILE test COLON suite .)
@@ -2332,6 +2331,7 @@ state 99
     NUMBER          reduce using rule 52 (while_stmt -> WHILE test COLON suite .)
     STRING          reduce using rule 52 (while_stmt -> WHILE test COLON suite .)
     ENDMARKER       reduce using rule 52 (while_stmt -> WHILE test COLON suite .)
+    DEDENT          reduce using rule 52 (while_stmt -> WHILE test COLON suite .)
 
 
 state 100
@@ -2368,11 +2368,11 @@ state 102
 
     (36) arith_expression -> term PLUS term .
 
-    RPAREN          reduce using rule 36 (arith_expression -> term PLUS term .)
-    COMMA           reduce using rule 36 (arith_expression -> term PLUS term .)
     OR              reduce using rule 36 (arith_expression -> term PLUS term .)
     AND             reduce using rule 36 (arith_expression -> term PLUS term .)
     COLON           reduce using rule 36 (arith_expression -> term PLUS term .)
+    RPAREN          reduce using rule 36 (arith_expression -> term PLUS term .)
+    COMMA           reduce using rule 36 (arith_expression -> term PLUS term .)
     EQEQUAL         reduce using rule 36 (arith_expression -> term PLUS term .)
     NOTEQUAL        reduce using rule 36 (arith_expression -> term PLUS term .)
     LESSEQUAL       reduce using rule 36 (arith_expression -> term PLUS term .)
@@ -2386,11 +2386,11 @@ state 103
 
     (37) arith_expression -> term MINUS term .
 
-    RPAREN          reduce using rule 37 (arith_expression -> term MINUS term .)
-    COMMA           reduce using rule 37 (arith_expression -> term MINUS term .)
     OR              reduce using rule 37 (arith_expression -> term MINUS term .)
     AND             reduce using rule 37 (arith_expression -> term MINUS term .)
     COLON           reduce using rule 37 (arith_expression -> term MINUS term .)
+    RPAREN          reduce using rule 37 (arith_expression -> term MINUS term .)
+    COMMA           reduce using rule 37 (arith_expression -> term MINUS term .)
     EQEQUAL         reduce using rule 37 (arith_expression -> term MINUS term .)
     NOTEQUAL        reduce using rule 37 (arith_expression -> term MINUS term .)
     LESSEQUAL       reduce using rule 37 (arith_expression -> term MINUS term .)
@@ -2430,18 +2430,18 @@ state 105
 
 state 106
 
-    (27) calLPARENam -> NAME EQUAL arith_expression .
+    (25) callparamlist -> callparamlist COMMA callparam .
 
-    RPAREN          reduce using rule 27 (calLPARENam -> NAME EQUAL arith_expression .)
-    COMMA           reduce using rule 27 (calLPARENam -> NAME EQUAL arith_expression .)
+    RPAREN          reduce using rule 25 (callparamlist -> callparamlist COMMA callparam .)
+    COMMA           reduce using rule 25 (callparamlist -> callparamlist COMMA callparam .)
 
 
 state 107
 
-    (25) calLPARENamlist -> calLPARENamlist COMMA calLPARENam .
+    (27) callparam -> NAME EQUAL arith_expression .
 
-    RPAREN          reduce using rule 25 (calLPARENamlist -> calLPARENamlist COMMA calLPARENam .)
-    COMMA           reduce using rule 25 (calLPARENamlist -> calLPARENamlist COMMA calLPARENam .)
+    RPAREN          reduce using rule 27 (callparam -> NAME EQUAL arith_expression .)
+    COMMA           reduce using rule 27 (callparam -> NAME EQUAL arith_expression .)
 
 
 state 108
