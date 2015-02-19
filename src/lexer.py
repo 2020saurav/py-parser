@@ -39,7 +39,8 @@ tokens = tuple(tokens) + (
 		'INDENT', 'DEDENT',
 		'TRIPLESTRING', 'STRING', 
 		'RAWSTRING','UNICODESTRING',
-		'NAME','WS'
+		'NAME','WS',
+		'ENDMARKER'
 	)
 
 # Regular expression rules for simple tokens

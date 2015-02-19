@@ -1,0 +1,2681 @@
+Created by PLY version 3.4 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    ELIF
+    RAISE
+    STAREQUAL
+    STARSTAR
+    GLOBAL
+    ASSERT
+    DEL
+    VBAR
+    BACKQUOTE
+    PASS
+    WITH
+    LEFTSHIFT
+    MINEQUAL
+    SEMI
+    BINARYNUMBER
+    EXCEPT
+    PERCENTEQUAL
+    TILDE
+    IMPORT
+    UNICODESTRING
+    TRIPLESTRING
+    SLASHSLASH
+    SLASHEQUAL
+    RIGHTSHIFT
+    RBRACE
+    EXEC
+    AMPER
+    IS
+    PERCENT
+    YIELD
+    TRY
+    PLUSEQUAL
+    FINALLY
+    CIRCUMFLEX
+    FNUMBER
+    LBRACE
+    FROM
+    HEXADECIMALNUMBER
+    INUMBER
+    RAWSTRING
+    AS
+    OCTALNUMBER
+    WS
+    LAMBDA
+
+Grammar
+
+Rule 0     S' -> program
+Rule 1     program -> file_input_star ENDMARKER
+Rule 2     file_input_star -> NEWLINE
+Rule 3     file_input_star -> stmt
+Rule 4     file_input_star -> file_input_star stmt
+Rule 5     stmt -> single_stmt
+Rule 6     stmt -> compound_stmt
+Rule 7     stmt -> stmt single_stmt
+Rule 8     stmt -> stmt compound_stmt
+Rule 9     single_stmt -> complex_stmt
+Rule 10    single_stmt -> small_stmt NEWLINE
+Rule 11    small_stmt -> small_assign_stmt
+Rule 12    small_stmt -> trailer_item
+Rule 13    small_stmt -> return_stmt
+Rule 14    small_stmt -> print_stmt
+Rule 15    small_stmt -> break_stmt
+Rule 16    small_stmt -> continue_stmt
+Rule 17    return_stmt -> RETURN small_expression
+Rule 18    break_stmt -> BREAK
+Rule 19    continue_stmt -> CONTINUE
+Rule 20    paramlist -> paramlist COMMA param
+Rule 21    paramlist -> param
+Rule 22    param -> NAME EQUAL constants
+Rule 23    param -> NAME
+Rule 24    param -> constants
+Rule 25    calLPARENamlist -> calLPARENamlist COMMA calLPARENam
+Rule 26    calLPARENamlist -> calLPARENam
+Rule 27    calLPARENam -> NAME EQUAL arith_expression
+Rule 28    calLPARENam -> arith_expression
+Rule 29    small_assign_stmt -> trailer_item EQUAL small_expression
+Rule 30    small_expression -> arith_expression
+Rule 31    complex_stmt -> trailer_item EQUAL complex_expression
+Rule 32    complex_expression -> CLASS
+Rule 33    complex_expression -> DEF
+Rule 34    namelist -> namelist COMMA NAME
+Rule 35    namelist -> NAME
+Rule 36    arith_expression -> term PLUS term
+Rule 37    arith_expression -> term MINUS term
+Rule 38    arith_expression -> term
+Rule 39    term -> factor STAR factor
+Rule 40    term -> factor SLASH factor
+Rule 41    term -> factor
+Rule 42    factor -> trailer_item
+Rule 43    factor -> LPAREN arith_expression RPAREN
+Rule 44    print_stmt -> PRINT small_expression
+Rule 45    constants -> NUMBER
+Rule 46    constants -> STRING
+Rule 47    compound_stmt -> if_stmt
+Rule 48    compound_stmt -> for_stmt
+Rule 49    compound_stmt -> while_stmt
+Rule 50    if_stmt -> IF test COLON suite
+Rule 51    if_stmt -> IF test COLON suite NEWLINE ELSE suite
+Rule 52    while_stmt -> WHILE test COLON suite
+Rule 53    for_stmt -> FOR NAME IN small_expression COLON suite
+Rule 54    suite -> NEWLINE INDENT stmt DEDENT
+Rule 55    test -> test_add AND test_add
+Rule 56    test -> test_add
+Rule 57    test_add -> test_or OR test_or
+Rule 58    test_add -> test_or
+Rule 59    test_or -> test_not
+Rule 60    test_or -> test_factor
+Rule 61    test_not -> NOT test_factor
+Rule 62    test_factor -> arith_expression cmp_op arith_expression
+Rule 63    test_factor -> arith_expression
+Rule 64    cmp_op -> EQEQUAL
+Rule 65    cmp_op -> NOTEQUAL
+Rule 66    cmp_op -> LESSEQUAL
+Rule 67    cmp_op -> GREATEREQUAL
+Rule 68    cmp_op -> LESS
+Rule 69    cmp_op -> GREATER
+Rule 70    trailer -> DOT NAME
+Rule 71    trailer -> LSQB subscript RSQB
+Rule 72    trailer -> LPAREN RPAREN
+Rule 73    trailer -> LPAREN calLPARENamlist RPAREN
+Rule 74    trailer_star -> trailer
+Rule 75    trailer_star -> trailer_star trailer
+Rule 76    trailer_item -> atom
+Rule 77    trailer_item -> atom trailer_star
+Rule 78    atom -> AT NAME
+Rule 79    atom -> NAME
+Rule 80    atom -> constants
+Rule 81    subscript -> NUMBER
+Rule 82    empty -> <empty>
+
+Terminals, with rules where they appear
+
+AMPER                : 
+AND                  : 55
+AS                   : 
+ASSERT               : 
+AT                   : 78
+BACKQUOTE            : 
+BINARYNUMBER         : 
+BREAK                : 18
+CIRCUMFLEX           : 
+CLASS                : 32
+COLON                : 50 51 52 53
+COMMA                : 20 25 34
+CONTINUE             : 19
+DEDENT               : 54
+DEF                  : 33
+DEL                  : 
+DOT                  : 70
+ELIF                 : 
+ELSE                 : 51
+ENDMARKER            : 1
+EQEQUAL              : 64
+EQUAL                : 22 27 29 31
+EXCEPT               : 
+EXEC                 : 
+FINALLY              : 
+FNUMBER              : 
+FOR                  : 53
+FROM                 : 
+GLOBAL               : 
+GREATER              : 69
+GREATEREQUAL         : 67
+HEXADECIMALNUMBER    : 
+IF                   : 50 51
+IMPORT               : 
+IN                   : 53
+INDENT               : 54
+INUMBER              : 
+IS                   : 
+LAMBDA               : 
+LBRACE               : 
+LEFTSHIFT            : 
+LESS                 : 68
+LESSEQUAL            : 66
+LPAREN               : 43 72 73
+LSQB                 : 71
+MINEQUAL             : 
+MINUS                : 37
+NAME                 : 22 23 27 34 35 53 70 78 79
+NEWLINE              : 2 10 51 54
+NOT                  : 61
+NOTEQUAL             : 65
+NUMBER               : 45 81
+OCTALNUMBER          : 
+OR                   : 57
+PASS                 : 
+PERCENT              : 
+PERCENTEQUAL         : 
+PLUS                 : 36
+PLUSEQUAL            : 
+PRINT                : 44
+RAISE                : 
+RAWSTRING            : 
+RBRACE               : 
+RETURN               : 17
+RIGHTSHIFT           : 
+RPAREN               : 43 72 73
+RSQB                 : 71
+SEMI                 : 
+SLASH                : 40
+SLASHEQUAL           : 
+SLASHSLASH           : 
+STAR                 : 39
+STAREQUAL            : 
+STARSTAR             : 
+STRING               : 46
+TILDE                : 
+TRIPLESTRING         : 
+TRY                  : 
+UNICODESTRING        : 
+VBAR                 : 
+WHILE                : 52
+WITH                 : 
+WS                   : 
+YIELD                : 
+error                : 
+
+Nonterminals, with rules where they appear
+
+arith_expression     : 27 28 30 43 62 62 63
+atom                 : 76 77
+break_stmt           : 15
+calLPARENam          : 25 26
+calLPARENamlist      : 25 73
+cmp_op               : 62
+complex_expression   : 31
+complex_stmt         : 9
+compound_stmt        : 6 8
+constants            : 22 24 80
+continue_stmt        : 16
+empty                : 
+factor               : 39 39 40 40 41
+file_input_star      : 1 4
+for_stmt             : 48
+if_stmt              : 47
+namelist             : 34
+param                : 20 21
+paramlist            : 20
+print_stmt           : 14
+program              : 0
+return_stmt          : 13
+single_stmt          : 5 7
+small_assign_stmt    : 11
+small_expression     : 17 29 44 53
+small_stmt           : 10
+stmt                 : 3 4 7 8 54
+subscript            : 71
+suite                : 50 51 51 52 53
+term                 : 36 36 37 37 38
+test                 : 50 51 52
+test_add             : 55 55 56
+test_factor          : 60 61
+test_not             : 59
+test_or              : 57 57 58
+trailer              : 74 75
+trailer_item         : 12 29 31 42
+trailer_star         : 75 77
+while_stmt           : 49
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . program
+    (1) program -> . file_input_star ENDMARKER
+    (2) file_input_star -> . NEWLINE
+    (3) file_input_star -> . stmt
+    (4) file_input_star -> . file_input_star stmt
+    (5) stmt -> . single_stmt
+    (6) stmt -> . compound_stmt
+    (7) stmt -> . stmt single_stmt
+    (8) stmt -> . stmt compound_stmt
+    (9) single_stmt -> . complex_stmt
+    (10) single_stmt -> . small_stmt NEWLINE
+    (47) compound_stmt -> . if_stmt
+    (48) compound_stmt -> . for_stmt
+    (49) compound_stmt -> . while_stmt
+    (31) complex_stmt -> . trailer_item EQUAL complex_expression
+    (11) small_stmt -> . small_assign_stmt
+    (12) small_stmt -> . trailer_item
+    (13) small_stmt -> . return_stmt
+    (14) small_stmt -> . print_stmt
+    (15) small_stmt -> . break_stmt
+    (16) small_stmt -> . continue_stmt
+    (50) if_stmt -> . IF test COLON suite
+    (51) if_stmt -> . IF test COLON suite NEWLINE ELSE suite
+    (53) for_stmt -> . FOR NAME IN small_expression COLON suite
+    (52) while_stmt -> . WHILE test COLON suite
+    (76) trailer_item -> . atom
+    (77) trailer_item -> . atom trailer_star
+    (29) small_assign_stmt -> . trailer_item EQUAL small_expression
+    (17) return_stmt -> . RETURN small_expression
+    (44) print_stmt -> . PRINT small_expression
+    (18) break_stmt -> . BREAK
+    (19) continue_stmt -> . CONTINUE
+    (78) atom -> . AT NAME
+    (79) atom -> . NAME
+    (80) atom -> . constants
+    (45) constants -> . NUMBER
+    (46) constants -> . STRING
+
+    NEWLINE         shift and go to state 11
+    IF              shift and go to state 24
+    FOR             shift and go to state 16
+    WHILE           shift and go to state 4
+    RETURN          shift and go to state 7
+    PRINT           shift and go to state 6
+    BREAK           shift and go to state 26
+    CONTINUE        shift and go to state 28
+    AT              shift and go to state 22
+    NAME            shift and go to state 1
+    NUMBER          shift and go to state 30
+    STRING          shift and go to state 15
+
+    small_stmt                     shift and go to state 2
+    trailer_item                   shift and go to state 19
+    return_stmt                    shift and go to state 5
+    break_stmt                     shift and go to state 8
+    file_input_star                shift and go to state 9
+    continue_stmt                  shift and go to state 10
+    small_assign_stmt              shift and go to state 12
+    program                        shift and go to state 13
+    compound_stmt                  shift and go to state 14
+    print_stmt                     shift and go to state 17
+    stmt                           shift and go to state 18
+    complex_stmt                   shift and go to state 20
+    for_stmt                       shift and go to state 21
+    atom                           shift and go to state 3
+    constants                      shift and go to state 23
+    if_stmt                        shift and go to state 25
+    while_stmt                     shift and go to state 27
+    single_stmt                    shift and go to state 29
+
+state 1
+
+    (79) atom -> NAME .
+
+    DOT             reduce using rule 79 (atom -> NAME .)
+    LSQB            reduce using rule 79 (atom -> NAME .)
+    LPAREN          reduce using rule 79 (atom -> NAME .)
+    STAR            reduce using rule 79 (atom -> NAME .)
+    SLASH           reduce using rule 79 (atom -> NAME .)
+    PLUS            reduce using rule 79 (atom -> NAME .)
+    MINUS           reduce using rule 79 (atom -> NAME .)
+    NEWLINE         reduce using rule 79 (atom -> NAME .)
+    EQUAL           reduce using rule 79 (atom -> NAME .)
+    COLON           reduce using rule 79 (atom -> NAME .)
+    EQEQUAL         reduce using rule 79 (atom -> NAME .)
+    NOTEQUAL        reduce using rule 79 (atom -> NAME .)
+    LESSEQUAL       reduce using rule 79 (atom -> NAME .)
+    GREATEREQUAL    reduce using rule 79 (atom -> NAME .)
+    LESS            reduce using rule 79 (atom -> NAME .)
+    GREATER         reduce using rule 79 (atom -> NAME .)
+    OR              reduce using rule 79 (atom -> NAME .)
+    AND             reduce using rule 79 (atom -> NAME .)
+    RPAREN          reduce using rule 79 (atom -> NAME .)
+    COMMA           reduce using rule 79 (atom -> NAME .)
+
+
+state 2
+
+    (10) single_stmt -> small_stmt . NEWLINE
+
+    NEWLINE         shift and go to state 31
+
+
+state 3
+
+    (76) trailer_item -> atom .
+    (77) trailer_item -> atom . trailer_star
+    (74) trailer_star -> . trailer
+    (75) trailer_star -> . trailer_star trailer
+    (70) trailer -> . DOT NAME
+    (71) trailer -> . LSQB subscript RSQB
+    (72) trailer -> . LPAREN RPAREN
+    (73) trailer -> . LPAREN calLPARENamlist RPAREN
+
+    STAR            reduce using rule 76 (trailer_item -> atom .)
+    SLASH           reduce using rule 76 (trailer_item -> atom .)
+    PLUS            reduce using rule 76 (trailer_item -> atom .)
+    MINUS           reduce using rule 76 (trailer_item -> atom .)
+    RPAREN          reduce using rule 76 (trailer_item -> atom .)
+    COMMA           reduce using rule 76 (trailer_item -> atom .)
+    OR              reduce using rule 76 (trailer_item -> atom .)
+    AND             reduce using rule 76 (trailer_item -> atom .)
+    COLON           reduce using rule 76 (trailer_item -> atom .)
+    EQEQUAL         reduce using rule 76 (trailer_item -> atom .)
+    NOTEQUAL        reduce using rule 76 (trailer_item -> atom .)
+    LESSEQUAL       reduce using rule 76 (trailer_item -> atom .)
+    GREATEREQUAL    reduce using rule 76 (trailer_item -> atom .)
+    LESS            reduce using rule 76 (trailer_item -> atom .)
+    GREATER         reduce using rule 76 (trailer_item -> atom .)
+    NEWLINE         reduce using rule 76 (trailer_item -> atom .)
+    EQUAL           reduce using rule 76 (trailer_item -> atom .)
+    DOT             shift and go to state 36
+    LSQB            shift and go to state 35
+    LPAREN          shift and go to state 34
+
+    trailer_star                   shift and go to state 32
+    trailer                        shift and go to state 33
+
+state 4
+
+    (52) while_stmt -> WHILE . test COLON suite
+    (55) test -> . test_add AND test_add
+    (56) test -> . test_add
+    (57) test_add -> . test_or OR test_or
+    (58) test_add -> . test_or
+    (59) test_or -> . test_not
+    (60) test_or -> . test_factor
+    (61) test_not -> . NOT test_factor
+    (62) test_factor -> . arith_expression cmp_op arith_expression
+    (63) test_factor -> . arith_expression
+    (36) arith_expression -> . term PLUS term
+    (37) arith_expression -> . term MINUS term
+    (38) arith_expression -> . term
+    (39) term -> . factor STAR factor
+    (40) term -> . factor SLASH factor
+    (41) term -> . factor
+    (42) factor -> . trailer_item
+    (43) factor -> . LPAREN arith_expression RPAREN
+    (76) trailer_item -> . atom
+    (77) trailer_item -> . atom trailer_star
+    (78) atom -> . AT NAME
+    (79) atom -> . NAME
+    (80) atom -> . constants
+    (45) constants -> . NUMBER
+    (46) constants -> . STRING
+
+    NOT             shift and go to state 47
+    LPAREN          shift and go to state 44
+    AT              shift and go to state 22
+    NAME            shift and go to state 1
+    NUMBER          shift and go to state 30
+    STRING          shift and go to state 15
+
+    test_add                       shift and go to state 40
+    term                           shift and go to state 46
+    test_factor                    shift and go to state 37
+    atom                           shift and go to state 3
+    trailer_item                   shift and go to state 38
+    arith_expression               shift and go to state 39
+    factor                         shift and go to state 41
+    test                           shift and go to state 42
+    test_not                       shift and go to state 45
+    constants                      shift and go to state 23
+    test_or                        shift and go to state 43
+
+state 5
+
+    (13) small_stmt -> return_stmt .
+
+    NEWLINE         reduce using rule 13 (small_stmt -> return_stmt .)
+
+
+state 6
+
+    (44) print_stmt -> PRINT . small_expression
+    (30) small_expression -> . arith_expression
+    (36) arith_expression -> . term PLUS term
+    (37) arith_expression -> . term MINUS term
+    (38) arith_expression -> . term
+    (39) term -> . factor STAR factor
+    (40) term -> . factor SLASH factor
+    (41) term -> . factor
+    (42) factor -> . trailer_item
+    (43) factor -> . LPAREN arith_expression RPAREN
+    (76) trailer_item -> . atom
+    (77) trailer_item -> . atom trailer_star
+    (78) atom -> . AT NAME
+    (79) atom -> . NAME
+    (80) atom -> . constants
+    (45) constants -> . NUMBER
+    (46) constants -> . STRING
+
+    LPAREN          shift and go to state 44
+    AT              shift and go to state 22
+    NAME            shift and go to state 1
+    NUMBER          shift and go to state 30
+    STRING          shift and go to state 15
+
+    term                           shift and go to state 46
+    factor                         shift and go to state 41
+    trailer_item                   shift and go to state 38
+    small_expression               shift and go to state 48
+    arith_expression               shift and go to state 49
+    atom                           shift and go to state 3
+    constants                      shift and go to state 23
+
+state 7
+
+    (17) return_stmt -> RETURN . small_expression
+    (30) small_expression -> . arith_expression
+    (36) arith_expression -> . term PLUS term
+    (37) arith_expression -> . term MINUS term
+    (38) arith_expression -> . term
+    (39) term -> . factor STAR factor
+    (40) term -> . factor SLASH factor
+    (41) term -> . factor
+    (42) factor -> . trailer_item
+    (43) factor -> . LPAREN arith_expression RPAREN
+    (76) trailer_item -> . atom
+    (77) trailer_item -> . atom trailer_star
+    (78) atom -> . AT NAME
+    (79) atom -> . NAME
+    (80) atom -> . constants
+    (45) constants -> . NUMBER
+    (46) constants -> . STRING
+
+    LPAREN          shift and go to state 44
+    AT              shift and go to state 22
+    NAME            shift and go to state 1
+    NUMBER          shift and go to state 30
+    STRING          shift and go to state 15
+
+    term                           shift and go to state 46
+    factor                         shift and go to state 41
+    trailer_item                   shift and go to state 38
+    small_expression               shift and go to state 50
+    arith_expression               shift and go to state 49
+    atom                           shift and go to state 3
+    constants                      shift and go to state 23
+
+state 8
+
+    (15) small_stmt -> break_stmt .
+
+    NEWLINE         reduce using rule 15 (small_stmt -> break_stmt .)
+
+
+state 9
+
+    (1) program -> file_input_star . ENDMARKER
+    (4) file_input_star -> file_input_star . stmt
+    (5) stmt -> . single_stmt
+    (6) stmt -> . compound_stmt
+    (7) stmt -> . stmt single_stmt
+    (8) stmt -> . stmt compound_stmt
+    (9) single_stmt -> . complex_stmt
+    (10) single_stmt -> . small_stmt NEWLINE
+    (47) compound_stmt -> . if_stmt
+    (48) compound_stmt -> . for_stmt
+    (49) compound_stmt -> . while_stmt
+    (31) complex_stmt -> . trailer_item EQUAL complex_expression
+    (11) small_stmt -> . small_assign_stmt
+    (12) small_stmt -> . trailer_item
+    (13) small_stmt -> . return_stmt
+    (14) small_stmt -> . print_stmt
+    (15) small_stmt -> . break_stmt
+    (16) small_stmt -> . continue_stmt
+    (50) if_stmt -> . IF test COLON suite
+    (51) if_stmt -> . IF test COLON suite NEWLINE ELSE suite
+    (53) for_stmt -> . FOR NAME IN small_expression COLON suite
+    (52) while_stmt -> . WHILE test COLON suite
+    (76) trailer_item -> . atom
+    (77) trailer_item -> . atom trailer_star
+    (29) small_assign_stmt -> . trailer_item EQUAL small_expression
+    (17) return_stmt -> . RETURN small_expression
+    (44) print_stmt -> . PRINT small_expression
+    (18) break_stmt -> . BREAK
+    (19) continue_stmt -> . CONTINUE
+    (78) atom -> . AT NAME
+    (79) atom -> . NAME
+    (80) atom -> . constants
+    (45) constants -> . NUMBER
+    (46) constants -> . STRING
+
+    ENDMARKER       shift and go to state 51
+    IF              shift and go to state 24
+    FOR             shift and go to state 16
+    WHILE           shift and go to state 4
+    RETURN          shift and go to state 7
+    PRINT           shift and go to state 6
+    BREAK           shift and go to state 26
+    CONTINUE        shift and go to state 28
+    AT              shift and go to state 22
+    NAME            shift and go to state 1
+    NUMBER          shift and go to state 30
+    STRING          shift and go to state 15
+
+    small_stmt                     shift and go to state 2
+    trailer_item                   shift and go to state 19
+    return_stmt                    shift and go to state 5
+    break_stmt                     shift and go to state 8
+    continue_stmt                  shift and go to state 10
+    small_assign_stmt              shift and go to state 12
+    compound_stmt                  shift and go to state 14
+    print_stmt                     shift and go to state 17
+    stmt                           shift and go to state 52
+    complex_stmt                   shift and go to state 20
+    for_stmt                       shift and go to state 21
+    atom                           shift and go to state 3
+    constants                      shift and go to state 23
+    if_stmt                        shift and go to state 25
+    while_stmt                     shift and go to state 27
+    single_stmt                    shift and go to state 29
+
+state 10
+
+    (16) small_stmt -> continue_stmt .
+
+    NEWLINE         reduce using rule 16 (small_stmt -> continue_stmt .)
+
+
+state 11
+
+    (2) file_input_star -> NEWLINE .
+
+    ENDMARKER       reduce using rule 2 (file_input_star -> NEWLINE .)
+    IF              reduce using rule 2 (file_input_star -> NEWLINE .)
+    FOR             reduce using rule 2 (file_input_star -> NEWLINE .)
+    WHILE           reduce using rule 2 (file_input_star -> NEWLINE .)
+    RETURN          reduce using rule 2 (file_input_star -> NEWLINE .)
+    PRINT           reduce using rule 2 (file_input_star -> NEWLINE .)
+    BREAK           reduce using rule 2 (file_input_star -> NEWLINE .)
+    CONTINUE        reduce using rule 2 (file_input_star -> NEWLINE .)
+    AT              reduce using rule 2 (file_input_star -> NEWLINE .)
+    NAME            reduce using rule 2 (file_input_star -> NEWLINE .)
+    NUMBER          reduce using rule 2 (file_input_star -> NEWLINE .)
+    STRING          reduce using rule 2 (file_input_star -> NEWLINE .)
+
+
+state 12
+
+    (11) small_stmt -> small_assign_stmt .
+
+    NEWLINE         reduce using rule 11 (small_stmt -> small_assign_stmt .)
+
+
+state 13
+
+    (0) S' -> program .
+
+
+
+state 14
+
+    (6) stmt -> compound_stmt .
+
+    DEDENT          reduce using rule 6 (stmt -> compound_stmt .)
+    IF              reduce using rule 6 (stmt -> compound_stmt .)
+    FOR             reduce using rule 6 (stmt -> compound_stmt .)
+    WHILE           reduce using rule 6 (stmt -> compound_stmt .)
+    RETURN          reduce using rule 6 (stmt -> compound_stmt .)
+    PRINT           reduce using rule 6 (stmt -> compound_stmt .)
+    BREAK           reduce using rule 6 (stmt -> compound_stmt .)
+    CONTINUE        reduce using rule 6 (stmt -> compound_stmt .)
+    AT              reduce using rule 6 (stmt -> compound_stmt .)
+    NAME            reduce using rule 6 (stmt -> compound_stmt .)
+    NUMBER          reduce using rule 6 (stmt -> compound_stmt .)
+    STRING          reduce using rule 6 (stmt -> compound_stmt .)
+    ENDMARKER       reduce using rule 6 (stmt -> compound_stmt .)
+
+
+state 15
+
+    (46) constants -> STRING .
+
+    DOT             reduce using rule 46 (constants -> STRING .)
+    LSQB            reduce using rule 46 (constants -> STRING .)
+    LPAREN          reduce using rule 46 (constants -> STRING .)
+    STAR            reduce using rule 46 (constants -> STRING .)
+    SLASH           reduce using rule 46 (constants -> STRING .)
+    PLUS            reduce using rule 46 (constants -> STRING .)
+    MINUS           reduce using rule 46 (constants -> STRING .)
+    RPAREN          reduce using rule 46 (constants -> STRING .)
+    COMMA           reduce using rule 46 (constants -> STRING .)
+    NEWLINE         reduce using rule 46 (constants -> STRING .)
+    COLON           reduce using rule 46 (constants -> STRING .)
+    EQUAL           reduce using rule 46 (constants -> STRING .)
+    EQEQUAL         reduce using rule 46 (constants -> STRING .)
+    NOTEQUAL        reduce using rule 46 (constants -> STRING .)
+    LESSEQUAL       reduce using rule 46 (constants -> STRING .)
+    GREATEREQUAL    reduce using rule 46 (constants -> STRING .)
+    LESS            reduce using rule 46 (constants -> STRING .)
+    GREATER         reduce using rule 46 (constants -> STRING .)
+    OR              reduce using rule 46 (constants -> STRING .)
+    AND             reduce using rule 46 (constants -> STRING .)
+
+
+state 16
+
+    (53) for_stmt -> FOR . NAME IN small_expression COLON suite
+
+    NAME            shift and go to state 53
+
+
+state 17
+
+    (14) small_stmt -> print_stmt .
+
+    NEWLINE         reduce using rule 14 (small_stmt -> print_stmt .)
+
+
+state 18
+
+    (3) file_input_star -> stmt .
+    (7) stmt -> stmt . single_stmt
+    (8) stmt -> stmt . compound_stmt
+    (9) single_stmt -> . complex_stmt
+    (10) single_stmt -> . small_stmt NEWLINE
+    (47) compound_stmt -> . if_stmt
+    (48) compound_stmt -> . for_stmt
+    (49) compound_stmt -> . while_stmt
+    (31) complex_stmt -> . trailer_item EQUAL complex_expression
+    (11) small_stmt -> . small_assign_stmt
+    (12) small_stmt -> . trailer_item
+    (13) small_stmt -> . return_stmt
+    (14) small_stmt -> . print_stmt
+    (15) small_stmt -> . break_stmt
+    (16) small_stmt -> . continue_stmt
+    (50) if_stmt -> . IF test COLON suite
+    (51) if_stmt -> . IF test COLON suite NEWLINE ELSE suite
+    (53) for_stmt -> . FOR NAME IN small_expression COLON suite
+    (52) while_stmt -> . WHILE test COLON suite
+    (76) trailer_item -> . atom
+    (77) trailer_item -> . atom trailer_star
+    (29) small_assign_stmt -> . trailer_item EQUAL small_expression
+    (17) return_stmt -> . RETURN small_expression
+    (44) print_stmt -> . PRINT small_expression
+    (18) break_stmt -> . BREAK
+    (19) continue_stmt -> . CONTINUE
+    (78) atom -> . AT NAME
+    (79) atom -> . NAME
+    (80) atom -> . constants
+    (45) constants -> . NUMBER
+    (46) constants -> . STRING
+
+  ! shift/reduce conflict for IF resolved as shift
+  ! shift/reduce conflict for FOR resolved as shift
+  ! shift/reduce conflict for WHILE resolved as shift
+  ! shift/reduce conflict for RETURN resolved as shift
+  ! shift/reduce conflict for PRINT resolved as shift
+  ! shift/reduce conflict for BREAK resolved as shift
+  ! shift/reduce conflict for CONTINUE resolved as shift
+  ! shift/reduce conflict for AT resolved as shift
+  ! shift/reduce conflict for NAME resolved as shift
+  ! shift/reduce conflict for NUMBER resolved as shift
+  ! shift/reduce conflict for STRING resolved as shift
+    ENDMARKER       reduce using rule 3 (file_input_star -> stmt .)
+    IF              shift and go to state 24
+    FOR             shift and go to state 16
+    WHILE           shift and go to state 4
+    RETURN          shift and go to state 7
+    PRINT           shift and go to state 6
+    BREAK           shift and go to state 26
+    CONTINUE        shift and go to state 28
+    AT              shift and go to state 22
+    NAME            shift and go to state 1
+    NUMBER          shift and go to state 30
+    STRING          shift and go to state 15
+
+  ! IF              [ reduce using rule 3 (file_input_star -> stmt .) ]
+  ! FOR             [ reduce using rule 3 (file_input_star -> stmt .) ]
+  ! WHILE           [ reduce using rule 3 (file_input_star -> stmt .) ]
+  ! RETURN          [ reduce using rule 3 (file_input_star -> stmt .) ]
+  ! PRINT           [ reduce using rule 3 (file_input_star -> stmt .) ]
+  ! BREAK           [ reduce using rule 3 (file_input_star -> stmt .) ]
+  ! CONTINUE        [ reduce using rule 3 (file_input_star -> stmt .) ]
+  ! AT              [ reduce using rule 3 (file_input_star -> stmt .) ]
+  ! NAME            [ reduce using rule 3 (file_input_star -> stmt .) ]
+  ! NUMBER          [ reduce using rule 3 (file_input_star -> stmt .) ]
+  ! STRING          [ reduce using rule 3 (file_input_star -> stmt .) ]
+
+    print_stmt                     shift and go to state 17
+    break_stmt                     shift and go to state 8
+    small_assign_stmt              shift and go to state 12
+    if_stmt                        shift and go to state 25
+    small_stmt                     shift and go to state 2
+    continue_stmt                  shift and go to state 10
+    while_stmt                     shift and go to state 27
+    trailer_item                   shift and go to state 19
+    complex_stmt                   shift and go to state 20
+    for_stmt                       shift and go to state 21
+    return_stmt                    shift and go to state 5
+    single_stmt                    shift and go to state 55
+    atom                           shift and go to state 3
+    compound_stmt                  shift and go to state 54
+    constants                      shift and go to state 23
+
+state 19
+
+    (31) complex_stmt -> trailer_item . EQUAL complex_expression
+    (12) small_stmt -> trailer_item .
+    (29) small_assign_stmt -> trailer_item . EQUAL small_expression
+
+    EQUAL           shift and go to state 56
+    NEWLINE         reduce using rule 12 (small_stmt -> trailer_item .)
+
+
+state 20
+
+    (9) single_stmt -> complex_stmt .
+
+    IF              reduce using rule 9 (single_stmt -> complex_stmt .)
+    FOR             reduce using rule 9 (single_stmt -> complex_stmt .)
+    WHILE           reduce using rule 9 (single_stmt -> complex_stmt .)
+    RETURN          reduce using rule 9 (single_stmt -> complex_stmt .)
+    PRINT           reduce using rule 9 (single_stmt -> complex_stmt .)
+    BREAK           reduce using rule 9 (single_stmt -> complex_stmt .)
+    CONTINUE        reduce using rule 9 (single_stmt -> complex_stmt .)
+    AT              reduce using rule 9 (single_stmt -> complex_stmt .)
+    NAME            reduce using rule 9 (single_stmt -> complex_stmt .)
+    NUMBER          reduce using rule 9 (single_stmt -> complex_stmt .)
+    STRING          reduce using rule 9 (single_stmt -> complex_stmt .)
+    ENDMARKER       reduce using rule 9 (single_stmt -> complex_stmt .)
+    DEDENT          reduce using rule 9 (single_stmt -> complex_stmt .)
+
+
+state 21
+
+    (48) compound_stmt -> for_stmt .
+
+    IF              reduce using rule 48 (compound_stmt -> for_stmt .)
+    FOR             reduce using rule 48 (compound_stmt -> for_stmt .)
+    WHILE           reduce using rule 48 (compound_stmt -> for_stmt .)
+    RETURN          reduce using rule 48 (compound_stmt -> for_stmt .)
+    PRINT           reduce using rule 48 (compound_stmt -> for_stmt .)
+    BREAK           reduce using rule 48 (compound_stmt -> for_stmt .)
+    CONTINUE        reduce using rule 48 (compound_stmt -> for_stmt .)
+    AT              reduce using rule 48 (compound_stmt -> for_stmt .)
+    NAME            reduce using rule 48 (compound_stmt -> for_stmt .)
+    NUMBER          reduce using rule 48 (compound_stmt -> for_stmt .)
+    STRING          reduce using rule 48 (compound_stmt -> for_stmt .)
+    ENDMARKER       reduce using rule 48 (compound_stmt -> for_stmt .)
+    DEDENT          reduce using rule 48 (compound_stmt -> for_stmt .)
+
+
+state 22
+
+    (78) atom -> AT . NAME
+
+    NAME            shift and go to state 57
+
+
+state 23
+
+    (80) atom -> constants .
+
+    DOT             reduce using rule 80 (atom -> constants .)
+    LSQB            reduce using rule 80 (atom -> constants .)
+    LPAREN          reduce using rule 80 (atom -> constants .)
+    STAR            reduce using rule 80 (atom -> constants .)
+    SLASH           reduce using rule 80 (atom -> constants .)
+    PLUS            reduce using rule 80 (atom -> constants .)
+    MINUS           reduce using rule 80 (atom -> constants .)
+    RPAREN          reduce using rule 80 (atom -> constants .)
+    COMMA           reduce using rule 80 (atom -> constants .)
+    NEWLINE         reduce using rule 80 (atom -> constants .)
+    EQUAL           reduce using rule 80 (atom -> constants .)
+    COLON           reduce using rule 80 (atom -> constants .)
+    EQEQUAL         reduce using rule 80 (atom -> constants .)
+    NOTEQUAL        reduce using rule 80 (atom -> constants .)
+    LESSEQUAL       reduce using rule 80 (atom -> constants .)
+    GREATEREQUAL    reduce using rule 80 (atom -> constants .)
+    LESS            reduce using rule 80 (atom -> constants .)
+    GREATER         reduce using rule 80 (atom -> constants .)
+    OR              reduce using rule 80 (atom -> constants .)
+    AND             reduce using rule 80 (atom -> constants .)
+
+
+state 24
+
+    (50) if_stmt -> IF . test COLON suite
+    (51) if_stmt -> IF . test COLON suite NEWLINE ELSE suite
+    (55) test -> . test_add AND test_add
+    (56) test -> . test_add
+    (57) test_add -> . test_or OR test_or
+    (58) test_add -> . test_or
+    (59) test_or -> . test_not
+    (60) test_or -> . test_factor
+    (61) test_not -> . NOT test_factor
+    (62) test_factor -> . arith_expression cmp_op arith_expression
+    (63) test_factor -> . arith_expression
+    (36) arith_expression -> . term PLUS term
+    (37) arith_expression -> . term MINUS term
+    (38) arith_expression -> . term
+    (39) term -> . factor STAR factor
+    (40) term -> . factor SLASH factor
+    (41) term -> . factor
+    (42) factor -> . trailer_item
+    (43) factor -> . LPAREN arith_expression RPAREN
+    (76) trailer_item -> . atom
+    (77) trailer_item -> . atom trailer_star
+    (78) atom -> . AT NAME
+    (79) atom -> . NAME
+    (80) atom -> . constants
+    (45) constants -> . NUMBER
+    (46) constants -> . STRING
+
+    NOT             shift and go to state 47
+    LPAREN          shift and go to state 44
+    AT              shift and go to state 22
+    NAME            shift and go to state 1
+    NUMBER          shift and go to state 30
+    STRING          shift and go to state 15
+
+    test_add                       shift and go to state 40
+    term                           shift and go to state 46
+    test_factor                    shift and go to state 37
+    atom                           shift and go to state 3
+    trailer_item                   shift and go to state 38
+    arith_expression               shift and go to state 39
+    factor                         shift and go to state 41
+    test                           shift and go to state 58
+    test_not                       shift and go to state 45
+    constants                      shift and go to state 23
+    test_or                        shift and go to state 43
+
+state 25
+
+    (47) compound_stmt -> if_stmt .
+
+    IF              reduce using rule 47 (compound_stmt -> if_stmt .)
+    FOR             reduce using rule 47 (compound_stmt -> if_stmt .)
+    WHILE           reduce using rule 47 (compound_stmt -> if_stmt .)
+    RETURN          reduce using rule 47 (compound_stmt -> if_stmt .)
+    PRINT           reduce using rule 47 (compound_stmt -> if_stmt .)
+    BREAK           reduce using rule 47 (compound_stmt -> if_stmt .)
+    CONTINUE        reduce using rule 47 (compound_stmt -> if_stmt .)
+    AT              reduce using rule 47 (compound_stmt -> if_stmt .)
+    NAME            reduce using rule 47 (compound_stmt -> if_stmt .)
+    NUMBER          reduce using rule 47 (compound_stmt -> if_stmt .)
+    STRING          reduce using rule 47 (compound_stmt -> if_stmt .)
+    ENDMARKER       reduce using rule 47 (compound_stmt -> if_stmt .)
+    DEDENT          reduce using rule 47 (compound_stmt -> if_stmt .)
+
+
+state 26
+
+    (18) break_stmt -> BREAK .
+
+    NEWLINE         reduce using rule 18 (break_stmt -> BREAK .)
+
+
+state 27
+
+    (49) compound_stmt -> while_stmt .
+
+    IF              reduce using rule 49 (compound_stmt -> while_stmt .)
+    FOR             reduce using rule 49 (compound_stmt -> while_stmt .)
+    WHILE           reduce using rule 49 (compound_stmt -> while_stmt .)
+    RETURN          reduce using rule 49 (compound_stmt -> while_stmt .)
+    PRINT           reduce using rule 49 (compound_stmt -> while_stmt .)
+    BREAK           reduce using rule 49 (compound_stmt -> while_stmt .)
+    CONTINUE        reduce using rule 49 (compound_stmt -> while_stmt .)
+    AT              reduce using rule 49 (compound_stmt -> while_stmt .)
+    NAME            reduce using rule 49 (compound_stmt -> while_stmt .)
+    NUMBER          reduce using rule 49 (compound_stmt -> while_stmt .)
+    STRING          reduce using rule 49 (compound_stmt -> while_stmt .)
+    ENDMARKER       reduce using rule 49 (compound_stmt -> while_stmt .)
+    DEDENT          reduce using rule 49 (compound_stmt -> while_stmt .)
+
+
+state 28
+
+    (19) continue_stmt -> CONTINUE .
+
+    NEWLINE         reduce using rule 19 (continue_stmt -> CONTINUE .)
+
+
+state 29
+
+    (5) stmt -> single_stmt .
+
+    DEDENT          reduce using rule 5 (stmt -> single_stmt .)
+    IF              reduce using rule 5 (stmt -> single_stmt .)
+    FOR             reduce using rule 5 (stmt -> single_stmt .)
+    WHILE           reduce using rule 5 (stmt -> single_stmt .)
+    RETURN          reduce using rule 5 (stmt -> single_stmt .)
+    PRINT           reduce using rule 5 (stmt -> single_stmt .)
+    BREAK           reduce using rule 5 (stmt -> single_stmt .)
+    CONTINUE        reduce using rule 5 (stmt -> single_stmt .)
+    AT              reduce using rule 5 (stmt -> single_stmt .)
+    NAME            reduce using rule 5 (stmt -> single_stmt .)
+    NUMBER          reduce using rule 5 (stmt -> single_stmt .)
+    STRING          reduce using rule 5 (stmt -> single_stmt .)
+    ENDMARKER       reduce using rule 5 (stmt -> single_stmt .)
+
+
+state 30
+
+    (45) constants -> NUMBER .
+
+    DOT             reduce using rule 45 (constants -> NUMBER .)
+    LSQB            reduce using rule 45 (constants -> NUMBER .)
+    LPAREN          reduce using rule 45 (constants -> NUMBER .)
+    STAR            reduce using rule 45 (constants -> NUMBER .)
+    SLASH           reduce using rule 45 (constants -> NUMBER .)
+    PLUS            reduce using rule 45 (constants -> NUMBER .)
+    MINUS           reduce using rule 45 (constants -> NUMBER .)
+    RPAREN          reduce using rule 45 (constants -> NUMBER .)
+    COMMA           reduce using rule 45 (constants -> NUMBER .)
+    NEWLINE         reduce using rule 45 (constants -> NUMBER .)
+    COLON           reduce using rule 45 (constants -> NUMBER .)
+    EQUAL           reduce using rule 45 (constants -> NUMBER .)
+    EQEQUAL         reduce using rule 45 (constants -> NUMBER .)
+    NOTEQUAL        reduce using rule 45 (constants -> NUMBER .)
+    LESSEQUAL       reduce using rule 45 (constants -> NUMBER .)
+    GREATEREQUAL    reduce using rule 45 (constants -> NUMBER .)
+    LESS            reduce using rule 45 (constants -> NUMBER .)
+    GREATER         reduce using rule 45 (constants -> NUMBER .)
+    OR              reduce using rule 45 (constants -> NUMBER .)
+    AND             reduce using rule 45 (constants -> NUMBER .)
+
+
+state 31
+
+    (10) single_stmt -> small_stmt NEWLINE .
+
+    IF              reduce using rule 10 (single_stmt -> small_stmt NEWLINE .)
+    FOR             reduce using rule 10 (single_stmt -> small_stmt NEWLINE .)
+    WHILE           reduce using rule 10 (single_stmt -> small_stmt NEWLINE .)
+    RETURN          reduce using rule 10 (single_stmt -> small_stmt NEWLINE .)
+    PRINT           reduce using rule 10 (single_stmt -> small_stmt NEWLINE .)
+    BREAK           reduce using rule 10 (single_stmt -> small_stmt NEWLINE .)
+    CONTINUE        reduce using rule 10 (single_stmt -> small_stmt NEWLINE .)
+    AT              reduce using rule 10 (single_stmt -> small_stmt NEWLINE .)
+    NAME            reduce using rule 10 (single_stmt -> small_stmt NEWLINE .)
+    NUMBER          reduce using rule 10 (single_stmt -> small_stmt NEWLINE .)
+    STRING          reduce using rule 10 (single_stmt -> small_stmt NEWLINE .)
+    ENDMARKER       reduce using rule 10 (single_stmt -> small_stmt NEWLINE .)
+    DEDENT          reduce using rule 10 (single_stmt -> small_stmt NEWLINE .)
+
+
+state 32
+
+    (77) trailer_item -> atom trailer_star .
+    (75) trailer_star -> trailer_star . trailer
+    (70) trailer -> . DOT NAME
+    (71) trailer -> . LSQB subscript RSQB
+    (72) trailer -> . LPAREN RPAREN
+    (73) trailer -> . LPAREN calLPARENamlist RPAREN
+
+    STAR            reduce using rule 77 (trailer_item -> atom trailer_star .)
+    SLASH           reduce using rule 77 (trailer_item -> atom trailer_star .)
+    PLUS            reduce using rule 77 (trailer_item -> atom trailer_star .)
+    MINUS           reduce using rule 77 (trailer_item -> atom trailer_star .)
+    RPAREN          reduce using rule 77 (trailer_item -> atom trailer_star .)
+    COMMA           reduce using rule 77 (trailer_item -> atom trailer_star .)
+    OR              reduce using rule 77 (trailer_item -> atom trailer_star .)
+    AND             reduce using rule 77 (trailer_item -> atom trailer_star .)
+    COLON           reduce using rule 77 (trailer_item -> atom trailer_star .)
+    EQEQUAL         reduce using rule 77 (trailer_item -> atom trailer_star .)
+    NOTEQUAL        reduce using rule 77 (trailer_item -> atom trailer_star .)
+    LESSEQUAL       reduce using rule 77 (trailer_item -> atom trailer_star .)
+    GREATEREQUAL    reduce using rule 77 (trailer_item -> atom trailer_star .)
+    LESS            reduce using rule 77 (trailer_item -> atom trailer_star .)
+    GREATER         reduce using rule 77 (trailer_item -> atom trailer_star .)
+    NEWLINE         reduce using rule 77 (trailer_item -> atom trailer_star .)
+    EQUAL           reduce using rule 77 (trailer_item -> atom trailer_star .)
+    DOT             shift and go to state 36
+    LSQB            shift and go to state 35
+    LPAREN          shift and go to state 34
+
+    trailer                        shift and go to state 59
+
+state 33
+
+    (74) trailer_star -> trailer .
+
+    DOT             reduce using rule 74 (trailer_star -> trailer .)
+    LSQB            reduce using rule 74 (trailer_star -> trailer .)
+    LPAREN          reduce using rule 74 (trailer_star -> trailer .)
+    EQUAL           reduce using rule 74 (trailer_star -> trailer .)
+    NEWLINE         reduce using rule 74 (trailer_star -> trailer .)
+    STAR            reduce using rule 74 (trailer_star -> trailer .)
+    SLASH           reduce using rule 74 (trailer_star -> trailer .)
+    PLUS            reduce using rule 74 (trailer_star -> trailer .)
+    MINUS           reduce using rule 74 (trailer_star -> trailer .)
+    EQEQUAL         reduce using rule 74 (trailer_star -> trailer .)
+    NOTEQUAL        reduce using rule 74 (trailer_star -> trailer .)
+    LESSEQUAL       reduce using rule 74 (trailer_star -> trailer .)
+    GREATEREQUAL    reduce using rule 74 (trailer_star -> trailer .)
+    LESS            reduce using rule 74 (trailer_star -> trailer .)
+    GREATER         reduce using rule 74 (trailer_star -> trailer .)
+    OR              reduce using rule 74 (trailer_star -> trailer .)
+    AND             reduce using rule 74 (trailer_star -> trailer .)
+    COLON           reduce using rule 74 (trailer_star -> trailer .)
+    RPAREN          reduce using rule 74 (trailer_star -> trailer .)
+    COMMA           reduce using rule 74 (trailer_star -> trailer .)
+
+
+state 34
+
+    (72) trailer -> LPAREN . RPAREN
+    (73) trailer -> LPAREN . calLPARENamlist RPAREN
+    (25) calLPARENamlist -> . calLPARENamlist COMMA calLPARENam
+    (26) calLPARENamlist -> . calLPARENam
+    (27) calLPARENam -> . NAME EQUAL arith_expression
+    (28) calLPARENam -> . arith_expression
+    (36) arith_expression -> . term PLUS term
+    (37) arith_expression -> . term MINUS term
+    (38) arith_expression -> . term
+    (39) term -> . factor STAR factor
+    (40) term -> . factor SLASH factor
+    (41) term -> . factor
+    (42) factor -> . trailer_item
+    (43) factor -> . LPAREN arith_expression RPAREN
+    (76) trailer_item -> . atom
+    (77) trailer_item -> . atom trailer_star
+    (78) atom -> . AT NAME
+    (79) atom -> . NAME
+    (80) atom -> . constants
+    (45) constants -> . NUMBER
+    (46) constants -> . STRING
+
+    RPAREN          shift and go to state 60
+    NAME            shift and go to state 61
+    LPAREN          shift and go to state 44
+    AT              shift and go to state 22
+    NUMBER          shift and go to state 30
+    STRING          shift and go to state 15
+
+    term                           shift and go to state 46
+    calLPARENam                    shift and go to state 62
+    atom                           shift and go to state 3
+    trailer_item                   shift and go to state 38
+    arith_expression               shift and go to state 63
+    factor                         shift and go to state 41
+    calLPARENamlist                shift and go to state 64
+    constants                      shift and go to state 23
+
+state 35
+
+    (71) trailer -> LSQB . subscript RSQB
+    (81) subscript -> . NUMBER
+
+    NUMBER          shift and go to state 66
+
+    subscript                      shift and go to state 65
+
+state 36
+
+    (70) trailer -> DOT . NAME
+
+    NAME            shift and go to state 67
+
+
+state 37
+
+    (60) test_or -> test_factor .
+
+    AND             reduce using rule 60 (test_or -> test_factor .)
+    COLON           reduce using rule 60 (test_or -> test_factor .)
+    OR              reduce using rule 60 (test_or -> test_factor .)
+
+
+state 38
+
+    (42) factor -> trailer_item .
+
+    STAR            reduce using rule 42 (factor -> trailer_item .)
+    SLASH           reduce using rule 42 (factor -> trailer_item .)
+    PLUS            reduce using rule 42 (factor -> trailer_item .)
+    MINUS           reduce using rule 42 (factor -> trailer_item .)
+    EQEQUAL         reduce using rule 42 (factor -> trailer_item .)
+    NOTEQUAL        reduce using rule 42 (factor -> trailer_item .)
+    LESSEQUAL       reduce using rule 42 (factor -> trailer_item .)
+    GREATEREQUAL    reduce using rule 42 (factor -> trailer_item .)
+    LESS            reduce using rule 42 (factor -> trailer_item .)
+    GREATER         reduce using rule 42 (factor -> trailer_item .)
+    OR              reduce using rule 42 (factor -> trailer_item .)
+    AND             reduce using rule 42 (factor -> trailer_item .)
+    COLON           reduce using rule 42 (factor -> trailer_item .)
+    NEWLINE         reduce using rule 42 (factor -> trailer_item .)
+    RPAREN          reduce using rule 42 (factor -> trailer_item .)
+    COMMA           reduce using rule 42 (factor -> trailer_item .)
+
+
+state 39
+
+    (62) test_factor -> arith_expression . cmp_op arith_expression
+    (63) test_factor -> arith_expression .
+    (64) cmp_op -> . EQEQUAL
+    (65) cmp_op -> . NOTEQUAL
+    (66) cmp_op -> . LESSEQUAL
+    (67) cmp_op -> . GREATEREQUAL
+    (68) cmp_op -> . LESS
+    (69) cmp_op -> . GREATER
+
+    AND             reduce using rule 63 (test_factor -> arith_expression .)
+    COLON           reduce using rule 63 (test_factor -> arith_expression .)
+    OR              reduce using rule 63 (test_factor -> arith_expression .)
+    EQEQUAL         shift and go to state 74
+    NOTEQUAL        shift and go to state 68
+    LESSEQUAL       shift and go to state 72
+    GREATEREQUAL    shift and go to state 69
+    LESS            shift and go to state 71
+    GREATER         shift and go to state 70
+
+    cmp_op                         shift and go to state 73
+
+state 40
+
+    (55) test -> test_add . AND test_add
+    (56) test -> test_add .
+
+    AND             shift and go to state 75
+    COLON           reduce using rule 56 (test -> test_add .)
+
+
+state 41
+
+    (39) term -> factor . STAR factor
+    (40) term -> factor . SLASH factor
+    (41) term -> factor .
+
+    STAR            shift and go to state 76
+    SLASH           shift and go to state 77
+    PLUS            reduce using rule 41 (term -> factor .)
+    MINUS           reduce using rule 41 (term -> factor .)
+    EQEQUAL         reduce using rule 41 (term -> factor .)
+    NOTEQUAL        reduce using rule 41 (term -> factor .)
+    LESSEQUAL       reduce using rule 41 (term -> factor .)
+    GREATEREQUAL    reduce using rule 41 (term -> factor .)
+    LESS            reduce using rule 41 (term -> factor .)
+    GREATER         reduce using rule 41 (term -> factor .)
+    OR              reduce using rule 41 (term -> factor .)
+    COLON           reduce using rule 41 (term -> factor .)
+    NEWLINE         reduce using rule 41 (term -> factor .)
+    RPAREN          reduce using rule 41 (term -> factor .)
+    COMMA           reduce using rule 41 (term -> factor .)
+    AND             reduce using rule 41 (term -> factor .)
+
+
+state 42
+
+    (52) while_stmt -> WHILE test . COLON suite
+
+    COLON           shift and go to state 78
+
+
+state 43
+
+    (57) test_add -> test_or . OR test_or
+    (58) test_add -> test_or .
+
+    OR              shift and go to state 79
+    AND             reduce using rule 58 (test_add -> test_or .)
+    COLON           reduce using rule 58 (test_add -> test_or .)
+
+
+state 44
+
+    (43) factor -> LPAREN . arith_expression RPAREN
+    (36) arith_expression -> . term PLUS term
+    (37) arith_expression -> . term MINUS term
+    (38) arith_expression -> . term
+    (39) term -> . factor STAR factor
+    (40) term -> . factor SLASH factor
+    (41) term -> . factor
+    (42) factor -> . trailer_item
+    (43) factor -> . LPAREN arith_expression RPAREN
+    (76) trailer_item -> . atom
+    (77) trailer_item -> . atom trailer_star
+    (78) atom -> . AT NAME
+    (79) atom -> . NAME
+    (80) atom -> . constants
+    (45) constants -> . NUMBER
+    (46) constants -> . STRING
+
+    LPAREN          shift and go to state 44
+    AT              shift and go to state 22
+    NAME            shift and go to state 1
+    NUMBER          shift and go to state 30
+    STRING          shift and go to state 15
+
+    term                           shift and go to state 46
+    factor                         shift and go to state 41
+    trailer_item                   shift and go to state 38
+    arith_expression               shift and go to state 80
+    atom                           shift and go to state 3
+    constants                      shift and go to state 23
+
+state 45
+
+    (59) test_or -> test_not .
+
+    AND             reduce using rule 59 (test_or -> test_not .)
+    COLON           reduce using rule 59 (test_or -> test_not .)
+    OR              reduce using rule 59 (test_or -> test_not .)
+
+
+state 46
+
+    (36) arith_expression -> term . PLUS term
+    (37) arith_expression -> term . MINUS term
+    (38) arith_expression -> term .
+
+    PLUS            shift and go to state 81
+    MINUS           shift and go to state 82
+    RPAREN          reduce using rule 38 (arith_expression -> term .)
+    COMMA           reduce using rule 38 (arith_expression -> term .)
+    OR              reduce using rule 38 (arith_expression -> term .)
+    AND             reduce using rule 38 (arith_expression -> term .)
+    COLON           reduce using rule 38 (arith_expression -> term .)
+    EQEQUAL         reduce using rule 38 (arith_expression -> term .)
+    NOTEQUAL        reduce using rule 38 (arith_expression -> term .)
+    LESSEQUAL       reduce using rule 38 (arith_expression -> term .)
+    GREATEREQUAL    reduce using rule 38 (arith_expression -> term .)
+    LESS            reduce using rule 38 (arith_expression -> term .)
+    GREATER         reduce using rule 38 (arith_expression -> term .)
+    NEWLINE         reduce using rule 38 (arith_expression -> term .)
+
+
+state 47
+
+    (61) test_not -> NOT . test_factor
+    (62) test_factor -> . arith_expression cmp_op arith_expression
+    (63) test_factor -> . arith_expression
+    (36) arith_expression -> . term PLUS term
+    (37) arith_expression -> . term MINUS term
+    (38) arith_expression -> . term
+    (39) term -> . factor STAR factor
+    (40) term -> . factor SLASH factor
+    (41) term -> . factor
+    (42) factor -> . trailer_item
+    (43) factor -> . LPAREN arith_expression RPAREN
+    (76) trailer_item -> . atom
+    (77) trailer_item -> . atom trailer_star
+    (78) atom -> . AT NAME
+    (79) atom -> . NAME
+    (80) atom -> . constants
+    (45) constants -> . NUMBER
+    (46) constants -> . STRING
+
+    LPAREN          shift and go to state 44
+    AT              shift and go to state 22
+    NAME            shift and go to state 1
+    NUMBER          shift and go to state 30
+    STRING          shift and go to state 15
+
+    term                           shift and go to state 46
+    test_factor                    shift and go to state 83
+    atom                           shift and go to state 3
+    trailer_item                   shift and go to state 38
+    arith_expression               shift and go to state 39
+    factor                         shift and go to state 41
+    constants                      shift and go to state 23
+
+state 48
+
+    (44) print_stmt -> PRINT small_expression .
+
+    NEWLINE         reduce using rule 44 (print_stmt -> PRINT small_expression .)
+
+
+state 49
+
+    (30) small_expression -> arith_expression .
+
+    NEWLINE         reduce using rule 30 (small_expression -> arith_expression .)
+    COLON           reduce using rule 30 (small_expression -> arith_expression .)
+
+
+state 50
+
+    (17) return_stmt -> RETURN small_expression .
+
+    NEWLINE         reduce using rule 17 (return_stmt -> RETURN small_expression .)
+
+
+state 51
+
+    (1) program -> file_input_star ENDMARKER .
+
+    $end            reduce using rule 1 (program -> file_input_star ENDMARKER .)
+
+
+state 52
+
+    (4) file_input_star -> file_input_star stmt .
+    (7) stmt -> stmt . single_stmt
+    (8) stmt -> stmt . compound_stmt
+    (9) single_stmt -> . complex_stmt
+    (10) single_stmt -> . small_stmt NEWLINE
+    (47) compound_stmt -> . if_stmt
+    (48) compound_stmt -> . for_stmt
+    (49) compound_stmt -> . while_stmt
+    (31) complex_stmt -> . trailer_item EQUAL complex_expression
+    (11) small_stmt -> . small_assign_stmt
+    (12) small_stmt -> . trailer_item
+    (13) small_stmt -> . return_stmt
+    (14) small_stmt -> . print_stmt
+    (15) small_stmt -> . break_stmt
+    (16) small_stmt -> . continue_stmt
+    (50) if_stmt -> . IF test COLON suite
+    (51) if_stmt -> . IF test COLON suite NEWLINE ELSE suite
+    (53) for_stmt -> . FOR NAME IN small_expression COLON suite
+    (52) while_stmt -> . WHILE test COLON suite
+    (76) trailer_item -> . atom
+    (77) trailer_item -> . atom trailer_star
+    (29) small_assign_stmt -> . trailer_item EQUAL small_expression
+    (17) return_stmt -> . RETURN small_expression
+    (44) print_stmt -> . PRINT small_expression
+    (18) break_stmt -> . BREAK
+    (19) continue_stmt -> . CONTINUE
+    (78) atom -> . AT NAME
+    (79) atom -> . NAME
+    (80) atom -> . constants
+    (45) constants -> . NUMBER
+    (46) constants -> . STRING
+
+  ! shift/reduce conflict for IF resolved as shift
+  ! shift/reduce conflict for FOR resolved as shift
+  ! shift/reduce conflict for WHILE resolved as shift
+  ! shift/reduce conflict for RETURN resolved as shift
+  ! shift/reduce conflict for PRINT resolved as shift
+  ! shift/reduce conflict for BREAK resolved as shift
+  ! shift/reduce conflict for CONTINUE resolved as shift
+  ! shift/reduce conflict for AT resolved as shift
+  ! shift/reduce conflict for NAME resolved as shift
+  ! shift/reduce conflict for NUMBER resolved as shift
+  ! shift/reduce conflict for STRING resolved as shift
+    ENDMARKER       reduce using rule 4 (file_input_star -> file_input_star stmt .)
+    IF              shift and go to state 24
+    FOR             shift and go to state 16
+    WHILE           shift and go to state 4
+    RETURN          shift and go to state 7
+    PRINT           shift and go to state 6
+    BREAK           shift and go to state 26
+    CONTINUE        shift and go to state 28
+    AT              shift and go to state 22
+    NAME            shift and go to state 1
+    NUMBER          shift and go to state 30
+    STRING          shift and go to state 15
+
+  ! IF              [ reduce using rule 4 (file_input_star -> file_input_star stmt .) ]
+  ! FOR             [ reduce using rule 4 (file_input_star -> file_input_star stmt .) ]
+  ! WHILE           [ reduce using rule 4 (file_input_star -> file_input_star stmt .) ]
+  ! RETURN          [ reduce using rule 4 (file_input_star -> file_input_star stmt .) ]
+  ! PRINT           [ reduce using rule 4 (file_input_star -> file_input_star stmt .) ]
+  ! BREAK           [ reduce using rule 4 (file_input_star -> file_input_star stmt .) ]
+  ! CONTINUE        [ reduce using rule 4 (file_input_star -> file_input_star stmt .) ]
+  ! AT              [ reduce using rule 4 (file_input_star -> file_input_star stmt .) ]
+  ! NAME            [ reduce using rule 4 (file_input_star -> file_input_star stmt .) ]
+  ! NUMBER          [ reduce using rule 4 (file_input_star -> file_input_star stmt .) ]
+  ! STRING          [ reduce using rule 4 (file_input_star -> file_input_star stmt .) ]
+
+    small_stmt                     shift and go to state 2
+    trailer_item                   shift and go to state 19
+    return_stmt                    shift and go to state 5
+    break_stmt                     shift and go to state 8
+    continue_stmt                  shift and go to state 10
+    small_assign_stmt              shift and go to state 12
+    compound_stmt                  shift and go to state 54
+    print_stmt                     shift and go to state 17
+    complex_stmt                   shift and go to state 20
+    for_stmt                       shift and go to state 21
+    atom                           shift and go to state 3
+    constants                      shift and go to state 23
+    if_stmt                        shift and go to state 25
+    while_stmt                     shift and go to state 27
+    single_stmt                    shift and go to state 55
+
+state 53
+
+    (53) for_stmt -> FOR NAME . IN small_expression COLON suite
+
+    IN              shift and go to state 84
+
+
+state 54
+
+    (8) stmt -> stmt compound_stmt .
+
+    DEDENT          reduce using rule 8 (stmt -> stmt compound_stmt .)
+    IF              reduce using rule 8 (stmt -> stmt compound_stmt .)
+    FOR             reduce using rule 8 (stmt -> stmt compound_stmt .)
+    WHILE           reduce using rule 8 (stmt -> stmt compound_stmt .)
+    RETURN          reduce using rule 8 (stmt -> stmt compound_stmt .)
+    PRINT           reduce using rule 8 (stmt -> stmt compound_stmt .)
+    BREAK           reduce using rule 8 (stmt -> stmt compound_stmt .)
+    CONTINUE        reduce using rule 8 (stmt -> stmt compound_stmt .)
+    AT              reduce using rule 8 (stmt -> stmt compound_stmt .)
+    NAME            reduce using rule 8 (stmt -> stmt compound_stmt .)
+    NUMBER          reduce using rule 8 (stmt -> stmt compound_stmt .)
+    STRING          reduce using rule 8 (stmt -> stmt compound_stmt .)
+    ENDMARKER       reduce using rule 8 (stmt -> stmt compound_stmt .)
+
+
+state 55
+
+    (7) stmt -> stmt single_stmt .
+
+    DEDENT          reduce using rule 7 (stmt -> stmt single_stmt .)
+    IF              reduce using rule 7 (stmt -> stmt single_stmt .)
+    FOR             reduce using rule 7 (stmt -> stmt single_stmt .)
+    WHILE           reduce using rule 7 (stmt -> stmt single_stmt .)
+    RETURN          reduce using rule 7 (stmt -> stmt single_stmt .)
+    PRINT           reduce using rule 7 (stmt -> stmt single_stmt .)
+    BREAK           reduce using rule 7 (stmt -> stmt single_stmt .)
+    CONTINUE        reduce using rule 7 (stmt -> stmt single_stmt .)
+    AT              reduce using rule 7 (stmt -> stmt single_stmt .)
+    NAME            reduce using rule 7 (stmt -> stmt single_stmt .)
+    NUMBER          reduce using rule 7 (stmt -> stmt single_stmt .)
+    STRING          reduce using rule 7 (stmt -> stmt single_stmt .)
+    ENDMARKER       reduce using rule 7 (stmt -> stmt single_stmt .)
+
+
+state 56
+
+    (31) complex_stmt -> trailer_item EQUAL . complex_expression
+    (29) small_assign_stmt -> trailer_item EQUAL . small_expression
+    (32) complex_expression -> . CLASS
+    (33) complex_expression -> . DEF
+    (30) small_expression -> . arith_expression
+    (36) arith_expression -> . term PLUS term
+    (37) arith_expression -> . term MINUS term
+    (38) arith_expression -> . term
+    (39) term -> . factor STAR factor
+    (40) term -> . factor SLASH factor
+    (41) term -> . factor
+    (42) factor -> . trailer_item
+    (43) factor -> . LPAREN arith_expression RPAREN
+    (76) trailer_item -> . atom
+    (77) trailer_item -> . atom trailer_star
+    (78) atom -> . AT NAME
+    (79) atom -> . NAME
+    (80) atom -> . constants
+    (45) constants -> . NUMBER
+    (46) constants -> . STRING
+
+    CLASS           shift and go to state 87
+    DEF             shift and go to state 86
+    LPAREN          shift and go to state 44
+    AT              shift and go to state 22
+    NAME            shift and go to state 1
+    NUMBER          shift and go to state 30
+    STRING          shift and go to state 15
+
+    term                           shift and go to state 46
+    complex_expression             shift and go to state 88
+    atom                           shift and go to state 3
+    trailer_item                   shift and go to state 38
+    small_expression               shift and go to state 85
+    arith_expression               shift and go to state 49
+    factor                         shift and go to state 41
+    constants                      shift and go to state 23
+
+state 57
+
+    (78) atom -> AT NAME .
+
+    DOT             reduce using rule 78 (atom -> AT NAME .)
+    LSQB            reduce using rule 78 (atom -> AT NAME .)
+    LPAREN          reduce using rule 78 (atom -> AT NAME .)
+    STAR            reduce using rule 78 (atom -> AT NAME .)
+    SLASH           reduce using rule 78 (atom -> AT NAME .)
+    PLUS            reduce using rule 78 (atom -> AT NAME .)
+    MINUS           reduce using rule 78 (atom -> AT NAME .)
+    RPAREN          reduce using rule 78 (atom -> AT NAME .)
+    COMMA           reduce using rule 78 (atom -> AT NAME .)
+    NEWLINE         reduce using rule 78 (atom -> AT NAME .)
+    EQUAL           reduce using rule 78 (atom -> AT NAME .)
+    COLON           reduce using rule 78 (atom -> AT NAME .)
+    EQEQUAL         reduce using rule 78 (atom -> AT NAME .)
+    NOTEQUAL        reduce using rule 78 (atom -> AT NAME .)
+    LESSEQUAL       reduce using rule 78 (atom -> AT NAME .)
+    GREATEREQUAL    reduce using rule 78 (atom -> AT NAME .)
+    LESS            reduce using rule 78 (atom -> AT NAME .)
+    GREATER         reduce using rule 78 (atom -> AT NAME .)
+    OR              reduce using rule 78 (atom -> AT NAME .)
+    AND             reduce using rule 78 (atom -> AT NAME .)
+
+
+state 58
+
+    (50) if_stmt -> IF test . COLON suite
+    (51) if_stmt -> IF test . COLON suite NEWLINE ELSE suite
+
+    COLON           shift and go to state 89
+
+
+state 59
+
+    (75) trailer_star -> trailer_star trailer .
+
+    DOT             reduce using rule 75 (trailer_star -> trailer_star trailer .)
+    LSQB            reduce using rule 75 (trailer_star -> trailer_star trailer .)
+    LPAREN          reduce using rule 75 (trailer_star -> trailer_star trailer .)
+    EQUAL           reduce using rule 75 (trailer_star -> trailer_star trailer .)
+    NEWLINE         reduce using rule 75 (trailer_star -> trailer_star trailer .)
+    STAR            reduce using rule 75 (trailer_star -> trailer_star trailer .)
+    SLASH           reduce using rule 75 (trailer_star -> trailer_star trailer .)
+    PLUS            reduce using rule 75 (trailer_star -> trailer_star trailer .)
+    MINUS           reduce using rule 75 (trailer_star -> trailer_star trailer .)
+    EQEQUAL         reduce using rule 75 (trailer_star -> trailer_star trailer .)
+    NOTEQUAL        reduce using rule 75 (trailer_star -> trailer_star trailer .)
+    LESSEQUAL       reduce using rule 75 (trailer_star -> trailer_star trailer .)
+    GREATEREQUAL    reduce using rule 75 (trailer_star -> trailer_star trailer .)
+    LESS            reduce using rule 75 (trailer_star -> trailer_star trailer .)
+    GREATER         reduce using rule 75 (trailer_star -> trailer_star trailer .)
+    OR              reduce using rule 75 (trailer_star -> trailer_star trailer .)
+    AND             reduce using rule 75 (trailer_star -> trailer_star trailer .)
+    COLON           reduce using rule 75 (trailer_star -> trailer_star trailer .)
+    RPAREN          reduce using rule 75 (trailer_star -> trailer_star trailer .)
+    COMMA           reduce using rule 75 (trailer_star -> trailer_star trailer .)
+
+
+state 60
+
+    (72) trailer -> LPAREN RPAREN .
+
+    DOT             reduce using rule 72 (trailer -> LPAREN RPAREN .)
+    LSQB            reduce using rule 72 (trailer -> LPAREN RPAREN .)
+    LPAREN          reduce using rule 72 (trailer -> LPAREN RPAREN .)
+    EQUAL           reduce using rule 72 (trailer -> LPAREN RPAREN .)
+    NEWLINE         reduce using rule 72 (trailer -> LPAREN RPAREN .)
+    STAR            reduce using rule 72 (trailer -> LPAREN RPAREN .)
+    SLASH           reduce using rule 72 (trailer -> LPAREN RPAREN .)
+    PLUS            reduce using rule 72 (trailer -> LPAREN RPAREN .)
+    MINUS           reduce using rule 72 (trailer -> LPAREN RPAREN .)
+    EQEQUAL         reduce using rule 72 (trailer -> LPAREN RPAREN .)
+    NOTEQUAL        reduce using rule 72 (trailer -> LPAREN RPAREN .)
+    LESSEQUAL       reduce using rule 72 (trailer -> LPAREN RPAREN .)
+    GREATEREQUAL    reduce using rule 72 (trailer -> LPAREN RPAREN .)
+    LESS            reduce using rule 72 (trailer -> LPAREN RPAREN .)
+    GREATER         reduce using rule 72 (trailer -> LPAREN RPAREN .)
+    OR              reduce using rule 72 (trailer -> LPAREN RPAREN .)
+    AND             reduce using rule 72 (trailer -> LPAREN RPAREN .)
+    COLON           reduce using rule 72 (trailer -> LPAREN RPAREN .)
+    RPAREN          reduce using rule 72 (trailer -> LPAREN RPAREN .)
+    COMMA           reduce using rule 72 (trailer -> LPAREN RPAREN .)
+
+
+state 61
+
+    (27) calLPARENam -> NAME . EQUAL arith_expression
+    (79) atom -> NAME .
+
+    EQUAL           shift and go to state 90
+    DOT             reduce using rule 79 (atom -> NAME .)
+    LSQB            reduce using rule 79 (atom -> NAME .)
+    LPAREN          reduce using rule 79 (atom -> NAME .)
+    STAR            reduce using rule 79 (atom -> NAME .)
+    SLASH           reduce using rule 79 (atom -> NAME .)
+    PLUS            reduce using rule 79 (atom -> NAME .)
+    MINUS           reduce using rule 79 (atom -> NAME .)
+    RPAREN          reduce using rule 79 (atom -> NAME .)
+    COMMA           reduce using rule 79 (atom -> NAME .)
+
+
+state 62
+
+    (26) calLPARENamlist -> calLPARENam .
+
+    RPAREN          reduce using rule 26 (calLPARENamlist -> calLPARENam .)
+    COMMA           reduce using rule 26 (calLPARENamlist -> calLPARENam .)
+
+
+state 63
+
+    (28) calLPARENam -> arith_expression .
+
+    RPAREN          reduce using rule 28 (calLPARENam -> arith_expression .)
+    COMMA           reduce using rule 28 (calLPARENam -> arith_expression .)
+
+
+state 64
+
+    (73) trailer -> LPAREN calLPARENamlist . RPAREN
+    (25) calLPARENamlist -> calLPARENamlist . COMMA calLPARENam
+
+    RPAREN          shift and go to state 92
+    COMMA           shift and go to state 91
+
+
+state 65
+
+    (71) trailer -> LSQB subscript . RSQB
+
+    RSQB            shift and go to state 93
+
+
+state 66
+
+    (81) subscript -> NUMBER .
+
+    RSQB            reduce using rule 81 (subscript -> NUMBER .)
+
+
+state 67
+
+    (70) trailer -> DOT NAME .
+
+    DOT             reduce using rule 70 (trailer -> DOT NAME .)
+    LSQB            reduce using rule 70 (trailer -> DOT NAME .)
+    LPAREN          reduce using rule 70 (trailer -> DOT NAME .)
+    EQUAL           reduce using rule 70 (trailer -> DOT NAME .)
+    NEWLINE         reduce using rule 70 (trailer -> DOT NAME .)
+    STAR            reduce using rule 70 (trailer -> DOT NAME .)
+    SLASH           reduce using rule 70 (trailer -> DOT NAME .)
+    PLUS            reduce using rule 70 (trailer -> DOT NAME .)
+    MINUS           reduce using rule 70 (trailer -> DOT NAME .)
+    EQEQUAL         reduce using rule 70 (trailer -> DOT NAME .)
+    NOTEQUAL        reduce using rule 70 (trailer -> DOT NAME .)
+    LESSEQUAL       reduce using rule 70 (trailer -> DOT NAME .)
+    GREATEREQUAL    reduce using rule 70 (trailer -> DOT NAME .)
+    LESS            reduce using rule 70 (trailer -> DOT NAME .)
+    GREATER         reduce using rule 70 (trailer -> DOT NAME .)
+    OR              reduce using rule 70 (trailer -> DOT NAME .)
+    AND             reduce using rule 70 (trailer -> DOT NAME .)
+    COLON           reduce using rule 70 (trailer -> DOT NAME .)
+    RPAREN          reduce using rule 70 (trailer -> DOT NAME .)
+    COMMA           reduce using rule 70 (trailer -> DOT NAME .)
+
+
+state 68
+
+    (65) cmp_op -> NOTEQUAL .
+
+    LPAREN          reduce using rule 65 (cmp_op -> NOTEQUAL .)
+    AT              reduce using rule 65 (cmp_op -> NOTEQUAL .)
+    NAME            reduce using rule 65 (cmp_op -> NOTEQUAL .)
+    NUMBER          reduce using rule 65 (cmp_op -> NOTEQUAL .)
+    STRING          reduce using rule 65 (cmp_op -> NOTEQUAL .)
+
+
+state 69
+
+    (67) cmp_op -> GREATEREQUAL .
+
+    LPAREN          reduce using rule 67 (cmp_op -> GREATEREQUAL .)
+    AT              reduce using rule 67 (cmp_op -> GREATEREQUAL .)
+    NAME            reduce using rule 67 (cmp_op -> GREATEREQUAL .)
+    NUMBER          reduce using rule 67 (cmp_op -> GREATEREQUAL .)
+    STRING          reduce using rule 67 (cmp_op -> GREATEREQUAL .)
+
+
+state 70
+
+    (69) cmp_op -> GREATER .
+
+    LPAREN          reduce using rule 69 (cmp_op -> GREATER .)
+    AT              reduce using rule 69 (cmp_op -> GREATER .)
+    NAME            reduce using rule 69 (cmp_op -> GREATER .)
+    NUMBER          reduce using rule 69 (cmp_op -> GREATER .)
+    STRING          reduce using rule 69 (cmp_op -> GREATER .)
+
+
+state 71
+
+    (68) cmp_op -> LESS .
+
+    LPAREN          reduce using rule 68 (cmp_op -> LESS .)
+    AT              reduce using rule 68 (cmp_op -> LESS .)
+    NAME            reduce using rule 68 (cmp_op -> LESS .)
+    NUMBER          reduce using rule 68 (cmp_op -> LESS .)
+    STRING          reduce using rule 68 (cmp_op -> LESS .)
+
+
+state 72
+
+    (66) cmp_op -> LESSEQUAL .
+
+    LPAREN          reduce using rule 66 (cmp_op -> LESSEQUAL .)
+    AT              reduce using rule 66 (cmp_op -> LESSEQUAL .)
+    NAME            reduce using rule 66 (cmp_op -> LESSEQUAL .)
+    NUMBER          reduce using rule 66 (cmp_op -> LESSEQUAL .)
+    STRING          reduce using rule 66 (cmp_op -> LESSEQUAL .)
+
+
+state 73
+
+    (62) test_factor -> arith_expression cmp_op . arith_expression
+    (36) arith_expression -> . term PLUS term
+    (37) arith_expression -> . term MINUS term
+    (38) arith_expression -> . term
+    (39) term -> . factor STAR factor
+    (40) term -> . factor SLASH factor
+    (41) term -> . factor
+    (42) factor -> . trailer_item
+    (43) factor -> . LPAREN arith_expression RPAREN
+    (76) trailer_item -> . atom
+    (77) trailer_item -> . atom trailer_star
+    (78) atom -> . AT NAME
+    (79) atom -> . NAME
+    (80) atom -> . constants
+    (45) constants -> . NUMBER
+    (46) constants -> . STRING
+
+    LPAREN          shift and go to state 44
+    AT              shift and go to state 22
+    NAME            shift and go to state 1
+    NUMBER          shift and go to state 30
+    STRING          shift and go to state 15
+
+    term                           shift and go to state 46
+    factor                         shift and go to state 41
+    trailer_item                   shift and go to state 38
+    arith_expression               shift and go to state 94
+    atom                           shift and go to state 3
+    constants                      shift and go to state 23
+
+state 74
+
+    (64) cmp_op -> EQEQUAL .
+
+    LPAREN          reduce using rule 64 (cmp_op -> EQEQUAL .)
+    AT              reduce using rule 64 (cmp_op -> EQEQUAL .)
+    NAME            reduce using rule 64 (cmp_op -> EQEQUAL .)
+    NUMBER          reduce using rule 64 (cmp_op -> EQEQUAL .)
+    STRING          reduce using rule 64 (cmp_op -> EQEQUAL .)
+
+
+state 75
+
+    (55) test -> test_add AND . test_add
+    (57) test_add -> . test_or OR test_or
+    (58) test_add -> . test_or
+    (59) test_or -> . test_not
+    (60) test_or -> . test_factor
+    (61) test_not -> . NOT test_factor
+    (62) test_factor -> . arith_expression cmp_op arith_expression
+    (63) test_factor -> . arith_expression
+    (36) arith_expression -> . term PLUS term
+    (37) arith_expression -> . term MINUS term
+    (38) arith_expression -> . term
+    (39) term -> . factor STAR factor
+    (40) term -> . factor SLASH factor
+    (41) term -> . factor
+    (42) factor -> . trailer_item
+    (43) factor -> . LPAREN arith_expression RPAREN
+    (76) trailer_item -> . atom
+    (77) trailer_item -> . atom trailer_star
+    (78) atom -> . AT NAME
+    (79) atom -> . NAME
+    (80) atom -> . constants
+    (45) constants -> . NUMBER
+    (46) constants -> . STRING
+
+    NOT             shift and go to state 47
+    LPAREN          shift and go to state 44
+    AT              shift and go to state 22
+    NAME            shift and go to state 1
+    NUMBER          shift and go to state 30
+    STRING          shift and go to state 15
+
+    test_add                       shift and go to state 95
+    term                           shift and go to state 46
+    test_factor                    shift and go to state 37
+    atom                           shift and go to state 3
+    trailer_item                   shift and go to state 38
+    arith_expression               shift and go to state 39
+    factor                         shift and go to state 41
+    test_not                       shift and go to state 45
+    constants                      shift and go to state 23
+    test_or                        shift and go to state 43
+
+state 76
+
+    (39) term -> factor STAR . factor
+    (42) factor -> . trailer_item
+    (43) factor -> . LPAREN arith_expression RPAREN
+    (76) trailer_item -> . atom
+    (77) trailer_item -> . atom trailer_star
+    (78) atom -> . AT NAME
+    (79) atom -> . NAME
+    (80) atom -> . constants
+    (45) constants -> . NUMBER
+    (46) constants -> . STRING
+
+    LPAREN          shift and go to state 44
+    AT              shift and go to state 22
+    NAME            shift and go to state 1
+    NUMBER          shift and go to state 30
+    STRING          shift and go to state 15
+
+    factor                         shift and go to state 96
+    trailer_item                   shift and go to state 38
+    atom                           shift and go to state 3
+    constants                      shift and go to state 23
+
+state 77
+
+    (40) term -> factor SLASH . factor
+    (42) factor -> . trailer_item
+    (43) factor -> . LPAREN arith_expression RPAREN
+    (76) trailer_item -> . atom
+    (77) trailer_item -> . atom trailer_star
+    (78) atom -> . AT NAME
+    (79) atom -> . NAME
+    (80) atom -> . constants
+    (45) constants -> . NUMBER
+    (46) constants -> . STRING
+
+    LPAREN          shift and go to state 44
+    AT              shift and go to state 22
+    NAME            shift and go to state 1
+    NUMBER          shift and go to state 30
+    STRING          shift and go to state 15
+
+    factor                         shift and go to state 97
+    trailer_item                   shift and go to state 38
+    atom                           shift and go to state 3
+    constants                      shift and go to state 23
+
+state 78
+
+    (52) while_stmt -> WHILE test COLON . suite
+    (54) suite -> . NEWLINE INDENT stmt DEDENT
+
+    NEWLINE         shift and go to state 98
+
+    suite                          shift and go to state 99
+
+state 79
+
+    (57) test_add -> test_or OR . test_or
+    (59) test_or -> . test_not
+    (60) test_or -> . test_factor
+    (61) test_not -> . NOT test_factor
+    (62) test_factor -> . arith_expression cmp_op arith_expression
+    (63) test_factor -> . arith_expression
+    (36) arith_expression -> . term PLUS term
+    (37) arith_expression -> . term MINUS term
+    (38) arith_expression -> . term
+    (39) term -> . factor STAR factor
+    (40) term -> . factor SLASH factor
+    (41) term -> . factor
+    (42) factor -> . trailer_item
+    (43) factor -> . LPAREN arith_expression RPAREN
+    (76) trailer_item -> . atom
+    (77) trailer_item -> . atom trailer_star
+    (78) atom -> . AT NAME
+    (79) atom -> . NAME
+    (80) atom -> . constants
+    (45) constants -> . NUMBER
+    (46) constants -> . STRING
+
+    NOT             shift and go to state 47
+    LPAREN          shift and go to state 44
+    AT              shift and go to state 22
+    NAME            shift and go to state 1
+    NUMBER          shift and go to state 30
+    STRING          shift and go to state 15
+
+    term                           shift and go to state 46
+    test_factor                    shift and go to state 37
+    atom                           shift and go to state 3
+    trailer_item                   shift and go to state 38
+    arith_expression               shift and go to state 39
+    factor                         shift and go to state 41
+    test_not                       shift and go to state 45
+    constants                      shift and go to state 23
+    test_or                        shift and go to state 100
+
+state 80
+
+    (43) factor -> LPAREN arith_expression . RPAREN
+
+    RPAREN          shift and go to state 101
+
+
+state 81
+
+    (36) arith_expression -> term PLUS . term
+    (39) term -> . factor STAR factor
+    (40) term -> . factor SLASH factor
+    (41) term -> . factor
+    (42) factor -> . trailer_item
+    (43) factor -> . LPAREN arith_expression RPAREN
+    (76) trailer_item -> . atom
+    (77) trailer_item -> . atom trailer_star
+    (78) atom -> . AT NAME
+    (79) atom -> . NAME
+    (80) atom -> . constants
+    (45) constants -> . NUMBER
+    (46) constants -> . STRING
+
+    LPAREN          shift and go to state 44
+    AT              shift and go to state 22
+    NAME            shift and go to state 1
+    NUMBER          shift and go to state 30
+    STRING          shift and go to state 15
+
+    term                           shift and go to state 102
+    factor                         shift and go to state 41
+    trailer_item                   shift and go to state 38
+    atom                           shift and go to state 3
+    constants                      shift and go to state 23
+
+state 82
+
+    (37) arith_expression -> term MINUS . term
+    (39) term -> . factor STAR factor
+    (40) term -> . factor SLASH factor
+    (41) term -> . factor
+    (42) factor -> . trailer_item
+    (43) factor -> . LPAREN arith_expression RPAREN
+    (76) trailer_item -> . atom
+    (77) trailer_item -> . atom trailer_star
+    (78) atom -> . AT NAME
+    (79) atom -> . NAME
+    (80) atom -> . constants
+    (45) constants -> . NUMBER
+    (46) constants -> . STRING
+
+    LPAREN          shift and go to state 44
+    AT              shift and go to state 22
+    NAME            shift and go to state 1
+    NUMBER          shift and go to state 30
+    STRING          shift and go to state 15
+
+    term                           shift and go to state 103
+    factor                         shift and go to state 41
+    trailer_item                   shift and go to state 38
+    atom                           shift and go to state 3
+    constants                      shift and go to state 23
+
+state 83
+
+    (61) test_not -> NOT test_factor .
+
+    AND             reduce using rule 61 (test_not -> NOT test_factor .)
+    COLON           reduce using rule 61 (test_not -> NOT test_factor .)
+    OR              reduce using rule 61 (test_not -> NOT test_factor .)
+
+
+state 84
+
+    (53) for_stmt -> FOR NAME IN . small_expression COLON suite
+    (30) small_expression -> . arith_expression
+    (36) arith_expression -> . term PLUS term
+    (37) arith_expression -> . term MINUS term
+    (38) arith_expression -> . term
+    (39) term -> . factor STAR factor
+    (40) term -> . factor SLASH factor
+    (41) term -> . factor
+    (42) factor -> . trailer_item
+    (43) factor -> . LPAREN arith_expression RPAREN
+    (76) trailer_item -> . atom
+    (77) trailer_item -> . atom trailer_star
+    (78) atom -> . AT NAME
+    (79) atom -> . NAME
+    (80) atom -> . constants
+    (45) constants -> . NUMBER
+    (46) constants -> . STRING
+
+    LPAREN          shift and go to state 44
+    AT              shift and go to state 22
+    NAME            shift and go to state 1
+    NUMBER          shift and go to state 30
+    STRING          shift and go to state 15
+
+    term                           shift and go to state 46
+    atom                           shift and go to state 3
+    trailer_item                   shift and go to state 38
+    small_expression               shift and go to state 104
+    arith_expression               shift and go to state 49
+    factor                         shift and go to state 41
+    constants                      shift and go to state 23
+
+state 85
+
+    (29) small_assign_stmt -> trailer_item EQUAL small_expression .
+
+    NEWLINE         reduce using rule 29 (small_assign_stmt -> trailer_item EQUAL small_expression .)
+
+
+state 86
+
+    (33) complex_expression -> DEF .
+
+    IF              reduce using rule 33 (complex_expression -> DEF .)
+    FOR             reduce using rule 33 (complex_expression -> DEF .)
+    WHILE           reduce using rule 33 (complex_expression -> DEF .)
+    RETURN          reduce using rule 33 (complex_expression -> DEF .)
+    PRINT           reduce using rule 33 (complex_expression -> DEF .)
+    BREAK           reduce using rule 33 (complex_expression -> DEF .)
+    CONTINUE        reduce using rule 33 (complex_expression -> DEF .)
+    AT              reduce using rule 33 (complex_expression -> DEF .)
+    NAME            reduce using rule 33 (complex_expression -> DEF .)
+    NUMBER          reduce using rule 33 (complex_expression -> DEF .)
+    STRING          reduce using rule 33 (complex_expression -> DEF .)
+    ENDMARKER       reduce using rule 33 (complex_expression -> DEF .)
+    DEDENT          reduce using rule 33 (complex_expression -> DEF .)
+
+
+state 87
+
+    (32) complex_expression -> CLASS .
+
+    IF              reduce using rule 32 (complex_expression -> CLASS .)
+    FOR             reduce using rule 32 (complex_expression -> CLASS .)
+    WHILE           reduce using rule 32 (complex_expression -> CLASS .)
+    RETURN          reduce using rule 32 (complex_expression -> CLASS .)
+    PRINT           reduce using rule 32 (complex_expression -> CLASS .)
+    BREAK           reduce using rule 32 (complex_expression -> CLASS .)
+    CONTINUE        reduce using rule 32 (complex_expression -> CLASS .)
+    AT              reduce using rule 32 (complex_expression -> CLASS .)
+    NAME            reduce using rule 32 (complex_expression -> CLASS .)
+    NUMBER          reduce using rule 32 (complex_expression -> CLASS .)
+    STRING          reduce using rule 32 (complex_expression -> CLASS .)
+    ENDMARKER       reduce using rule 32 (complex_expression -> CLASS .)
+    DEDENT          reduce using rule 32 (complex_expression -> CLASS .)
+
+
+state 88
+
+    (31) complex_stmt -> trailer_item EQUAL complex_expression .
+
+    IF              reduce using rule 31 (complex_stmt -> trailer_item EQUAL complex_expression .)
+    FOR             reduce using rule 31 (complex_stmt -> trailer_item EQUAL complex_expression .)
+    WHILE           reduce using rule 31 (complex_stmt -> trailer_item EQUAL complex_expression .)
+    RETURN          reduce using rule 31 (complex_stmt -> trailer_item EQUAL complex_expression .)
+    PRINT           reduce using rule 31 (complex_stmt -> trailer_item EQUAL complex_expression .)
+    BREAK           reduce using rule 31 (complex_stmt -> trailer_item EQUAL complex_expression .)
+    CONTINUE        reduce using rule 31 (complex_stmt -> trailer_item EQUAL complex_expression .)
+    AT              reduce using rule 31 (complex_stmt -> trailer_item EQUAL complex_expression .)
+    NAME            reduce using rule 31 (complex_stmt -> trailer_item EQUAL complex_expression .)
+    NUMBER          reduce using rule 31 (complex_stmt -> trailer_item EQUAL complex_expression .)
+    STRING          reduce using rule 31 (complex_stmt -> trailer_item EQUAL complex_expression .)
+    ENDMARKER       reduce using rule 31 (complex_stmt -> trailer_item EQUAL complex_expression .)
+    DEDENT          reduce using rule 31 (complex_stmt -> trailer_item EQUAL complex_expression .)
+
+
+state 89
+
+    (50) if_stmt -> IF test COLON . suite
+    (51) if_stmt -> IF test COLON . suite NEWLINE ELSE suite
+    (54) suite -> . NEWLINE INDENT stmt DEDENT
+
+    NEWLINE         shift and go to state 98
+
+    suite                          shift and go to state 105
+
+state 90
+
+    (27) calLPARENam -> NAME EQUAL . arith_expression
+    (36) arith_expression -> . term PLUS term
+    (37) arith_expression -> . term MINUS term
+    (38) arith_expression -> . term
+    (39) term -> . factor STAR factor
+    (40) term -> . factor SLASH factor
+    (41) term -> . factor
+    (42) factor -> . trailer_item
+    (43) factor -> . LPAREN arith_expression RPAREN
+    (76) trailer_item -> . atom
+    (77) trailer_item -> . atom trailer_star
+    (78) atom -> . AT NAME
+    (79) atom -> . NAME
+    (80) atom -> . constants
+    (45) constants -> . NUMBER
+    (46) constants -> . STRING
+
+    LPAREN          shift and go to state 44
+    AT              shift and go to state 22
+    NAME            shift and go to state 1
+    NUMBER          shift and go to state 30
+    STRING          shift and go to state 15
+
+    term                           shift and go to state 46
+    factor                         shift and go to state 41
+    trailer_item                   shift and go to state 38
+    arith_expression               shift and go to state 106
+    atom                           shift and go to state 3
+    constants                      shift and go to state 23
+
+state 91
+
+    (25) calLPARENamlist -> calLPARENamlist COMMA . calLPARENam
+    (27) calLPARENam -> . NAME EQUAL arith_expression
+    (28) calLPARENam -> . arith_expression
+    (36) arith_expression -> . term PLUS term
+    (37) arith_expression -> . term MINUS term
+    (38) arith_expression -> . term
+    (39) term -> . factor STAR factor
+    (40) term -> . factor SLASH factor
+    (41) term -> . factor
+    (42) factor -> . trailer_item
+    (43) factor -> . LPAREN arith_expression RPAREN
+    (76) trailer_item -> . atom
+    (77) trailer_item -> . atom trailer_star
+    (78) atom -> . AT NAME
+    (79) atom -> . NAME
+    (80) atom -> . constants
+    (45) constants -> . NUMBER
+    (46) constants -> . STRING
+
+    NAME            shift and go to state 61
+    LPAREN          shift and go to state 44
+    AT              shift and go to state 22
+    NUMBER          shift and go to state 30
+    STRING          shift and go to state 15
+
+    term                           shift and go to state 46
+    calLPARENam                    shift and go to state 107
+    atom                           shift and go to state 3
+    trailer_item                   shift and go to state 38
+    arith_expression               shift and go to state 63
+    factor                         shift and go to state 41
+    constants                      shift and go to state 23
+
+state 92
+
+    (73) trailer -> LPAREN calLPARENamlist RPAREN .
+
+    DOT             reduce using rule 73 (trailer -> LPAREN calLPARENamlist RPAREN .)
+    LSQB            reduce using rule 73 (trailer -> LPAREN calLPARENamlist RPAREN .)
+    LPAREN          reduce using rule 73 (trailer -> LPAREN calLPARENamlist RPAREN .)
+    EQUAL           reduce using rule 73 (trailer -> LPAREN calLPARENamlist RPAREN .)
+    NEWLINE         reduce using rule 73 (trailer -> LPAREN calLPARENamlist RPAREN .)
+    STAR            reduce using rule 73 (trailer -> LPAREN calLPARENamlist RPAREN .)
+    SLASH           reduce using rule 73 (trailer -> LPAREN calLPARENamlist RPAREN .)
+    PLUS            reduce using rule 73 (trailer -> LPAREN calLPARENamlist RPAREN .)
+    MINUS           reduce using rule 73 (trailer -> LPAREN calLPARENamlist RPAREN .)
+    EQEQUAL         reduce using rule 73 (trailer -> LPAREN calLPARENamlist RPAREN .)
+    NOTEQUAL        reduce using rule 73 (trailer -> LPAREN calLPARENamlist RPAREN .)
+    LESSEQUAL       reduce using rule 73 (trailer -> LPAREN calLPARENamlist RPAREN .)
+    GREATEREQUAL    reduce using rule 73 (trailer -> LPAREN calLPARENamlist RPAREN .)
+    LESS            reduce using rule 73 (trailer -> LPAREN calLPARENamlist RPAREN .)
+    GREATER         reduce using rule 73 (trailer -> LPAREN calLPARENamlist RPAREN .)
+    OR              reduce using rule 73 (trailer -> LPAREN calLPARENamlist RPAREN .)
+    AND             reduce using rule 73 (trailer -> LPAREN calLPARENamlist RPAREN .)
+    COLON           reduce using rule 73 (trailer -> LPAREN calLPARENamlist RPAREN .)
+    RPAREN          reduce using rule 73 (trailer -> LPAREN calLPARENamlist RPAREN .)
+    COMMA           reduce using rule 73 (trailer -> LPAREN calLPARENamlist RPAREN .)
+
+
+state 93
+
+    (71) trailer -> LSQB subscript RSQB .
+
+    DOT             reduce using rule 71 (trailer -> LSQB subscript RSQB .)
+    LSQB            reduce using rule 71 (trailer -> LSQB subscript RSQB .)
+    LPAREN          reduce using rule 71 (trailer -> LSQB subscript RSQB .)
+    EQUAL           reduce using rule 71 (trailer -> LSQB subscript RSQB .)
+    NEWLINE         reduce using rule 71 (trailer -> LSQB subscript RSQB .)
+    STAR            reduce using rule 71 (trailer -> LSQB subscript RSQB .)
+    SLASH           reduce using rule 71 (trailer -> LSQB subscript RSQB .)
+    PLUS            reduce using rule 71 (trailer -> LSQB subscript RSQB .)
+    MINUS           reduce using rule 71 (trailer -> LSQB subscript RSQB .)
+    EQEQUAL         reduce using rule 71 (trailer -> LSQB subscript RSQB .)
+    NOTEQUAL        reduce using rule 71 (trailer -> LSQB subscript RSQB .)
+    LESSEQUAL       reduce using rule 71 (trailer -> LSQB subscript RSQB .)
+    GREATEREQUAL    reduce using rule 71 (trailer -> LSQB subscript RSQB .)
+    LESS            reduce using rule 71 (trailer -> LSQB subscript RSQB .)
+    GREATER         reduce using rule 71 (trailer -> LSQB subscript RSQB .)
+    OR              reduce using rule 71 (trailer -> LSQB subscript RSQB .)
+    AND             reduce using rule 71 (trailer -> LSQB subscript RSQB .)
+    COLON           reduce using rule 71 (trailer -> LSQB subscript RSQB .)
+    RPAREN          reduce using rule 71 (trailer -> LSQB subscript RSQB .)
+    COMMA           reduce using rule 71 (trailer -> LSQB subscript RSQB .)
+
+
+state 94
+
+    (62) test_factor -> arith_expression cmp_op arith_expression .
+
+    AND             reduce using rule 62 (test_factor -> arith_expression cmp_op arith_expression .)
+    COLON           reduce using rule 62 (test_factor -> arith_expression cmp_op arith_expression .)
+    OR              reduce using rule 62 (test_factor -> arith_expression cmp_op arith_expression .)
+
+
+state 95
+
+    (55) test -> test_add AND test_add .
+
+    COLON           reduce using rule 55 (test -> test_add AND test_add .)
+
+
+state 96
+
+    (39) term -> factor STAR factor .
+
+    PLUS            reduce using rule 39 (term -> factor STAR factor .)
+    MINUS           reduce using rule 39 (term -> factor STAR factor .)
+    EQEQUAL         reduce using rule 39 (term -> factor STAR factor .)
+    NOTEQUAL        reduce using rule 39 (term -> factor STAR factor .)
+    LESSEQUAL       reduce using rule 39 (term -> factor STAR factor .)
+    GREATEREQUAL    reduce using rule 39 (term -> factor STAR factor .)
+    LESS            reduce using rule 39 (term -> factor STAR factor .)
+    GREATER         reduce using rule 39 (term -> factor STAR factor .)
+    OR              reduce using rule 39 (term -> factor STAR factor .)
+    COLON           reduce using rule 39 (term -> factor STAR factor .)
+    NEWLINE         reduce using rule 39 (term -> factor STAR factor .)
+    RPAREN          reduce using rule 39 (term -> factor STAR factor .)
+    COMMA           reduce using rule 39 (term -> factor STAR factor .)
+    AND             reduce using rule 39 (term -> factor STAR factor .)
+
+
+state 97
+
+    (40) term -> factor SLASH factor .
+
+    PLUS            reduce using rule 40 (term -> factor SLASH factor .)
+    MINUS           reduce using rule 40 (term -> factor SLASH factor .)
+    EQEQUAL         reduce using rule 40 (term -> factor SLASH factor .)
+    NOTEQUAL        reduce using rule 40 (term -> factor SLASH factor .)
+    LESSEQUAL       reduce using rule 40 (term -> factor SLASH factor .)
+    GREATEREQUAL    reduce using rule 40 (term -> factor SLASH factor .)
+    LESS            reduce using rule 40 (term -> factor SLASH factor .)
+    GREATER         reduce using rule 40 (term -> factor SLASH factor .)
+    OR              reduce using rule 40 (term -> factor SLASH factor .)
+    COLON           reduce using rule 40 (term -> factor SLASH factor .)
+    NEWLINE         reduce using rule 40 (term -> factor SLASH factor .)
+    RPAREN          reduce using rule 40 (term -> factor SLASH factor .)
+    COMMA           reduce using rule 40 (term -> factor SLASH factor .)
+    AND             reduce using rule 40 (term -> factor SLASH factor .)
+
+
+state 98
+
+    (54) suite -> NEWLINE . INDENT stmt DEDENT
+
+    INDENT          shift and go to state 108
+
+
+state 99
+
+    (52) while_stmt -> WHILE test COLON suite .
+
+    DEDENT          reduce using rule 52 (while_stmt -> WHILE test COLON suite .)
+    IF              reduce using rule 52 (while_stmt -> WHILE test COLON suite .)
+    FOR             reduce using rule 52 (while_stmt -> WHILE test COLON suite .)
+    WHILE           reduce using rule 52 (while_stmt -> WHILE test COLON suite .)
+    RETURN          reduce using rule 52 (while_stmt -> WHILE test COLON suite .)
+    PRINT           reduce using rule 52 (while_stmt -> WHILE test COLON suite .)
+    BREAK           reduce using rule 52 (while_stmt -> WHILE test COLON suite .)
+    CONTINUE        reduce using rule 52 (while_stmt -> WHILE test COLON suite .)
+    AT              reduce using rule 52 (while_stmt -> WHILE test COLON suite .)
+    NAME            reduce using rule 52 (while_stmt -> WHILE test COLON suite .)
+    NUMBER          reduce using rule 52 (while_stmt -> WHILE test COLON suite .)
+    STRING          reduce using rule 52 (while_stmt -> WHILE test COLON suite .)
+    ENDMARKER       reduce using rule 52 (while_stmt -> WHILE test COLON suite .)
+
+
+state 100
+
+    (57) test_add -> test_or OR test_or .
+
+    AND             reduce using rule 57 (test_add -> test_or OR test_or .)
+    COLON           reduce using rule 57 (test_add -> test_or OR test_or .)
+
+
+state 101
+
+    (43) factor -> LPAREN arith_expression RPAREN .
+
+    STAR            reduce using rule 43 (factor -> LPAREN arith_expression RPAREN .)
+    SLASH           reduce using rule 43 (factor -> LPAREN arith_expression RPAREN .)
+    PLUS            reduce using rule 43 (factor -> LPAREN arith_expression RPAREN .)
+    MINUS           reduce using rule 43 (factor -> LPAREN arith_expression RPAREN .)
+    EQEQUAL         reduce using rule 43 (factor -> LPAREN arith_expression RPAREN .)
+    NOTEQUAL        reduce using rule 43 (factor -> LPAREN arith_expression RPAREN .)
+    LESSEQUAL       reduce using rule 43 (factor -> LPAREN arith_expression RPAREN .)
+    GREATEREQUAL    reduce using rule 43 (factor -> LPAREN arith_expression RPAREN .)
+    LESS            reduce using rule 43 (factor -> LPAREN arith_expression RPAREN .)
+    GREATER         reduce using rule 43 (factor -> LPAREN arith_expression RPAREN .)
+    OR              reduce using rule 43 (factor -> LPAREN arith_expression RPAREN .)
+    AND             reduce using rule 43 (factor -> LPAREN arith_expression RPAREN .)
+    COLON           reduce using rule 43 (factor -> LPAREN arith_expression RPAREN .)
+    NEWLINE         reduce using rule 43 (factor -> LPAREN arith_expression RPAREN .)
+    RPAREN          reduce using rule 43 (factor -> LPAREN arith_expression RPAREN .)
+    COMMA           reduce using rule 43 (factor -> LPAREN arith_expression RPAREN .)
+
+
+state 102
+
+    (36) arith_expression -> term PLUS term .
+
+    RPAREN          reduce using rule 36 (arith_expression -> term PLUS term .)
+    COMMA           reduce using rule 36 (arith_expression -> term PLUS term .)
+    OR              reduce using rule 36 (arith_expression -> term PLUS term .)
+    AND             reduce using rule 36 (arith_expression -> term PLUS term .)
+    COLON           reduce using rule 36 (arith_expression -> term PLUS term .)
+    EQEQUAL         reduce using rule 36 (arith_expression -> term PLUS term .)
+    NOTEQUAL        reduce using rule 36 (arith_expression -> term PLUS term .)
+    LESSEQUAL       reduce using rule 36 (arith_expression -> term PLUS term .)
+    GREATEREQUAL    reduce using rule 36 (arith_expression -> term PLUS term .)
+    LESS            reduce using rule 36 (arith_expression -> term PLUS term .)
+    GREATER         reduce using rule 36 (arith_expression -> term PLUS term .)
+    NEWLINE         reduce using rule 36 (arith_expression -> term PLUS term .)
+
+
+state 103
+
+    (37) arith_expression -> term MINUS term .
+
+    RPAREN          reduce using rule 37 (arith_expression -> term MINUS term .)
+    COMMA           reduce using rule 37 (arith_expression -> term MINUS term .)
+    OR              reduce using rule 37 (arith_expression -> term MINUS term .)
+    AND             reduce using rule 37 (arith_expression -> term MINUS term .)
+    COLON           reduce using rule 37 (arith_expression -> term MINUS term .)
+    EQEQUAL         reduce using rule 37 (arith_expression -> term MINUS term .)
+    NOTEQUAL        reduce using rule 37 (arith_expression -> term MINUS term .)
+    LESSEQUAL       reduce using rule 37 (arith_expression -> term MINUS term .)
+    GREATEREQUAL    reduce using rule 37 (arith_expression -> term MINUS term .)
+    LESS            reduce using rule 37 (arith_expression -> term MINUS term .)
+    GREATER         reduce using rule 37 (arith_expression -> term MINUS term .)
+    NEWLINE         reduce using rule 37 (arith_expression -> term MINUS term .)
+
+
+state 104
+
+    (53) for_stmt -> FOR NAME IN small_expression . COLON suite
+
+    COLON           shift and go to state 109
+
+
+state 105
+
+    (50) if_stmt -> IF test COLON suite .
+    (51) if_stmt -> IF test COLON suite . NEWLINE ELSE suite
+
+    DEDENT          reduce using rule 50 (if_stmt -> IF test COLON suite .)
+    IF              reduce using rule 50 (if_stmt -> IF test COLON suite .)
+    FOR             reduce using rule 50 (if_stmt -> IF test COLON suite .)
+    WHILE           reduce using rule 50 (if_stmt -> IF test COLON suite .)
+    RETURN          reduce using rule 50 (if_stmt -> IF test COLON suite .)
+    PRINT           reduce using rule 50 (if_stmt -> IF test COLON suite .)
+    BREAK           reduce using rule 50 (if_stmt -> IF test COLON suite .)
+    CONTINUE        reduce using rule 50 (if_stmt -> IF test COLON suite .)
+    AT              reduce using rule 50 (if_stmt -> IF test COLON suite .)
+    NAME            reduce using rule 50 (if_stmt -> IF test COLON suite .)
+    NUMBER          reduce using rule 50 (if_stmt -> IF test COLON suite .)
+    STRING          reduce using rule 50 (if_stmt -> IF test COLON suite .)
+    ENDMARKER       reduce using rule 50 (if_stmt -> IF test COLON suite .)
+    NEWLINE         shift and go to state 110
+
+
+state 106
+
+    (27) calLPARENam -> NAME EQUAL arith_expression .
+
+    RPAREN          reduce using rule 27 (calLPARENam -> NAME EQUAL arith_expression .)
+    COMMA           reduce using rule 27 (calLPARENam -> NAME EQUAL arith_expression .)
+
+
+state 107
+
+    (25) calLPARENamlist -> calLPARENamlist COMMA calLPARENam .
+
+    RPAREN          reduce using rule 25 (calLPARENamlist -> calLPARENamlist COMMA calLPARENam .)
+    COMMA           reduce using rule 25 (calLPARENamlist -> calLPARENamlist COMMA calLPARENam .)
+
+
+state 108
+
+    (54) suite -> NEWLINE INDENT . stmt DEDENT
+    (5) stmt -> . single_stmt
+    (6) stmt -> . compound_stmt
+    (7) stmt -> . stmt single_stmt
+    (8) stmt -> . stmt compound_stmt
+    (9) single_stmt -> . complex_stmt
+    (10) single_stmt -> . small_stmt NEWLINE
+    (47) compound_stmt -> . if_stmt
+    (48) compound_stmt -> . for_stmt
+    (49) compound_stmt -> . while_stmt
+    (31) complex_stmt -> . trailer_item EQUAL complex_expression
+    (11) small_stmt -> . small_assign_stmt
+    (12) small_stmt -> . trailer_item
+    (13) small_stmt -> . return_stmt
+    (14) small_stmt -> . print_stmt
+    (15) small_stmt -> . break_stmt
+    (16) small_stmt -> . continue_stmt
+    (50) if_stmt -> . IF test COLON suite
+    (51) if_stmt -> . IF test COLON suite NEWLINE ELSE suite
+    (53) for_stmt -> . FOR NAME IN small_expression COLON suite
+    (52) while_stmt -> . WHILE test COLON suite
+    (76) trailer_item -> . atom
+    (77) trailer_item -> . atom trailer_star
+    (29) small_assign_stmt -> . trailer_item EQUAL small_expression
+    (17) return_stmt -> . RETURN small_expression
+    (44) print_stmt -> . PRINT small_expression
+    (18) break_stmt -> . BREAK
+    (19) continue_stmt -> . CONTINUE
+    (78) atom -> . AT NAME
+    (79) atom -> . NAME
+    (80) atom -> . constants
+    (45) constants -> . NUMBER
+    (46) constants -> . STRING
+
+    IF              shift and go to state 24
+    FOR             shift and go to state 16
+    WHILE           shift and go to state 4
+    RETURN          shift and go to state 7
+    PRINT           shift and go to state 6
+    BREAK           shift and go to state 26
+    CONTINUE        shift and go to state 28
+    AT              shift and go to state 22
+    NAME            shift and go to state 1
+    NUMBER          shift and go to state 30
+    STRING          shift and go to state 15
+
+    print_stmt                     shift and go to state 17
+    break_stmt                     shift and go to state 8
+    small_assign_stmt              shift and go to state 12
+    if_stmt                        shift and go to state 25
+    small_stmt                     shift and go to state 2
+    continue_stmt                  shift and go to state 10
+    while_stmt                     shift and go to state 27
+    stmt                           shift and go to state 111
+    trailer_item                   shift and go to state 19
+    complex_stmt                   shift and go to state 20
+    for_stmt                       shift and go to state 21
+    return_stmt                    shift and go to state 5
+    single_stmt                    shift and go to state 29
+    atom                           shift and go to state 3
+    compound_stmt                  shift and go to state 14
+    constants                      shift and go to state 23
+
+state 109
+
+    (53) for_stmt -> FOR NAME IN small_expression COLON . suite
+    (54) suite -> . NEWLINE INDENT stmt DEDENT
+
+    NEWLINE         shift and go to state 98
+
+    suite                          shift and go to state 112
+
+state 110
+
+    (51) if_stmt -> IF test COLON suite NEWLINE . ELSE suite
+
+    ELSE            shift and go to state 113
+
+
+state 111
+
+    (54) suite -> NEWLINE INDENT stmt . DEDENT
+    (7) stmt -> stmt . single_stmt
+    (8) stmt -> stmt . compound_stmt
+    (9) single_stmt -> . complex_stmt
+    (10) single_stmt -> . small_stmt NEWLINE
+    (47) compound_stmt -> . if_stmt
+    (48) compound_stmt -> . for_stmt
+    (49) compound_stmt -> . while_stmt
+    (31) complex_stmt -> . trailer_item EQUAL complex_expression
+    (11) small_stmt -> . small_assign_stmt
+    (12) small_stmt -> . trailer_item
+    (13) small_stmt -> . return_stmt
+    (14) small_stmt -> . print_stmt
+    (15) small_stmt -> . break_stmt
+    (16) small_stmt -> . continue_stmt
+    (50) if_stmt -> . IF test COLON suite
+    (51) if_stmt -> . IF test COLON suite NEWLINE ELSE suite
+    (53) for_stmt -> . FOR NAME IN small_expression COLON suite
+    (52) while_stmt -> . WHILE test COLON suite
+    (76) trailer_item -> . atom
+    (77) trailer_item -> . atom trailer_star
+    (29) small_assign_stmt -> . trailer_item EQUAL small_expression
+    (17) return_stmt -> . RETURN small_expression
+    (44) print_stmt -> . PRINT small_expression
+    (18) break_stmt -> . BREAK
+    (19) continue_stmt -> . CONTINUE
+    (78) atom -> . AT NAME
+    (79) atom -> . NAME
+    (80) atom -> . constants
+    (45) constants -> . NUMBER
+    (46) constants -> . STRING
+
+    DEDENT          shift and go to state 114
+    IF              shift and go to state 24
+    FOR             shift and go to state 16
+    WHILE           shift and go to state 4
+    RETURN          shift and go to state 7
+    PRINT           shift and go to state 6
+    BREAK           shift and go to state 26
+    CONTINUE        shift and go to state 28
+    AT              shift and go to state 22
+    NAME            shift and go to state 1
+    NUMBER          shift and go to state 30
+    STRING          shift and go to state 15
+
+    print_stmt                     shift and go to state 17
+    break_stmt                     shift and go to state 8
+    small_assign_stmt              shift and go to state 12
+    if_stmt                        shift and go to state 25
+    small_stmt                     shift and go to state 2
+    continue_stmt                  shift and go to state 10
+    while_stmt                     shift and go to state 27
+    trailer_item                   shift and go to state 19
+    complex_stmt                   shift and go to state 20
+    for_stmt                       shift and go to state 21
+    return_stmt                    shift and go to state 5
+    single_stmt                    shift and go to state 55
+    atom                           shift and go to state 3
+    compound_stmt                  shift and go to state 54
+    constants                      shift and go to state 23
+
+state 112
+
+    (53) for_stmt -> FOR NAME IN small_expression COLON suite .
+
+    DEDENT          reduce using rule 53 (for_stmt -> FOR NAME IN small_expression COLON suite .)
+    IF              reduce using rule 53 (for_stmt -> FOR NAME IN small_expression COLON suite .)
+    FOR             reduce using rule 53 (for_stmt -> FOR NAME IN small_expression COLON suite .)
+    WHILE           reduce using rule 53 (for_stmt -> FOR NAME IN small_expression COLON suite .)
+    RETURN          reduce using rule 53 (for_stmt -> FOR NAME IN small_expression COLON suite .)
+    PRINT           reduce using rule 53 (for_stmt -> FOR NAME IN small_expression COLON suite .)
+    BREAK           reduce using rule 53 (for_stmt -> FOR NAME IN small_expression COLON suite .)
+    CONTINUE        reduce using rule 53 (for_stmt -> FOR NAME IN small_expression COLON suite .)
+    AT              reduce using rule 53 (for_stmt -> FOR NAME IN small_expression COLON suite .)
+    NAME            reduce using rule 53 (for_stmt -> FOR NAME IN small_expression COLON suite .)
+    NUMBER          reduce using rule 53 (for_stmt -> FOR NAME IN small_expression COLON suite .)
+    STRING          reduce using rule 53 (for_stmt -> FOR NAME IN small_expression COLON suite .)
+    ENDMARKER       reduce using rule 53 (for_stmt -> FOR NAME IN small_expression COLON suite .)
+
+
+state 113
+
+    (51) if_stmt -> IF test COLON suite NEWLINE ELSE . suite
+    (54) suite -> . NEWLINE INDENT stmt DEDENT
+
+    NEWLINE         shift and go to state 98
+
+    suite                          shift and go to state 115
+
+state 114
+
+    (54) suite -> NEWLINE INDENT stmt DEDENT .
+
+    NEWLINE         reduce using rule 54 (suite -> NEWLINE INDENT stmt DEDENT .)
+    IF              reduce using rule 54 (suite -> NEWLINE INDENT stmt DEDENT .)
+    FOR             reduce using rule 54 (suite -> NEWLINE INDENT stmt DEDENT .)
+    WHILE           reduce using rule 54 (suite -> NEWLINE INDENT stmt DEDENT .)
+    RETURN          reduce using rule 54 (suite -> NEWLINE INDENT stmt DEDENT .)
+    PRINT           reduce using rule 54 (suite -> NEWLINE INDENT stmt DEDENT .)
+    BREAK           reduce using rule 54 (suite -> NEWLINE INDENT stmt DEDENT .)
+    CONTINUE        reduce using rule 54 (suite -> NEWLINE INDENT stmt DEDENT .)
+    AT              reduce using rule 54 (suite -> NEWLINE INDENT stmt DEDENT .)
+    NAME            reduce using rule 54 (suite -> NEWLINE INDENT stmt DEDENT .)
+    NUMBER          reduce using rule 54 (suite -> NEWLINE INDENT stmt DEDENT .)
+    STRING          reduce using rule 54 (suite -> NEWLINE INDENT stmt DEDENT .)
+    ENDMARKER       reduce using rule 54 (suite -> NEWLINE INDENT stmt DEDENT .)
+    DEDENT          reduce using rule 54 (suite -> NEWLINE INDENT stmt DEDENT .)
+
+
+state 115
+
+    (51) if_stmt -> IF test COLON suite NEWLINE ELSE suite .
+
+    DEDENT          reduce using rule 51 (if_stmt -> IF test COLON suite NEWLINE ELSE suite .)
+    IF              reduce using rule 51 (if_stmt -> IF test COLON suite NEWLINE ELSE suite .)
+    FOR             reduce using rule 51 (if_stmt -> IF test COLON suite NEWLINE ELSE suite .)
+    WHILE           reduce using rule 51 (if_stmt -> IF test COLON suite NEWLINE ELSE suite .)
+    RETURN          reduce using rule 51 (if_stmt -> IF test COLON suite NEWLINE ELSE suite .)
+    PRINT           reduce using rule 51 (if_stmt -> IF test COLON suite NEWLINE ELSE suite .)
+    BREAK           reduce using rule 51 (if_stmt -> IF test COLON suite NEWLINE ELSE suite .)
+    CONTINUE        reduce using rule 51 (if_stmt -> IF test COLON suite NEWLINE ELSE suite .)
+    AT              reduce using rule 51 (if_stmt -> IF test COLON suite NEWLINE ELSE suite .)
+    NAME            reduce using rule 51 (if_stmt -> IF test COLON suite NEWLINE ELSE suite .)
+    NUMBER          reduce using rule 51 (if_stmt -> IF test COLON suite NEWLINE ELSE suite .)
+    STRING          reduce using rule 51 (if_stmt -> IF test COLON suite NEWLINE ELSE suite .)
+    ENDMARKER       reduce using rule 51 (if_stmt -> IF test COLON suite NEWLINE ELSE suite .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for IF in state 18 resolved as shift
+WARNING: shift/reduce conflict for FOR in state 18 resolved as shift
+WARNING: shift/reduce conflict for WHILE in state 18 resolved as shift
+WARNING: shift/reduce conflict for RETURN in state 18 resolved as shift
+WARNING: shift/reduce conflict for PRINT in state 18 resolved as shift
+WARNING: shift/reduce conflict for BREAK in state 18 resolved as shift
+WARNING: shift/reduce conflict for CONTINUE in state 18 resolved as shift
+WARNING: shift/reduce conflict for AT in state 18 resolved as shift
+WARNING: shift/reduce conflict for NAME in state 18 resolved as shift
+WARNING: shift/reduce conflict for NUMBER in state 18 resolved as shift
+WARNING: shift/reduce conflict for STRING in state 18 resolved as shift
+WARNING: shift/reduce conflict for IF in state 52 resolved as shift
+WARNING: shift/reduce conflict for FOR in state 52 resolved as shift
+WARNING: shift/reduce conflict for WHILE in state 52 resolved as shift
+WARNING: shift/reduce conflict for RETURN in state 52 resolved as shift
+WARNING: shift/reduce conflict for PRINT in state 52 resolved as shift
+WARNING: shift/reduce conflict for BREAK in state 52 resolved as shift
+WARNING: shift/reduce conflict for CONTINUE in state 52 resolved as shift
+WARNING: shift/reduce conflict for AT in state 52 resolved as shift
+WARNING: shift/reduce conflict for NAME in state 52 resolved as shift
+WARNING: shift/reduce conflict for NUMBER in state 52 resolved as shift
+WARNING: shift/reduce conflict for STRING in state 52 resolved as shift
