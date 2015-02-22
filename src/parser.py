@@ -2,458 +2,302 @@ from compiler import ast
 import yacc
 import lexer # our lexer
 tokens = lexer.tokens
-	
+
+
+# Helper function
+def Assign(left, right):
+    names = []
+    if isinstance(left, ast.Name):
+        # Single assignment on left
+        return ast.Assign([ast.AssName(left.name, 'EQUAL')], right)
+    elif isinstance(left, ast.Tuple):
+        # List of things - make sure they are Name nodes
+        names = []
+        for child in left.getChildren():
+            if not isinstance(child, ast.Name):
+                raise SyntaxError("that assignment not supported")
+            names.append(child.name)
+        ass_list = [ast.AssName(name, 'OP_ASSIGN') for name in names]
+        return ast.Assign([ast.AssTuple(ass_list)], right)
+    else:
+        raise SyntaxError("Can't do that yet")
+
+# The grammar comments come from Python's Grammar/Grammar file
+
+## NB: compound_stmt in single_input is followed by extra NEWLINE!
+# file_input: (NEWLINE | stmt)* ENDMARKER
 def p_program(p):
-	"""
-		program  :  file_input_star ENDMARKER
-	"""
-	p[0] = p[1]
+    """program : file_input ENDMARKER"""
+    p[0] = ast.Stmt(p[1])
+def p_file_input(p):
+    """file_input : file_input NEWLINE
+                  | file_input stmt
+                  | NEWLINE
+                  | stmt"""
+    if isinstance(p[len(p)-1], basestring):
+        if len(p) == 3:
+            p[0] = p[1]
+        else:
+            p[0] = [] # p == 2 --> only a blank line
+    else:
+        if len(p) == 3:
+            p[0] = p[1] + p[2]
+        else:
+            p[0] = p[1]
+            
 
-def p_file_input_star_1(p):
-	"""
-		file_input_star : NEWLINE
-	"""
-	pass
+# funcdef: [decorators] 'def' NAME parameters ':' suite
+# ignoring decorators
+def p_funcdef(p):
+    "funcdef : DEF NAME parameters COLON suite"
+    p[0] = ast.Function(None, p[2], tuple(p[3]), (), 0, None, p[5])
+    
+# parameters: '(' [varargslist] ')'
+def p_parameters(p):
+    """parameters : LPAREN RPAREN
+                  | LPAREN varargslist RPAREN"""
+    if len(p) == 3:
+        p[0] = []
+    else:
+        p[0] = p[2]
+    
 
-def p_file_input_star_2(p):
-	"""
-		file_input_star : stmt
-	"""
-	p[0] = ast.Stmt(p[1])
+# varargslist: (fpdef ['=' test] ',')* ('*' NAME [',' '**' NAME] | '**' NAME) | 
+# highly simplified
+def p_varargslist(p):
+    """varargslist : varargslist COMMA NAME
+                   | NAME"""
+    if len(p) == 4:
+        p[0] = p[1]
+        p[0].append(p[3])
+    else:
+        p[0] = [p[1]]
 
-def p_file_input_star_3(p):
-	"""
-		file_input_star : file_input_star stmt
-	"""
-	p[0] = p[1].add(p[2])
+# stmt: simple_stmt | compound_stmt
+def p_stmt_simple(p):
+    """stmt : simple_stmt"""
+    # simple_stmt is a list
+    p[0] = p[1]
+    
+def p_stmt_compound(p):
+    """stmt : compound_stmt"""
+    p[0] = [p[1]]
 
+# simple_stmt: small_stmt (';' small_stmt)* [';'] NEWLINE
+def p_simple_stmt(p):
+    """simple_stmt : small_stmts NEWLINE
+                   | small_stmts SEMI NEWLINE"""
+    p[0] = p[1]
 
-def p_stmt_3(p):
-	"""
-		stmt : single_stmt 
-	"""
-	p[0] = p[1]
+def p_small_stmts(p):
+    """small_stmts : small_stmts SEMI small_stmt
+                   | small_stmt"""
+    if len(p) == 4:
+        p[0] = p[1] + [p[3]]
+    else:
+        p[0] = [p[1]]
 
-def p_stmt_4(p):
-	"""
-		stmt : compound_stmt
-	"""
-	p[0] = p[1]
+# small_stmt: expr_stmt | print_stmt  | del_stmt | pass_stmt | flow_stmt |
+#    import_stmt | global_stmt | exec_stmt | assert_stmt
+def p_small_stmt(p):
+    """small_stmt : flow_stmt
+                  | expr_stmt"""
+    p[0] = p[1]
 
-def p_stmt_1(p):
-	"""
-		stmt	: stmt single_stmt
-	"""
-	p[0] = p[1].add(p[2])
+# expr_stmt: testlist (augassign (yield_expr|testlist) |
+#                      ('=' (yield_expr|testlist))*)
+# augassign: ('+=' | '-=' | '*=' | '/=' | '%=' | '&=' | '|=' | '^=' |
+#             '<<=' | '>>=' | '**=' | '//=')
+def p_expr_stmt(p):
+    """expr_stmt : testlist EQUAL testlist
+                 | testlist """
+    if len(p) == 2:
+        # a list of expressions
+        p[0] = ast.Discard(p[1])
+    else:
+        p[0] = Assign(p[1], p[3])
 
-def p_stmt_2(p):
-	"""
-		stmt	: stmt compound_stmt 
-	"""
-	p[0] = p[1].add(p[2])
+def p_flow_stmt(p):
+    "flow_stmt : return_stmt"
+    p[0] = p[1]
 
-
-def p_single_stmt_1(p):
-	"""
-		single_stmt	 : complex_stmt
-	"""
-	p[0] = p[1]
-
-def p_single_stmt_2(p):
-	"""
-		single_stmt :	small_stmt NEWLINE
-	"""
-	p[0] = p[1]
-
-def p_small_stmt_1(p):
-	"""
-		small_stmt : small_assign_stmt
-	"""
-	p[0] = p[1]
-
-def p_small_stmt_2(p):
-	"""
-		small_stmt : trailer_item
-	"""
-	if not (p[1].v2 is not None and p[1].v2.ts[-1].op == '('):
-		p_error("small_stmt is not func_call")
-	else:
-		p[0] = ast.Stmt('fcall',p[1])
-
-def p_small_stmt_3(p):
-	"""
-		small_stmt : return_stmt
-	"""
-	p[0] = p[1]
-
-def p_small_stmt_4(p):
-	"""
-		small_stmt : print_stmt
-	"""
-	p[0] = p[1]
-
-def p_small_stmt_5(p):
-	"""
-		small_stmt : break_stmt
-	"""
-	p[0] = p[1]
-
-def p_small_stmt_6(p):
-	"""
-		small_stmt : continue_stmt
-	"""
-	p[0] = p[1]
-
+# return_stmt: 'return' [testlist]
 def p_return_stmt(p):
-	"""
-		return_stmt : RETURN small_expression
-	"""
-	p[0] = ast.Stmt('return',p[2])
+    "return_stmt : RETURN testlist"
+    p[0] = ast.Return(p[2])
 
-def p_break_stmt(p):
-	"""
-		 break_stmt : BREAK
-	"""
-	p[0] = ast.Stmt('break')
-
-def p_continue_stmt(p):
-	"""
-		continue_stmt : CONTINUE
-	"""
-	p[0] = ast.Stmt('continue')
-
-def p_paramlist(p):
-	"""
-		paramlist : paramlist COMMA  param
-	"""
-	p[0] = p[1].add(p[3])
-
-def p_paramlist_2(p):
-	"""
-		paramlist :  param
-	"""
-	p[0] = ast.ParamList(p[1])
-
-def p_param_1(p):
-	"""
-		param   : NAME EQUAL constants
-	"""
-	p[0] = ast.Param('value',p[1],p[3])
-
-def p_param_2(p):
-	"""
-		param : NAME 
-	"""
-	p[0] = ast.Param('default',p[1])
-
-def p_param_3(p):
-	"""
-		param : constants
-	"""
-	p[0] = ast.Param('direct',p[1])
-
-def p_callparamlist_1(p):
-	"""
-		callparamlist : callparamlist COMMA callparam
-	"""
-	p[0] = p[1].append(p[3])
-
-def p_callparamlist_2(p):
-	"""
-		callparamlist :  callparam
-	"""
-	# p[0] = ast.ParamList(p[1])
-	p[0] = [p[1]]
-
-def p_callparam_1(p):
-	"""
-		callparam   : NAME EQUAL arith_expression
-	"""
-	p[0] = ast.Param('value',p[1],p[3])
-
-def p_callparam_2(p):
-	"""
-		callparam : arith_expression
-	"""
-	p[0] = p[1]
-
-def p_small_assign_stmt(p):
-	"""
-		small_assign_stmt : trailer_item EQUAL small_expression
-	"""
-	p[0] = ast.Stmt('assign',[p[1],p[3]])
-
-def p_small_expression(p):
-	"""
-		small_expression : arith_expression 
-	"""
-	p[0] = p[1]
-
-def p_complex_stmt(p):
-	"""
-		complex_stmt : trailer_item EQUAL complex_expression
-	"""
-	p[0] = ast.Stmt('classFunc',[p[1],p[3]])
-	_scope_stack[-1]['type'] = p[3].type
-
-def p_complex_expression_1(p):
-	"""
-		complex_expression : CLASS
-							| DEF
-	"""
-	p[0] = p[1]
-
-def p_namelist_1(p):
-	"""
-		namelist : namelist COMMA NAME
-	"""
-	p[0] = p[1].add(p[3])
-
-def p_namelist_2(p):
-	"""
-		namelist : NAME
-	"""
-	p[0] = ast.NameList(p[1])
-
-def p_arith_expression(p):
-	"""
-		arith_expression	: term PLUS term 
-							| term MINUS term
-							| term
-	"""
-	if len(p) == 2:
-		p[0] = p[1]
-	else:
-		if(p[2]=='+'):
-			p[0] = ast.Add(p[1],p[3])
-		else:
-			p[0] = ast.Sub(p[1],p[3])
-	# else:
-		# p[0] = ast.Arith(p[2],p[1],p[3])
-
-def p_term(p):
-	"""
-		term : factor STAR factor
-				| factor SLASH factor
-				| factor
-	"""
-	if len(p) == 2:
-		p[0] = p[1]
-	else:
-		if(p[2]=='*'):
-			p[0] = ast.Mul(p[1],p[3])
-		else:
-			p[0] = ast.Div(p[1],p[3])
-		# p[0] = ast.Arith(p[2],p[1],p[3])
-
-def p_factor_1(p):
-	"""
-		factor : trailer_item
-	"""
-	p[0] = p[1]
-
-def p_factor_4(p):
-	"""
-		factor : LPAREN arith_expression RPAREN
-	"""
-	p[0] = ast.Arith(p[1],p[2])
-
-def p_print_stmt(p):
-	"""
-		print_stmt : PRINT small_expression
-	"""
-	p[0] = ast.Stmt('print',p[2])
-
-def p_constants(p):
-	"""
-		constants : NUMBER
-					| STRING
-	"""
-	p[0] = ast.Const(p[1])
 
 def p_compound_stmt(p):
-	"""
-		compound_stmt   : if_stmt
-						| for_stmt
-						| while_stmt
-	"""
-	p[0] = p[1]
+    """compound_stmt : if_stmt
+                     | funcdef"""
+    p[0] = p[1]
 
-def p_if_stmt_1(p):
-	"""
-		if_stmt : IF test COLON suite
-	"""
-	p[0] = ast.Stmt('if',[p[2],p[4]])
-
-def p_if_stmt_2(p):
-	""" 
-		if_stmt : IF test COLON suite NEWLINE ELSE suite
-	"""
-	p[0] = ast.Stmt('ifelse',[p[2],p[4],p[7]])
-
-def p_while_stmt(p):
-	"""
-		while_stmt : WHILE test COLON suite
-	"""
-	p[0] = ast.Stmt('while',[p[2],p[4]])
-
-def p_for_stmt(p):
-	""" 
-		for_stmt : FOR NAME IN small_expression COLON suite
-	"""
-	p[0] = ast.GenExprFor(p[2],p[4],p[6])
+def p_if_stmt(p):
+    'if_stmt : IF test COLON suite'
+    p[0] = ast.If([(p[2], p[4])], None)
 
 def p_suite(p):
-	"""
-		suite : NEWLINE INDENT stmt DEDENT
-	"""
-	p[0] = p[3]
+    """suite : simple_stmt
+             | NEWLINE INDENT stmts DEDENT"""
+    if len(p) == 2:
+        p[0] = ast.Stmt(p[1])
+    else:
+        p[0] = ast.Stmt(p[3])
+    
 
+def p_stmts(p):
+    """stmts : stmts stmt
+             | stmt"""
+    if len(p) == 3:
+        p[0] = p[1] + p[2]
+    else:
+        p[0] = p[1]
+
+## No using Python's approach because Ply supports precedence
+
+# comparison: expr (comp_op expr)*
+# arith_expr: term (('+'|'-') term)*
+# term: factor (('*'|'/'|'%'|'//') factor)*
+# factor: ('+'|'-'|'~') factor | power
+# comp_op: '<'|'>'|'=='|'>='|'<='|'<>'|'!='|'in'|'not' 'in'|'is'|'is' 'not'
+
+def make_lt_compare((left, right)):
+    return ast.Compare(left, [('<', right),])
+def make_gt_compare((left, right)):
+    return ast.Compare(left, [('>', right),])
+def make_eq_compare((left, right)):
+    return ast.Compare(left, [('==', right),])
+
+
+binary_ops = {
+    "+": ast.Add,
+    "-": ast.Sub,
+    "*": ast.Mul,
+    "/": ast.Div,
+    "<": make_lt_compare,
+    ">": make_gt_compare,
+    "==": make_eq_compare,
+}
+unary_ops = {
+    "+": ast.UnaryAdd,
+    "-": ast.UnarySub,
+    }
+precedence = (
+    ("left", "EQEQUAL", "GREATER", "LESS"),
+    ("left", "PLUS", "MINUS"),
+    ("left", "STAR", "SLASH"),
+    )
+
+def p_comparison(p):
+    """comparison : comparison PLUS comparison
+                  | comparison MINUS comparison
+                  | comparison STAR comparison
+                  | comparison SLASH comparison
+                  | comparison LESS comparison
+                  | comparison EQEQUAL comparison
+                  | comparison GREATER comparison
+                  | PLUS comparison
+                  | MINUS comparison
+                  | power"""
+    if len(p) == 4:
+        p[0] = binary_ops[p[2]]((p[1], p[3]))
+    elif len(p) == 3:
+        p[0] = unary_ops[p[1]](p[2])
+    else:
+        p[0] = p[1]
+                  
+# power: atom trailer* ['**' factor]
+# trailers enables function calls.  I only allow one level of calls
+# so this is 'trailer'
+def p_power(p):
+    """power : atom
+             | atom trailer"""
+    if len(p) == 2:
+        p[0] = p[1]
+    else:
+        if p[2][0] == "CALL":
+            p[0] = ast.CallFunc(p[1], p[2][1], None, None)
+        else:
+            raise AssertionError("not implemented")
+
+def p_atom_name(p):
+    """atom : NAME"""
+    p[0] = ast.Name(p[1])
+
+def p_atom_number(p):
+    """atom : NUMBER
+            | STRING"""
+    p[0] = ast.Const(p[1])
+
+def p_atom_tuple(p):
+    """atom : LPAREN testlist RPAREN"""
+    p[0] = p[2]
+
+# trailer: '(' [arglist] ')' | '[' subscriptlist ']' | '.' NAME
+def p_trailer(p):
+    "trailer : LPAREN arglist RPAREN"
+    p[0] = ("CALL", p[2])
+
+# testlist: test (',' test)* [',']
+# Contains shift/reduce error
+def p_testlist(p):
+    """testlist : testlist_multi COMMA
+                | testlist_multi """
+    if len(p) == 2:
+        p[0] = p[1]
+    else:
+        # May need to promote singleton to tuple
+        if isinstance(p[1], list):
+            p[0] = p[1]
+        else:
+            p[0] = [p[1]]
+    # Convert into a tuple?
+    if isinstance(p[0], list):
+        p[0] = ast.Tuple(p[0])
+
+def p_testlist_multi(p):
+    """testlist_multi : testlist_multi COMMA test
+                      | test"""
+    if len(p) == 2:
+        # singleton
+        p[0] = p[1]
+    else:
+        if isinstance(p[1], list):
+            p[0] = p[1] + [p[3]]
+        else:
+            # singleton -> tuple
+            p[0] = [p[1], p[3]]
+
+
+# test: or_test ['if' or_test 'else' test] | lambdef
+#  as I don't support 'and', 'or', and 'not' this works down to 'comparison'
 def p_test(p):
-	"""
-		test : test_add AND test_add
-				| test_add
-	"""
-	if len(p) == 2:
-		p[0] = p[1]			
-	else:
-		p[0] = ast.Test('and',p[1],p[3])
+    "test : comparison"
+    p[0] = p[1]
+    
 
-def p_test_add(p):
-	"""
-		test_add : test_or OR test_or
-				| test_or
-	"""
-	if len(p) == 2:
-		p[0] = p[1]
-	else:
-		p[0] = ast.Test('or',p[1],p[3])
 
-def p_test_or(p):
-	"""
-		test_or : test_not
-				| test_factor
-	"""
-	p[0] = p[1]
+# arglist: (argument ',')* (argument [',']| '*' test [',' '**' test] | '**' test)
+# XXX INCOMPLETE: this doesn't allow the trailing comma
+def p_arglist(p):
+    """arglist : arglist COMMA argument
+               | argument"""
+    if len(p) == 4:
+        p[0] = p[1] + [p[3]]
+    else:
+        p[0] = [p[1]]
 
-def p_test_not(p):
-	"""
-		test_not : NOT test_factor
-	"""
-	p[0] = ast.Test('not',p[2])
-
-def p_test_factor_1(p):
-	"""
-		test_factor : arith_expression cmp_op arith_expression
-	"""
-	p[0] = ast.Test(p[2],p[1],p[3])
-
-def p_test_factor_2(p):
-	"""
-		test_factor : arith_expression
-	"""
-	p[0] = ast.Test('direct',p[1])
-
-def p_cmp_op(p):
-	"""
-		cmp_op  : EQEQUAL 
-				| NOTEQUAL 
-				| LESSEQUAL 
-				| GREATEREQUAL 
-				| LESS 
-				| GREATER
-	"""
-	p[0] = p[1]
-
-def p_trailer_0(p):
-	"""
-		trailer : DOT NAME 
-	"""
-	p[0] = ast.Trailer('.',p[2])
-
-def p_trailer_1(p):
-	"""
-		trailer : LSQB subscript RSQB
-	"""
-	p[0] = ast.Trailer('[',p[2])
-
-def p_trailer_2(p):
-	"""
-		trailer : LPAREN RPAREN
-	"""
-	p[0] = ast.Trailer('(',None)
-
-def p_trailer_3(p):
-	"""
-		trailer : LPAREN callparamlist RPAREN
-	"""
-	# p[0] = ast.Trailer('(',p[2])
-	p[0] = ("CALL", p[2])
-
-def p_trailer_star_1(p):
-	"""
-		trailer_star : trailer
-	"""
-	# p[0] = ast.TrailerList(p[1])
-	p[0] = p[1]
-
-def p_trailer_star_2(p):
-	"""
-		trailer_star : trailer_star trailer
-	"""
-	p[0] = p[1].append(p[2])
-
-def p_trailer_item_1(p):
-	"""
-		trailer_item : atom
-	"""
-	# p[0] = ast.Item('direct',p[1])
-	p[0] = p[1]
-
-def p_trailer_item_2(p):
-	"""
-		trailer_item : atom trailer_star
-	"""
-	# p[0] = ast.Item('trailer',p[1],p[2])
-	p[0] = ast.AssList(p[1],p[2])
-def p_atom_0(p):
-	"""
-		atom : AT NAME
-	"""
-	p[0] = ast.Decorators(p[2])
-
-def p_atom_1(p):
-	"""
-		atom : NAME
-	"""
-	p[0] = ast.Name(p[1])
-
-def p_atom_2(p):
-	"""
-		atom : constants
-	"""
-	p[0] = ast.Const(p[1])
-
-def p_subscript(p):
-	"""
-		subscript : NUMBER 
-	"""
-	p[0] = ast.Const(p[1])
-
-def p_empty(p):
-	"""
-		empty : 
-	"""
+# argument: test [gen_for] | test '=' test  # Really [keyword '='] test
+def p_argument(p):
+    "argument : test"
+    p[0] = p[1]
 
 def p_error(p):
-	if p:
-		print "shit",p
-		# parse_error(
-		# 	'before: %s' % p.value,
-		# 	'')
-	else:
-		print p
-		# parse_error('At end of input', '')
+    print "Error",p
+    #print "Error!", repr(p)
+    # raise SyntaxError(p)
+
+
 class G1Parser(object):
 	def __init__(self, mlexer=None):
 		if mlexer is None:
@@ -470,9 +314,7 @@ data = open('../test/test1.py')
 # I dont know how to print content from this AST
 t =  z.parse(data.read())
 # print dir(t)
-# p = (t.__class__.__name__)
-# print p
+print t
 # print dir(t.stmts)
 # print z.parse("a=4")
 # print z.mlexer.input("a=4")
-
