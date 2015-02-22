@@ -13,7 +13,6 @@ Unused terminals:
     DEL
     VBAR
     BACKQUOTE
-    PRINT
     PASS
     WITH
     LEFTSHIFT
@@ -85,42 +84,44 @@ Rule 15    small_stmts -> small_stmts SEMI small_stmt
 Rule 16    small_stmts -> small_stmt
 Rule 17    small_stmt -> flow_stmt
 Rule 18    small_stmt -> expr_stmt
-Rule 19    expr_stmt -> testlist EQUAL testlist
-Rule 20    expr_stmt -> testlist
-Rule 21    flow_stmt -> return_stmt
-Rule 22    return_stmt -> RETURN testlist
-Rule 23    compound_stmt -> if_stmt
-Rule 24    compound_stmt -> funcdef
-Rule 25    if_stmt -> IF test COLON suite
-Rule 26    suite -> simple_stmt
-Rule 27    suite -> NEWLINE INDENT stmts DEDENT
-Rule 28    stmts -> stmts stmt
-Rule 29    stmts -> stmt
-Rule 30    comparison -> comparison PLUS comparison
-Rule 31    comparison -> comparison MINUS comparison
-Rule 32    comparison -> comparison STAR comparison
-Rule 33    comparison -> comparison SLASH comparison
-Rule 34    comparison -> comparison LESS comparison
-Rule 35    comparison -> comparison EQEQUAL comparison
-Rule 36    comparison -> comparison GREATER comparison
-Rule 37    comparison -> PLUS comparison
-Rule 38    comparison -> MINUS comparison
-Rule 39    comparison -> power
-Rule 40    power -> atom
-Rule 41    power -> atom trailer
-Rule 42    atom -> NAME
-Rule 43    atom -> NUMBER
-Rule 44    atom -> STRING
-Rule 45    atom -> LPAREN testlist RPAREN
-Rule 46    trailer -> LPAREN arglist RPAREN
-Rule 47    testlist -> testlist_multi COMMA
-Rule 48    testlist -> testlist_multi
-Rule 49    testlist_multi -> testlist_multi COMMA test
-Rule 50    testlist_multi -> test
-Rule 51    test -> comparison
-Rule 52    arglist -> arglist COMMA argument
-Rule 53    arglist -> argument
-Rule 54    argument -> test
+Rule 19    small_stmt -> print_stmt
+Rule 20    expr_stmt -> testlist EQUAL testlist
+Rule 21    expr_stmt -> testlist
+Rule 22    flow_stmt -> return_stmt
+Rule 23    print_stmt -> PRINT test
+Rule 24    return_stmt -> RETURN testlist
+Rule 25    compound_stmt -> if_stmt
+Rule 26    compound_stmt -> funcdef
+Rule 27    if_stmt -> IF test COLON suite
+Rule 28    suite -> simple_stmt
+Rule 29    suite -> NEWLINE INDENT stmts DEDENT
+Rule 30    stmts -> stmts stmt
+Rule 31    stmts -> stmt
+Rule 32    comparison -> comparison PLUS comparison
+Rule 33    comparison -> comparison MINUS comparison
+Rule 34    comparison -> comparison STAR comparison
+Rule 35    comparison -> comparison SLASH comparison
+Rule 36    comparison -> comparison LESS comparison
+Rule 37    comparison -> comparison EQEQUAL comparison
+Rule 38    comparison -> comparison GREATER comparison
+Rule 39    comparison -> PLUS comparison
+Rule 40    comparison -> MINUS comparison
+Rule 41    comparison -> power
+Rule 42    power -> atom
+Rule 43    power -> atom trailer
+Rule 44    atom -> NAME
+Rule 45    atom -> NUMBER
+Rule 46    atom -> STRING
+Rule 47    atom -> LPAREN testlist RPAREN
+Rule 48    trailer -> LPAREN arglist RPAREN
+Rule 49    testlist -> testlist_multi COMMA
+Rule 50    testlist -> testlist_multi
+Rule 51    testlist_multi -> testlist_multi COMMA test
+Rule 52    testlist_multi -> test
+Rule 53    test -> comparison
+Rule 54    arglist -> arglist COMMA argument
+Rule 55    arglist -> argument
+Rule 56    argument -> test
 
 Terminals, with rules where they appear
 
@@ -134,18 +135,18 @@ BINARYNUMBER         :
 BREAK                : 
 CIRCUMFLEX           : 
 CLASS                : 
-COLON                : 6 25
-COMMA                : 9 47 49 52
+COLON                : 6 27
+COMMA                : 9 49 51 54
 CONTINUE             : 
-DEDENT               : 27
+DEDENT               : 29
 DEF                  : 6
 DEL                  : 
 DOT                  : 
 ELIF                 : 
 ELSE                 : 
 ENDMARKER            : 1
-EQEQUAL              : 35
-EQUAL                : 19
+EQEQUAL              : 37
+EQUAL                : 20
 EXCEPT               : 
 EXEC                 : 
 FINALLY              : 
@@ -153,52 +154,52 @@ FNUMBER              :
 FOR                  : 
 FROM                 : 
 GLOBAL               : 
-GREATER              : 36
+GREATER              : 38
 GREATEREQUAL         : 
 HEXADECIMALNUMBER    : 
-IF                   : 25
+IF                   : 27
 IMPORT               : 
 IN                   : 
-INDENT               : 27
+INDENT               : 29
 INUMBER              : 
 IS                   : 
 LAMBDA               : 
 LBRACE               : 
 LEFTSHIFT            : 
-LESS                 : 34
+LESS                 : 36
 LESSEQUAL            : 
-LPAREN               : 7 8 45 46
+LPAREN               : 7 8 47 48
 LSQB                 : 
 MINEQUAL             : 
-MINUS                : 31 38
-NAME                 : 6 9 10 42
-NEWLINE              : 2 4 13 14 27
+MINUS                : 33 40
+NAME                 : 6 9 10 44
+NEWLINE              : 2 4 13 14 29
 NOT                  : 
 NOTEQUAL             : 
-NUMBER               : 43
+NUMBER               : 45
 OCTALNUMBER          : 
 OR                   : 
 PASS                 : 
 PERCENT              : 
 PERCENTEQUAL         : 
-PLUS                 : 30 37
+PLUS                 : 32 39
 PLUSEQUAL            : 
-PRINT                : 
+PRINT                : 23
 RAISE                : 
 RAWSTRING            : 
 RBRACE               : 
-RETURN               : 22
+RETURN               : 24
 RIGHTSHIFT           : 
-RPAREN               : 7 8 45 46
+RPAREN               : 7 8 47 48
 RSQB                 : 
 SEMI                 : 14 15
-SLASH                : 33
+SLASH                : 35
 SLASHEQUAL           : 
 SLASHSLASH           : 
-STAR                 : 32
+STAR                 : 34
 STAREQUAL            : 
 STARSTAR             : 
-STRING               : 44
+STRING               : 46
 TILDE                : 
 TRIPLESTRING         : 
 TRY                  : 
@@ -212,30 +213,31 @@ error                :
 
 Nonterminals, with rules where they appear
 
-arglist              : 46 52
-argument             : 52 53
-atom                 : 40 41
-comparison           : 30 30 31 31 32 32 33 33 34 34 35 35 36 36 37 38 51
+arglist              : 48 54
+argument             : 54 55
+atom                 : 42 43
+comparison           : 32 32 33 33 34 34 35 35 36 36 37 37 38 38 39 40 53
 compound_stmt        : 12
 expr_stmt            : 18
 file_input           : 1 2 3
 flow_stmt            : 17
-funcdef              : 24
-if_stmt              : 23
+funcdef              : 26
+if_stmt              : 25
 parameters           : 6
-power                : 39
+power                : 41
+print_stmt           : 19
 program              : 0
-return_stmt          : 21
-simple_stmt          : 11 26
+return_stmt          : 22
+simple_stmt          : 11 28
 small_stmt           : 15 16
 small_stmts          : 13 14 15
-stmt                 : 3 5 28 29
-stmts                : 27 28
-suite                : 6 25
-test                 : 25 49 50 54
-testlist             : 19 19 20 22 45
-testlist_multi       : 47 48 49
-trailer              : 41
+stmt                 : 3 5 30 31
+stmts                : 29 30
+suite                : 6 27
+test                 : 23 27 51 52 56
+testlist             : 20 20 21 24 47
+testlist_multi       : 49 50 51
+trailer              : 43
 varargslist          : 8 9
 
 Parsing method: LALR
@@ -252,108 +254,112 @@ state 0
     (12) stmt -> . compound_stmt
     (13) simple_stmt -> . small_stmts NEWLINE
     (14) simple_stmt -> . small_stmts SEMI NEWLINE
-    (23) compound_stmt -> . if_stmt
-    (24) compound_stmt -> . funcdef
+    (25) compound_stmt -> . if_stmt
+    (26) compound_stmt -> . funcdef
     (15) small_stmts -> . small_stmts SEMI small_stmt
     (16) small_stmts -> . small_stmt
-    (25) if_stmt -> . IF test COLON suite
+    (27) if_stmt -> . IF test COLON suite
     (6) funcdef -> . DEF NAME parameters COLON suite
     (17) small_stmt -> . flow_stmt
     (18) small_stmt -> . expr_stmt
-    (21) flow_stmt -> . return_stmt
-    (19) expr_stmt -> . testlist EQUAL testlist
-    (20) expr_stmt -> . testlist
-    (22) return_stmt -> . RETURN testlist
-    (47) testlist -> . testlist_multi COMMA
-    (48) testlist -> . testlist_multi
-    (49) testlist_multi -> . testlist_multi COMMA test
-    (50) testlist_multi -> . test
-    (51) test -> . comparison
-    (30) comparison -> . comparison PLUS comparison
-    (31) comparison -> . comparison MINUS comparison
-    (32) comparison -> . comparison STAR comparison
-    (33) comparison -> . comparison SLASH comparison
-    (34) comparison -> . comparison LESS comparison
-    (35) comparison -> . comparison EQEQUAL comparison
-    (36) comparison -> . comparison GREATER comparison
-    (37) comparison -> . PLUS comparison
-    (38) comparison -> . MINUS comparison
-    (39) comparison -> . power
-    (40) power -> . atom
-    (41) power -> . atom trailer
-    (42) atom -> . NAME
-    (43) atom -> . NUMBER
-    (44) atom -> . STRING
-    (45) atom -> . LPAREN testlist RPAREN
+    (19) small_stmt -> . print_stmt
+    (22) flow_stmt -> . return_stmt
+    (20) expr_stmt -> . testlist EQUAL testlist
+    (21) expr_stmt -> . testlist
+    (23) print_stmt -> . PRINT test
+    (24) return_stmt -> . RETURN testlist
+    (49) testlist -> . testlist_multi COMMA
+    (50) testlist -> . testlist_multi
+    (51) testlist_multi -> . testlist_multi COMMA test
+    (52) testlist_multi -> . test
+    (53) test -> . comparison
+    (32) comparison -> . comparison PLUS comparison
+    (33) comparison -> . comparison MINUS comparison
+    (34) comparison -> . comparison STAR comparison
+    (35) comparison -> . comparison SLASH comparison
+    (36) comparison -> . comparison LESS comparison
+    (37) comparison -> . comparison EQEQUAL comparison
+    (38) comparison -> . comparison GREATER comparison
+    (39) comparison -> . PLUS comparison
+    (40) comparison -> . MINUS comparison
+    (41) comparison -> . power
+    (42) power -> . atom
+    (43) power -> . atom trailer
+    (44) atom -> . NAME
+    (45) atom -> . NUMBER
+    (46) atom -> . STRING
+    (47) atom -> . LPAREN testlist RPAREN
 
-    NEWLINE         shift and go to state 8
-    IF              shift and go to state 12
-    DEF             shift and go to state 6
-    RETURN          shift and go to state 4
-    PLUS            shift and go to state 9
-    MINUS           shift and go to state 5
-    NAME            shift and go to state 24
-    NUMBER          shift and go to state 19
-    STRING          shift and go to state 14
+    NEWLINE         shift and go to state 9
+    IF              shift and go to state 14
+    DEF             shift and go to state 7
+    PRINT           shift and go to state 4
+    RETURN          shift and go to state 5
+    PLUS            shift and go to state 10
+    MINUS           shift and go to state 6
+    NAME            shift and go to state 26
+    NUMBER          shift and go to state 21
+    STRING          shift and go to state 16
     LPAREN          shift and go to state 1
 
-    flow_stmt                      shift and go to state 7
-    comparison                     shift and go to state 25
-    expr_stmt                      shift and go to state 23
-    if_stmt                        shift and go to state 26
-    test                           shift and go to state 11
-    simple_stmt                    shift and go to state 16
-    file_input                     shift and go to state 27
-    testlist                       shift and go to state 17
-    stmt                           shift and go to state 18
-    testlist_multi                 shift and go to state 20
     small_stmt                     shift and go to state 2
-    power                          shift and go to state 15
-    program                        shift and go to state 10
     return_stmt                    shift and go to state 3
-    atom                           shift and go to state 21
-    funcdef                        shift and go to state 22
-    compound_stmt                  shift and go to state 13
-    small_stmts                    shift and go to state 28
+    flow_stmt                      shift and go to state 8
+    print_stmt                     shift and go to state 11
+    program                        shift and go to state 12
+    test                           shift and go to state 13
+    compound_stmt                  shift and go to state 15
+    power                          shift and go to state 17
+    simple_stmt                    shift and go to state 18
+    testlist                       shift and go to state 19
+    stmt                           shift and go to state 20
+    testlist_multi                 shift and go to state 22
+    atom                           shift and go to state 23
+    funcdef                        shift and go to state 24
+    expr_stmt                      shift and go to state 25
+    comparison                     shift and go to state 27
+    if_stmt                        shift and go to state 28
+    file_input                     shift and go to state 29
+    small_stmts                    shift and go to state 30
 
 state 1
 
-    (45) atom -> LPAREN . testlist RPAREN
-    (47) testlist -> . testlist_multi COMMA
-    (48) testlist -> . testlist_multi
-    (49) testlist_multi -> . testlist_multi COMMA test
-    (50) testlist_multi -> . test
-    (51) test -> . comparison
-    (30) comparison -> . comparison PLUS comparison
-    (31) comparison -> . comparison MINUS comparison
-    (32) comparison -> . comparison STAR comparison
-    (33) comparison -> . comparison SLASH comparison
-    (34) comparison -> . comparison LESS comparison
-    (35) comparison -> . comparison EQEQUAL comparison
-    (36) comparison -> . comparison GREATER comparison
-    (37) comparison -> . PLUS comparison
-    (38) comparison -> . MINUS comparison
-    (39) comparison -> . power
-    (40) power -> . atom
-    (41) power -> . atom trailer
-    (42) atom -> . NAME
-    (43) atom -> . NUMBER
-    (44) atom -> . STRING
-    (45) atom -> . LPAREN testlist RPAREN
+    (47) atom -> LPAREN . testlist RPAREN
+    (49) testlist -> . testlist_multi COMMA
+    (50) testlist -> . testlist_multi
+    (51) testlist_multi -> . testlist_multi COMMA test
+    (52) testlist_multi -> . test
+    (53) test -> . comparison
+    (32) comparison -> . comparison PLUS comparison
+    (33) comparison -> . comparison MINUS comparison
+    (34) comparison -> . comparison STAR comparison
+    (35) comparison -> . comparison SLASH comparison
+    (36) comparison -> . comparison LESS comparison
+    (37) comparison -> . comparison EQEQUAL comparison
+    (38) comparison -> . comparison GREATER comparison
+    (39) comparison -> . PLUS comparison
+    (40) comparison -> . MINUS comparison
+    (41) comparison -> . power
+    (42) power -> . atom
+    (43) power -> . atom trailer
+    (44) atom -> . NAME
+    (45) atom -> . NUMBER
+    (46) atom -> . STRING
+    (47) atom -> . LPAREN testlist RPAREN
 
-    PLUS            shift and go to state 9
-    MINUS           shift and go to state 5
-    NAME            shift and go to state 24
-    NUMBER          shift and go to state 19
-    STRING          shift and go to state 14
+    PLUS            shift and go to state 10
+    MINUS           shift and go to state 6
+    NAME            shift and go to state 26
+    NUMBER          shift and go to state 21
+    STRING          shift and go to state 16
     LPAREN          shift and go to state 1
 
-    comparison                     shift and go to state 25
-    power                          shift and go to state 15
-    testlist                       shift and go to state 29
-    testlist_multi                 shift and go to state 20
-    atom                           shift and go to state 21
-    test                           shift and go to state 11
+    comparison                     shift and go to state 27
+    power                          shift and go to state 17
+    testlist                       shift and go to state 31
+    testlist_multi                 shift and go to state 22
+    atom                           shift and go to state 23
+    test                           shift and go to state 13
 
 state 2
 
@@ -365,90 +371,123 @@ state 2
 
 state 3
 
-    (21) flow_stmt -> return_stmt .
+    (22) flow_stmt -> return_stmt .
 
-    NEWLINE         reduce using rule 21 (flow_stmt -> return_stmt .)
-    SEMI            reduce using rule 21 (flow_stmt -> return_stmt .)
+    NEWLINE         reduce using rule 22 (flow_stmt -> return_stmt .)
+    SEMI            reduce using rule 22 (flow_stmt -> return_stmt .)
 
 
 state 4
 
-    (22) return_stmt -> RETURN . testlist
-    (47) testlist -> . testlist_multi COMMA
-    (48) testlist -> . testlist_multi
-    (49) testlist_multi -> . testlist_multi COMMA test
-    (50) testlist_multi -> . test
-    (51) test -> . comparison
-    (30) comparison -> . comparison PLUS comparison
-    (31) comparison -> . comparison MINUS comparison
-    (32) comparison -> . comparison STAR comparison
-    (33) comparison -> . comparison SLASH comparison
-    (34) comparison -> . comparison LESS comparison
-    (35) comparison -> . comparison EQEQUAL comparison
-    (36) comparison -> . comparison GREATER comparison
-    (37) comparison -> . PLUS comparison
-    (38) comparison -> . MINUS comparison
-    (39) comparison -> . power
-    (40) power -> . atom
-    (41) power -> . atom trailer
-    (42) atom -> . NAME
-    (43) atom -> . NUMBER
-    (44) atom -> . STRING
-    (45) atom -> . LPAREN testlist RPAREN
+    (23) print_stmt -> PRINT . test
+    (53) test -> . comparison
+    (32) comparison -> . comparison PLUS comparison
+    (33) comparison -> . comparison MINUS comparison
+    (34) comparison -> . comparison STAR comparison
+    (35) comparison -> . comparison SLASH comparison
+    (36) comparison -> . comparison LESS comparison
+    (37) comparison -> . comparison EQEQUAL comparison
+    (38) comparison -> . comparison GREATER comparison
+    (39) comparison -> . PLUS comparison
+    (40) comparison -> . MINUS comparison
+    (41) comparison -> . power
+    (42) power -> . atom
+    (43) power -> . atom trailer
+    (44) atom -> . NAME
+    (45) atom -> . NUMBER
+    (46) atom -> . STRING
+    (47) atom -> . LPAREN testlist RPAREN
 
-    PLUS            shift and go to state 9
-    MINUS           shift and go to state 5
-    NAME            shift and go to state 24
-    NUMBER          shift and go to state 19
-    STRING          shift and go to state 14
+    PLUS            shift and go to state 10
+    MINUS           shift and go to state 6
+    NAME            shift and go to state 26
+    NUMBER          shift and go to state 21
+    STRING          shift and go to state 16
     LPAREN          shift and go to state 1
 
-    comparison                     shift and go to state 25
-    power                          shift and go to state 15
-    testlist                       shift and go to state 30
-    testlist_multi                 shift and go to state 20
-    atom                           shift and go to state 21
-    test                           shift and go to state 11
+    comparison                     shift and go to state 27
+    power                          shift and go to state 17
+    atom                           shift and go to state 23
+    test                           shift and go to state 32
 
 state 5
 
-    (38) comparison -> MINUS . comparison
-    (30) comparison -> . comparison PLUS comparison
-    (31) comparison -> . comparison MINUS comparison
-    (32) comparison -> . comparison STAR comparison
-    (33) comparison -> . comparison SLASH comparison
-    (34) comparison -> . comparison LESS comparison
-    (35) comparison -> . comparison EQEQUAL comparison
-    (36) comparison -> . comparison GREATER comparison
-    (37) comparison -> . PLUS comparison
-    (38) comparison -> . MINUS comparison
-    (39) comparison -> . power
-    (40) power -> . atom
-    (41) power -> . atom trailer
-    (42) atom -> . NAME
-    (43) atom -> . NUMBER
-    (44) atom -> . STRING
-    (45) atom -> . LPAREN testlist RPAREN
+    (24) return_stmt -> RETURN . testlist
+    (49) testlist -> . testlist_multi COMMA
+    (50) testlist -> . testlist_multi
+    (51) testlist_multi -> . testlist_multi COMMA test
+    (52) testlist_multi -> . test
+    (53) test -> . comparison
+    (32) comparison -> . comparison PLUS comparison
+    (33) comparison -> . comparison MINUS comparison
+    (34) comparison -> . comparison STAR comparison
+    (35) comparison -> . comparison SLASH comparison
+    (36) comparison -> . comparison LESS comparison
+    (37) comparison -> . comparison EQEQUAL comparison
+    (38) comparison -> . comparison GREATER comparison
+    (39) comparison -> . PLUS comparison
+    (40) comparison -> . MINUS comparison
+    (41) comparison -> . power
+    (42) power -> . atom
+    (43) power -> . atom trailer
+    (44) atom -> . NAME
+    (45) atom -> . NUMBER
+    (46) atom -> . STRING
+    (47) atom -> . LPAREN testlist RPAREN
 
-    PLUS            shift and go to state 9
-    MINUS           shift and go to state 5
-    NAME            shift and go to state 24
-    NUMBER          shift and go to state 19
-    STRING          shift and go to state 14
+    PLUS            shift and go to state 10
+    MINUS           shift and go to state 6
+    NAME            shift and go to state 26
+    NUMBER          shift and go to state 21
+    STRING          shift and go to state 16
     LPAREN          shift and go to state 1
 
-    comparison                     shift and go to state 31
-    power                          shift and go to state 15
-    atom                           shift and go to state 21
+    comparison                     shift and go to state 27
+    power                          shift and go to state 17
+    testlist                       shift and go to state 33
+    testlist_multi                 shift and go to state 22
+    atom                           shift and go to state 23
+    test                           shift and go to state 13
 
 state 6
 
-    (6) funcdef -> DEF . NAME parameters COLON suite
+    (40) comparison -> MINUS . comparison
+    (32) comparison -> . comparison PLUS comparison
+    (33) comparison -> . comparison MINUS comparison
+    (34) comparison -> . comparison STAR comparison
+    (35) comparison -> . comparison SLASH comparison
+    (36) comparison -> . comparison LESS comparison
+    (37) comparison -> . comparison EQEQUAL comparison
+    (38) comparison -> . comparison GREATER comparison
+    (39) comparison -> . PLUS comparison
+    (40) comparison -> . MINUS comparison
+    (41) comparison -> . power
+    (42) power -> . atom
+    (43) power -> . atom trailer
+    (44) atom -> . NAME
+    (45) atom -> . NUMBER
+    (46) atom -> . STRING
+    (47) atom -> . LPAREN testlist RPAREN
 
-    NAME            shift and go to state 32
+    PLUS            shift and go to state 10
+    MINUS           shift and go to state 6
+    NAME            shift and go to state 26
+    NUMBER          shift and go to state 21
+    STRING          shift and go to state 16
+    LPAREN          shift and go to state 1
 
+    comparison                     shift and go to state 34
+    power                          shift and go to state 17
+    atom                           shift and go to state 23
 
 state 7
+
+    (6) funcdef -> DEF . NAME parameters COLON suite
+
+    NAME            shift and go to state 35
+
+
+state 8
 
     (17) small_stmt -> flow_stmt .
 
@@ -456,7 +495,7 @@ state 7
     SEMI            reduce using rule 17 (small_stmt -> flow_stmt .)
 
 
-state 8
+state 9
 
     (4) file_input -> NEWLINE .
 
@@ -464,6 +503,7 @@ state 8
     NEWLINE         reduce using rule 4 (file_input -> NEWLINE .)
     IF              reduce using rule 4 (file_input -> NEWLINE .)
     DEF             reduce using rule 4 (file_input -> NEWLINE .)
+    PRINT           reduce using rule 4 (file_input -> NEWLINE .)
     RETURN          reduce using rule 4 (file_input -> NEWLINE .)
     PLUS            reduce using rule 4 (file_input -> NEWLINE .)
     MINUS           reduce using rule 4 (file_input -> NEWLINE .)
@@ -473,94 +513,103 @@ state 8
     LPAREN          reduce using rule 4 (file_input -> NEWLINE .)
 
 
-state 9
+state 10
 
-    (37) comparison -> PLUS . comparison
-    (30) comparison -> . comparison PLUS comparison
-    (31) comparison -> . comparison MINUS comparison
-    (32) comparison -> . comparison STAR comparison
-    (33) comparison -> . comparison SLASH comparison
-    (34) comparison -> . comparison LESS comparison
-    (35) comparison -> . comparison EQEQUAL comparison
-    (36) comparison -> . comparison GREATER comparison
-    (37) comparison -> . PLUS comparison
-    (38) comparison -> . MINUS comparison
-    (39) comparison -> . power
-    (40) power -> . atom
-    (41) power -> . atom trailer
-    (42) atom -> . NAME
-    (43) atom -> . NUMBER
-    (44) atom -> . STRING
-    (45) atom -> . LPAREN testlist RPAREN
+    (39) comparison -> PLUS . comparison
+    (32) comparison -> . comparison PLUS comparison
+    (33) comparison -> . comparison MINUS comparison
+    (34) comparison -> . comparison STAR comparison
+    (35) comparison -> . comparison SLASH comparison
+    (36) comparison -> . comparison LESS comparison
+    (37) comparison -> . comparison EQEQUAL comparison
+    (38) comparison -> . comparison GREATER comparison
+    (39) comparison -> . PLUS comparison
+    (40) comparison -> . MINUS comparison
+    (41) comparison -> . power
+    (42) power -> . atom
+    (43) power -> . atom trailer
+    (44) atom -> . NAME
+    (45) atom -> . NUMBER
+    (46) atom -> . STRING
+    (47) atom -> . LPAREN testlist RPAREN
 
-    PLUS            shift and go to state 9
-    MINUS           shift and go to state 5
-    NAME            shift and go to state 24
-    NUMBER          shift and go to state 19
-    STRING          shift and go to state 14
+    PLUS            shift and go to state 10
+    MINUS           shift and go to state 6
+    NAME            shift and go to state 26
+    NUMBER          shift and go to state 21
+    STRING          shift and go to state 16
     LPAREN          shift and go to state 1
 
-    comparison                     shift and go to state 33
-    power                          shift and go to state 15
-    atom                           shift and go to state 21
+    comparison                     shift and go to state 36
+    power                          shift and go to state 17
+    atom                           shift and go to state 23
 
-state 10
+state 11
+
+    (19) small_stmt -> print_stmt .
+
+    NEWLINE         reduce using rule 19 (small_stmt -> print_stmt .)
+    SEMI            reduce using rule 19 (small_stmt -> print_stmt .)
+
+
+state 12
 
     (0) S' -> program .
 
 
 
-state 11
+state 13
 
-    (50) testlist_multi -> test .
+    (52) testlist_multi -> test .
 
-    COMMA           reduce using rule 50 (testlist_multi -> test .)
-    EQUAL           reduce using rule 50 (testlist_multi -> test .)
-    NEWLINE         reduce using rule 50 (testlist_multi -> test .)
-    SEMI            reduce using rule 50 (testlist_multi -> test .)
-    RPAREN          reduce using rule 50 (testlist_multi -> test .)
+    COMMA           reduce using rule 52 (testlist_multi -> test .)
+    EQUAL           reduce using rule 52 (testlist_multi -> test .)
+    NEWLINE         reduce using rule 52 (testlist_multi -> test .)
+    SEMI            reduce using rule 52 (testlist_multi -> test .)
+    RPAREN          reduce using rule 52 (testlist_multi -> test .)
 
 
-state 12
+state 14
 
-    (25) if_stmt -> IF . test COLON suite
-    (51) test -> . comparison
-    (30) comparison -> . comparison PLUS comparison
-    (31) comparison -> . comparison MINUS comparison
-    (32) comparison -> . comparison STAR comparison
-    (33) comparison -> . comparison SLASH comparison
-    (34) comparison -> . comparison LESS comparison
-    (35) comparison -> . comparison EQEQUAL comparison
-    (36) comparison -> . comparison GREATER comparison
-    (37) comparison -> . PLUS comparison
-    (38) comparison -> . MINUS comparison
-    (39) comparison -> . power
-    (40) power -> . atom
-    (41) power -> . atom trailer
-    (42) atom -> . NAME
-    (43) atom -> . NUMBER
-    (44) atom -> . STRING
-    (45) atom -> . LPAREN testlist RPAREN
+    (27) if_stmt -> IF . test COLON suite
+    (53) test -> . comparison
+    (32) comparison -> . comparison PLUS comparison
+    (33) comparison -> . comparison MINUS comparison
+    (34) comparison -> . comparison STAR comparison
+    (35) comparison -> . comparison SLASH comparison
+    (36) comparison -> . comparison LESS comparison
+    (37) comparison -> . comparison EQEQUAL comparison
+    (38) comparison -> . comparison GREATER comparison
+    (39) comparison -> . PLUS comparison
+    (40) comparison -> . MINUS comparison
+    (41) comparison -> . power
+    (42) power -> . atom
+    (43) power -> . atom trailer
+    (44) atom -> . NAME
+    (45) atom -> . NUMBER
+    (46) atom -> . STRING
+    (47) atom -> . LPAREN testlist RPAREN
 
-    PLUS            shift and go to state 9
-    MINUS           shift and go to state 5
-    NAME            shift and go to state 24
-    NUMBER          shift and go to state 19
-    STRING          shift and go to state 14
+    PLUS            shift and go to state 10
+    MINUS           shift and go to state 6
+    NAME            shift and go to state 26
+    NUMBER          shift and go to state 21
+    STRING          shift and go to state 16
     LPAREN          shift and go to state 1
 
-    comparison                     shift and go to state 25
-    power                          shift and go to state 15
-    atom                           shift and go to state 21
-    test                           shift and go to state 34
+    comparison                     shift and go to state 27
+    power                          shift and go to state 17
+    atom                           shift and go to state 23
+    test                           shift and go to state 37
 
-state 13
+state 15
 
     (12) stmt -> compound_stmt .
 
     DEDENT          reduce using rule 12 (stmt -> compound_stmt .)
     IF              reduce using rule 12 (stmt -> compound_stmt .)
     DEF             reduce using rule 12 (stmt -> compound_stmt .)
+    PRINT           reduce using rule 12 (stmt -> compound_stmt .)
     RETURN          reduce using rule 12 (stmt -> compound_stmt .)
     PLUS            reduce using rule 12 (stmt -> compound_stmt .)
     MINUS           reduce using rule 12 (stmt -> compound_stmt .)
@@ -572,52 +621,53 @@ state 13
     NEWLINE         reduce using rule 12 (stmt -> compound_stmt .)
 
 
-state 14
-
-    (44) atom -> STRING .
-
-    LPAREN          reduce using rule 44 (atom -> STRING .)
-    PLUS            reduce using rule 44 (atom -> STRING .)
-    MINUS           reduce using rule 44 (atom -> STRING .)
-    STAR            reduce using rule 44 (atom -> STRING .)
-    SLASH           reduce using rule 44 (atom -> STRING .)
-    LESS            reduce using rule 44 (atom -> STRING .)
-    EQEQUAL         reduce using rule 44 (atom -> STRING .)
-    GREATER         reduce using rule 44 (atom -> STRING .)
-    COMMA           reduce using rule 44 (atom -> STRING .)
-    EQUAL           reduce using rule 44 (atom -> STRING .)
-    NEWLINE         reduce using rule 44 (atom -> STRING .)
-    SEMI            reduce using rule 44 (atom -> STRING .)
-    RPAREN          reduce using rule 44 (atom -> STRING .)
-    COLON           reduce using rule 44 (atom -> STRING .)
-
-
-state 15
-
-    (39) comparison -> power .
-
-    PLUS            reduce using rule 39 (comparison -> power .)
-    MINUS           reduce using rule 39 (comparison -> power .)
-    STAR            reduce using rule 39 (comparison -> power .)
-    SLASH           reduce using rule 39 (comparison -> power .)
-    LESS            reduce using rule 39 (comparison -> power .)
-    EQEQUAL         reduce using rule 39 (comparison -> power .)
-    GREATER         reduce using rule 39 (comparison -> power .)
-    COMMA           reduce using rule 39 (comparison -> power .)
-    EQUAL           reduce using rule 39 (comparison -> power .)
-    NEWLINE         reduce using rule 39 (comparison -> power .)
-    SEMI            reduce using rule 39 (comparison -> power .)
-    RPAREN          reduce using rule 39 (comparison -> power .)
-    COLON           reduce using rule 39 (comparison -> power .)
-
-
 state 16
+
+    (46) atom -> STRING .
+
+    LPAREN          reduce using rule 46 (atom -> STRING .)
+    PLUS            reduce using rule 46 (atom -> STRING .)
+    MINUS           reduce using rule 46 (atom -> STRING .)
+    STAR            reduce using rule 46 (atom -> STRING .)
+    SLASH           reduce using rule 46 (atom -> STRING .)
+    LESS            reduce using rule 46 (atom -> STRING .)
+    EQEQUAL         reduce using rule 46 (atom -> STRING .)
+    GREATER         reduce using rule 46 (atom -> STRING .)
+    COMMA           reduce using rule 46 (atom -> STRING .)
+    EQUAL           reduce using rule 46 (atom -> STRING .)
+    NEWLINE         reduce using rule 46 (atom -> STRING .)
+    SEMI            reduce using rule 46 (atom -> STRING .)
+    RPAREN          reduce using rule 46 (atom -> STRING .)
+    COLON           reduce using rule 46 (atom -> STRING .)
+
+
+state 17
+
+    (41) comparison -> power .
+
+    PLUS            reduce using rule 41 (comparison -> power .)
+    MINUS           reduce using rule 41 (comparison -> power .)
+    STAR            reduce using rule 41 (comparison -> power .)
+    SLASH           reduce using rule 41 (comparison -> power .)
+    LESS            reduce using rule 41 (comparison -> power .)
+    EQEQUAL         reduce using rule 41 (comparison -> power .)
+    GREATER         reduce using rule 41 (comparison -> power .)
+    COMMA           reduce using rule 41 (comparison -> power .)
+    EQUAL           reduce using rule 41 (comparison -> power .)
+    NEWLINE         reduce using rule 41 (comparison -> power .)
+    SEMI            reduce using rule 41 (comparison -> power .)
+    RPAREN          reduce using rule 41 (comparison -> power .)
+    COLON           reduce using rule 41 (comparison -> power .)
+
+
+state 18
 
     (11) stmt -> simple_stmt .
 
     DEDENT          reduce using rule 11 (stmt -> simple_stmt .)
     IF              reduce using rule 11 (stmt -> simple_stmt .)
     DEF             reduce using rule 11 (stmt -> simple_stmt .)
+    PRINT           reduce using rule 11 (stmt -> simple_stmt .)
     RETURN          reduce using rule 11 (stmt -> simple_stmt .)
     PLUS            reduce using rule 11 (stmt -> simple_stmt .)
     MINUS           reduce using rule 11 (stmt -> simple_stmt .)
@@ -629,17 +679,17 @@ state 16
     NEWLINE         reduce using rule 11 (stmt -> simple_stmt .)
 
 
-state 17
+state 19
 
-    (19) expr_stmt -> testlist . EQUAL testlist
-    (20) expr_stmt -> testlist .
+    (20) expr_stmt -> testlist . EQUAL testlist
+    (21) expr_stmt -> testlist .
 
-    EQUAL           shift and go to state 35
-    NEWLINE         reduce using rule 20 (expr_stmt -> testlist .)
-    SEMI            reduce using rule 20 (expr_stmt -> testlist .)
+    EQUAL           shift and go to state 38
+    NEWLINE         reduce using rule 21 (expr_stmt -> testlist .)
+    SEMI            reduce using rule 21 (expr_stmt -> testlist .)
 
 
-state 18
+state 20
 
     (5) file_input -> stmt .
 
@@ -647,6 +697,7 @@ state 18
     NEWLINE         reduce using rule 5 (file_input -> stmt .)
     IF              reduce using rule 5 (file_input -> stmt .)
     DEF             reduce using rule 5 (file_input -> stmt .)
+    PRINT           reduce using rule 5 (file_input -> stmt .)
     RETURN          reduce using rule 5 (file_input -> stmt .)
     PLUS            reduce using rule 5 (file_input -> stmt .)
     MINUS           reduce using rule 5 (file_input -> stmt .)
@@ -656,81 +707,82 @@ state 18
     LPAREN          reduce using rule 5 (file_input -> stmt .)
 
 
-state 19
-
-    (43) atom -> NUMBER .
-
-    LPAREN          reduce using rule 43 (atom -> NUMBER .)
-    PLUS            reduce using rule 43 (atom -> NUMBER .)
-    MINUS           reduce using rule 43 (atom -> NUMBER .)
-    STAR            reduce using rule 43 (atom -> NUMBER .)
-    SLASH           reduce using rule 43 (atom -> NUMBER .)
-    LESS            reduce using rule 43 (atom -> NUMBER .)
-    EQEQUAL         reduce using rule 43 (atom -> NUMBER .)
-    GREATER         reduce using rule 43 (atom -> NUMBER .)
-    COMMA           reduce using rule 43 (atom -> NUMBER .)
-    EQUAL           reduce using rule 43 (atom -> NUMBER .)
-    NEWLINE         reduce using rule 43 (atom -> NUMBER .)
-    SEMI            reduce using rule 43 (atom -> NUMBER .)
-    RPAREN          reduce using rule 43 (atom -> NUMBER .)
-    COLON           reduce using rule 43 (atom -> NUMBER .)
-
-
-state 20
-
-    (47) testlist -> testlist_multi . COMMA
-    (48) testlist -> testlist_multi .
-    (49) testlist_multi -> testlist_multi . COMMA test
-
-    COMMA           shift and go to state 36
-    EQUAL           reduce using rule 48 (testlist -> testlist_multi .)
-    NEWLINE         reduce using rule 48 (testlist -> testlist_multi .)
-    SEMI            reduce using rule 48 (testlist -> testlist_multi .)
-    RPAREN          reduce using rule 48 (testlist -> testlist_multi .)
-
-
 state 21
 
-    (40) power -> atom .
-    (41) power -> atom . trailer
-    (46) trailer -> . LPAREN arglist RPAREN
+    (45) atom -> NUMBER .
 
-    PLUS            reduce using rule 40 (power -> atom .)
-    MINUS           reduce using rule 40 (power -> atom .)
-    STAR            reduce using rule 40 (power -> atom .)
-    SLASH           reduce using rule 40 (power -> atom .)
-    LESS            reduce using rule 40 (power -> atom .)
-    EQEQUAL         reduce using rule 40 (power -> atom .)
-    GREATER         reduce using rule 40 (power -> atom .)
-    COMMA           reduce using rule 40 (power -> atom .)
-    EQUAL           reduce using rule 40 (power -> atom .)
-    NEWLINE         reduce using rule 40 (power -> atom .)
-    SEMI            reduce using rule 40 (power -> atom .)
-    RPAREN          reduce using rule 40 (power -> atom .)
-    COLON           reduce using rule 40 (power -> atom .)
-    LPAREN          shift and go to state 37
+    LPAREN          reduce using rule 45 (atom -> NUMBER .)
+    PLUS            reduce using rule 45 (atom -> NUMBER .)
+    MINUS           reduce using rule 45 (atom -> NUMBER .)
+    STAR            reduce using rule 45 (atom -> NUMBER .)
+    SLASH           reduce using rule 45 (atom -> NUMBER .)
+    LESS            reduce using rule 45 (atom -> NUMBER .)
+    EQEQUAL         reduce using rule 45 (atom -> NUMBER .)
+    GREATER         reduce using rule 45 (atom -> NUMBER .)
+    COMMA           reduce using rule 45 (atom -> NUMBER .)
+    EQUAL           reduce using rule 45 (atom -> NUMBER .)
+    NEWLINE         reduce using rule 45 (atom -> NUMBER .)
+    SEMI            reduce using rule 45 (atom -> NUMBER .)
+    RPAREN          reduce using rule 45 (atom -> NUMBER .)
+    COLON           reduce using rule 45 (atom -> NUMBER .)
 
-    trailer                        shift and go to state 38
 
 state 22
 
-    (24) compound_stmt -> funcdef .
+    (49) testlist -> testlist_multi . COMMA
+    (50) testlist -> testlist_multi .
+    (51) testlist_multi -> testlist_multi . COMMA test
 
-    ENDMARKER       reduce using rule 24 (compound_stmt -> funcdef .)
-    NEWLINE         reduce using rule 24 (compound_stmt -> funcdef .)
-    IF              reduce using rule 24 (compound_stmt -> funcdef .)
-    DEF             reduce using rule 24 (compound_stmt -> funcdef .)
-    RETURN          reduce using rule 24 (compound_stmt -> funcdef .)
-    PLUS            reduce using rule 24 (compound_stmt -> funcdef .)
-    MINUS           reduce using rule 24 (compound_stmt -> funcdef .)
-    NAME            reduce using rule 24 (compound_stmt -> funcdef .)
-    NUMBER          reduce using rule 24 (compound_stmt -> funcdef .)
-    STRING          reduce using rule 24 (compound_stmt -> funcdef .)
-    LPAREN          reduce using rule 24 (compound_stmt -> funcdef .)
-    DEDENT          reduce using rule 24 (compound_stmt -> funcdef .)
+    COMMA           shift and go to state 39
+    EQUAL           reduce using rule 50 (testlist -> testlist_multi .)
+    NEWLINE         reduce using rule 50 (testlist -> testlist_multi .)
+    SEMI            reduce using rule 50 (testlist -> testlist_multi .)
+    RPAREN          reduce using rule 50 (testlist -> testlist_multi .)
 
 
 state 23
+
+    (42) power -> atom .
+    (43) power -> atom . trailer
+    (48) trailer -> . LPAREN arglist RPAREN
+
+    PLUS            reduce using rule 42 (power -> atom .)
+    MINUS           reduce using rule 42 (power -> atom .)
+    STAR            reduce using rule 42 (power -> atom .)
+    SLASH           reduce using rule 42 (power -> atom .)
+    LESS            reduce using rule 42 (power -> atom .)
+    EQEQUAL         reduce using rule 42 (power -> atom .)
+    GREATER         reduce using rule 42 (power -> atom .)
+    RPAREN          reduce using rule 42 (power -> atom .)
+    COMMA           reduce using rule 42 (power -> atom .)
+    NEWLINE         reduce using rule 42 (power -> atom .)
+    SEMI            reduce using rule 42 (power -> atom .)
+    EQUAL           reduce using rule 42 (power -> atom .)
+    COLON           reduce using rule 42 (power -> atom .)
+    LPAREN          shift and go to state 40
+
+    trailer                        shift and go to state 41
+
+state 24
+
+    (26) compound_stmt -> funcdef .
+
+    ENDMARKER       reduce using rule 26 (compound_stmt -> funcdef .)
+    NEWLINE         reduce using rule 26 (compound_stmt -> funcdef .)
+    IF              reduce using rule 26 (compound_stmt -> funcdef .)
+    DEF             reduce using rule 26 (compound_stmt -> funcdef .)
+    PRINT           reduce using rule 26 (compound_stmt -> funcdef .)
+    RETURN          reduce using rule 26 (compound_stmt -> funcdef .)
+    PLUS            reduce using rule 26 (compound_stmt -> funcdef .)
+    MINUS           reduce using rule 26 (compound_stmt -> funcdef .)
+    NAME            reduce using rule 26 (compound_stmt -> funcdef .)
+    NUMBER          reduce using rule 26 (compound_stmt -> funcdef .)
+    STRING          reduce using rule 26 (compound_stmt -> funcdef .)
+    LPAREN          reduce using rule 26 (compound_stmt -> funcdef .)
+    DEDENT          reduce using rule 26 (compound_stmt -> funcdef .)
+
+
+state 25
 
     (18) small_stmt -> expr_stmt .
 
@@ -738,71 +790,72 @@ state 23
     SEMI            reduce using rule 18 (small_stmt -> expr_stmt .)
 
 
-state 24
-
-    (42) atom -> NAME .
-
-    LPAREN          reduce using rule 42 (atom -> NAME .)
-    PLUS            reduce using rule 42 (atom -> NAME .)
-    MINUS           reduce using rule 42 (atom -> NAME .)
-    STAR            reduce using rule 42 (atom -> NAME .)
-    SLASH           reduce using rule 42 (atom -> NAME .)
-    LESS            reduce using rule 42 (atom -> NAME .)
-    EQEQUAL         reduce using rule 42 (atom -> NAME .)
-    GREATER         reduce using rule 42 (atom -> NAME .)
-    COMMA           reduce using rule 42 (atom -> NAME .)
-    EQUAL           reduce using rule 42 (atom -> NAME .)
-    NEWLINE         reduce using rule 42 (atom -> NAME .)
-    SEMI            reduce using rule 42 (atom -> NAME .)
-    RPAREN          reduce using rule 42 (atom -> NAME .)
-    COLON           reduce using rule 42 (atom -> NAME .)
-
-
-state 25
-
-    (51) test -> comparison .
-    (30) comparison -> comparison . PLUS comparison
-    (31) comparison -> comparison . MINUS comparison
-    (32) comparison -> comparison . STAR comparison
-    (33) comparison -> comparison . SLASH comparison
-    (34) comparison -> comparison . LESS comparison
-    (35) comparison -> comparison . EQEQUAL comparison
-    (36) comparison -> comparison . GREATER comparison
-
-    COMMA           reduce using rule 51 (test -> comparison .)
-    EQUAL           reduce using rule 51 (test -> comparison .)
-    NEWLINE         reduce using rule 51 (test -> comparison .)
-    SEMI            reduce using rule 51 (test -> comparison .)
-    RPAREN          reduce using rule 51 (test -> comparison .)
-    COLON           reduce using rule 51 (test -> comparison .)
-    PLUS            shift and go to state 43
-    MINUS           shift and go to state 45
-    STAR            shift and go to state 39
-    SLASH           shift and go to state 44
-    LESS            shift and go to state 41
-    EQEQUAL         shift and go to state 42
-    GREATER         shift and go to state 40
-
-
 state 26
 
-    (23) compound_stmt -> if_stmt .
+    (44) atom -> NAME .
 
-    ENDMARKER       reduce using rule 23 (compound_stmt -> if_stmt .)
-    NEWLINE         reduce using rule 23 (compound_stmt -> if_stmt .)
-    IF              reduce using rule 23 (compound_stmt -> if_stmt .)
-    DEF             reduce using rule 23 (compound_stmt -> if_stmt .)
-    RETURN          reduce using rule 23 (compound_stmt -> if_stmt .)
-    PLUS            reduce using rule 23 (compound_stmt -> if_stmt .)
-    MINUS           reduce using rule 23 (compound_stmt -> if_stmt .)
-    NAME            reduce using rule 23 (compound_stmt -> if_stmt .)
-    NUMBER          reduce using rule 23 (compound_stmt -> if_stmt .)
-    STRING          reduce using rule 23 (compound_stmt -> if_stmt .)
-    LPAREN          reduce using rule 23 (compound_stmt -> if_stmt .)
-    DEDENT          reduce using rule 23 (compound_stmt -> if_stmt .)
+    LPAREN          reduce using rule 44 (atom -> NAME .)
+    PLUS            reduce using rule 44 (atom -> NAME .)
+    MINUS           reduce using rule 44 (atom -> NAME .)
+    STAR            reduce using rule 44 (atom -> NAME .)
+    SLASH           reduce using rule 44 (atom -> NAME .)
+    LESS            reduce using rule 44 (atom -> NAME .)
+    EQEQUAL         reduce using rule 44 (atom -> NAME .)
+    GREATER         reduce using rule 44 (atom -> NAME .)
+    COMMA           reduce using rule 44 (atom -> NAME .)
+    EQUAL           reduce using rule 44 (atom -> NAME .)
+    NEWLINE         reduce using rule 44 (atom -> NAME .)
+    SEMI            reduce using rule 44 (atom -> NAME .)
+    RPAREN          reduce using rule 44 (atom -> NAME .)
+    COLON           reduce using rule 44 (atom -> NAME .)
 
 
 state 27
+
+    (53) test -> comparison .
+    (32) comparison -> comparison . PLUS comparison
+    (33) comparison -> comparison . MINUS comparison
+    (34) comparison -> comparison . STAR comparison
+    (35) comparison -> comparison . SLASH comparison
+    (36) comparison -> comparison . LESS comparison
+    (37) comparison -> comparison . EQEQUAL comparison
+    (38) comparison -> comparison . GREATER comparison
+
+    RPAREN          reduce using rule 53 (test -> comparison .)
+    COMMA           reduce using rule 53 (test -> comparison .)
+    EQUAL           reduce using rule 53 (test -> comparison .)
+    NEWLINE         reduce using rule 53 (test -> comparison .)
+    SEMI            reduce using rule 53 (test -> comparison .)
+    COLON           reduce using rule 53 (test -> comparison .)
+    PLUS            shift and go to state 46
+    MINUS           shift and go to state 48
+    STAR            shift and go to state 42
+    SLASH           shift and go to state 47
+    LESS            shift and go to state 44
+    EQEQUAL         shift and go to state 45
+    GREATER         shift and go to state 43
+
+
+state 28
+
+    (25) compound_stmt -> if_stmt .
+
+    ENDMARKER       reduce using rule 25 (compound_stmt -> if_stmt .)
+    NEWLINE         reduce using rule 25 (compound_stmt -> if_stmt .)
+    IF              reduce using rule 25 (compound_stmt -> if_stmt .)
+    DEF             reduce using rule 25 (compound_stmt -> if_stmt .)
+    PRINT           reduce using rule 25 (compound_stmt -> if_stmt .)
+    RETURN          reduce using rule 25 (compound_stmt -> if_stmt .)
+    PLUS            reduce using rule 25 (compound_stmt -> if_stmt .)
+    MINUS           reduce using rule 25 (compound_stmt -> if_stmt .)
+    NAME            reduce using rule 25 (compound_stmt -> if_stmt .)
+    NUMBER          reduce using rule 25 (compound_stmt -> if_stmt .)
+    STRING          reduce using rule 25 (compound_stmt -> if_stmt .)
+    LPAREN          reduce using rule 25 (compound_stmt -> if_stmt .)
+    DEDENT          reduce using rule 25 (compound_stmt -> if_stmt .)
+
+
+state 29
 
     (1) program -> file_input . ENDMARKER
     (2) file_input -> file_input . NEWLINE
@@ -811,538 +864,550 @@ state 27
     (12) stmt -> . compound_stmt
     (13) simple_stmt -> . small_stmts NEWLINE
     (14) simple_stmt -> . small_stmts SEMI NEWLINE
-    (23) compound_stmt -> . if_stmt
-    (24) compound_stmt -> . funcdef
+    (25) compound_stmt -> . if_stmt
+    (26) compound_stmt -> . funcdef
     (15) small_stmts -> . small_stmts SEMI small_stmt
     (16) small_stmts -> . small_stmt
-    (25) if_stmt -> . IF test COLON suite
+    (27) if_stmt -> . IF test COLON suite
     (6) funcdef -> . DEF NAME parameters COLON suite
     (17) small_stmt -> . flow_stmt
     (18) small_stmt -> . expr_stmt
-    (21) flow_stmt -> . return_stmt
-    (19) expr_stmt -> . testlist EQUAL testlist
-    (20) expr_stmt -> . testlist
-    (22) return_stmt -> . RETURN testlist
-    (47) testlist -> . testlist_multi COMMA
-    (48) testlist -> . testlist_multi
-    (49) testlist_multi -> . testlist_multi COMMA test
-    (50) testlist_multi -> . test
-    (51) test -> . comparison
-    (30) comparison -> . comparison PLUS comparison
-    (31) comparison -> . comparison MINUS comparison
-    (32) comparison -> . comparison STAR comparison
-    (33) comparison -> . comparison SLASH comparison
-    (34) comparison -> . comparison LESS comparison
-    (35) comparison -> . comparison EQEQUAL comparison
-    (36) comparison -> . comparison GREATER comparison
-    (37) comparison -> . PLUS comparison
-    (38) comparison -> . MINUS comparison
-    (39) comparison -> . power
-    (40) power -> . atom
-    (41) power -> . atom trailer
-    (42) atom -> . NAME
-    (43) atom -> . NUMBER
-    (44) atom -> . STRING
-    (45) atom -> . LPAREN testlist RPAREN
+    (19) small_stmt -> . print_stmt
+    (22) flow_stmt -> . return_stmt
+    (20) expr_stmt -> . testlist EQUAL testlist
+    (21) expr_stmt -> . testlist
+    (23) print_stmt -> . PRINT test
+    (24) return_stmt -> . RETURN testlist
+    (49) testlist -> . testlist_multi COMMA
+    (50) testlist -> . testlist_multi
+    (51) testlist_multi -> . testlist_multi COMMA test
+    (52) testlist_multi -> . test
+    (53) test -> . comparison
+    (32) comparison -> . comparison PLUS comparison
+    (33) comparison -> . comparison MINUS comparison
+    (34) comparison -> . comparison STAR comparison
+    (35) comparison -> . comparison SLASH comparison
+    (36) comparison -> . comparison LESS comparison
+    (37) comparison -> . comparison EQEQUAL comparison
+    (38) comparison -> . comparison GREATER comparison
+    (39) comparison -> . PLUS comparison
+    (40) comparison -> . MINUS comparison
+    (41) comparison -> . power
+    (42) power -> . atom
+    (43) power -> . atom trailer
+    (44) atom -> . NAME
+    (45) atom -> . NUMBER
+    (46) atom -> . STRING
+    (47) atom -> . LPAREN testlist RPAREN
 
-    ENDMARKER       shift and go to state 46
-    NEWLINE         shift and go to state 47
-    IF              shift and go to state 12
-    DEF             shift and go to state 6
-    RETURN          shift and go to state 4
-    PLUS            shift and go to state 9
-    MINUS           shift and go to state 5
-    NAME            shift and go to state 24
-    NUMBER          shift and go to state 19
-    STRING          shift and go to state 14
+    ENDMARKER       shift and go to state 49
+    NEWLINE         shift and go to state 50
+    IF              shift and go to state 14
+    DEF             shift and go to state 7
+    PRINT           shift and go to state 4
+    RETURN          shift and go to state 5
+    PLUS            shift and go to state 10
+    MINUS           shift and go to state 6
+    NAME            shift and go to state 26
+    NUMBER          shift and go to state 21
+    STRING          shift and go to state 16
     LPAREN          shift and go to state 1
 
-    flow_stmt                      shift and go to state 7
-    comparison                     shift and go to state 25
-    if_stmt                        shift and go to state 26
-    simple_stmt                    shift and go to state 16
-    testlist                       shift and go to state 17
-    stmt                           shift and go to state 48
-    testlist_multi                 shift and go to state 20
+    flow_stmt                      shift and go to state 8
+    comparison                     shift and go to state 27
+    if_stmt                        shift and go to state 28
+    simple_stmt                    shift and go to state 18
+    testlist                       shift and go to state 19
+    print_stmt                     shift and go to state 11
+    stmt                           shift and go to state 51
+    testlist_multi                 shift and go to state 22
     small_stmt                     shift and go to state 2
-    power                          shift and go to state 15
-    test                           shift and go to state 11
+    power                          shift and go to state 17
+    test                           shift and go to state 13
     return_stmt                    shift and go to state 3
-    atom                           shift and go to state 21
-    funcdef                        shift and go to state 22
-    expr_stmt                      shift and go to state 23
-    compound_stmt                  shift and go to state 13
-    small_stmts                    shift and go to state 28
+    atom                           shift and go to state 23
+    funcdef                        shift and go to state 24
+    expr_stmt                      shift and go to state 25
+    compound_stmt                  shift and go to state 15
+    small_stmts                    shift and go to state 30
 
-state 28
+state 30
 
     (13) simple_stmt -> small_stmts . NEWLINE
     (14) simple_stmt -> small_stmts . SEMI NEWLINE
     (15) small_stmts -> small_stmts . SEMI small_stmt
 
-    NEWLINE         shift and go to state 49
-    SEMI            shift and go to state 50
-
-
-state 29
-
-    (45) atom -> LPAREN testlist . RPAREN
-
-    RPAREN          shift and go to state 51
-
-
-state 30
-
-    (22) return_stmt -> RETURN testlist .
-
-    NEWLINE         reduce using rule 22 (return_stmt -> RETURN testlist .)
-    SEMI            reduce using rule 22 (return_stmt -> RETURN testlist .)
+    NEWLINE         shift and go to state 52
+    SEMI            shift and go to state 53
 
 
 state 31
 
-    (38) comparison -> MINUS comparison .
-    (30) comparison -> comparison . PLUS comparison
-    (31) comparison -> comparison . MINUS comparison
-    (32) comparison -> comparison . STAR comparison
-    (33) comparison -> comparison . SLASH comparison
-    (34) comparison -> comparison . LESS comparison
-    (35) comparison -> comparison . EQEQUAL comparison
-    (36) comparison -> comparison . GREATER comparison
+    (47) atom -> LPAREN testlist . RPAREN
 
-    PLUS            reduce using rule 38 (comparison -> MINUS comparison .)
-    MINUS           reduce using rule 38 (comparison -> MINUS comparison .)
-    LESS            reduce using rule 38 (comparison -> MINUS comparison .)
-    EQEQUAL         reduce using rule 38 (comparison -> MINUS comparison .)
-    GREATER         reduce using rule 38 (comparison -> MINUS comparison .)
-    COMMA           reduce using rule 38 (comparison -> MINUS comparison .)
-    EQUAL           reduce using rule 38 (comparison -> MINUS comparison .)
-    NEWLINE         reduce using rule 38 (comparison -> MINUS comparison .)
-    SEMI            reduce using rule 38 (comparison -> MINUS comparison .)
-    RPAREN          reduce using rule 38 (comparison -> MINUS comparison .)
-    COLON           reduce using rule 38 (comparison -> MINUS comparison .)
-    STAR            shift and go to state 39
-    SLASH           shift and go to state 44
-
-  ! STAR            [ reduce using rule 38 (comparison -> MINUS comparison .) ]
-  ! SLASH           [ reduce using rule 38 (comparison -> MINUS comparison .) ]
-  ! PLUS            [ shift and go to state 43 ]
-  ! MINUS           [ shift and go to state 45 ]
-  ! LESS            [ shift and go to state 41 ]
-  ! EQEQUAL         [ shift and go to state 42 ]
-  ! GREATER         [ shift and go to state 40 ]
+    RPAREN          shift and go to state 54
 
 
 state 32
+
+    (23) print_stmt -> PRINT test .
+
+    NEWLINE         reduce using rule 23 (print_stmt -> PRINT test .)
+    SEMI            reduce using rule 23 (print_stmt -> PRINT test .)
+
+
+state 33
+
+    (24) return_stmt -> RETURN testlist .
+
+    NEWLINE         reduce using rule 24 (return_stmt -> RETURN testlist .)
+    SEMI            reduce using rule 24 (return_stmt -> RETURN testlist .)
+
+
+state 34
+
+    (40) comparison -> MINUS comparison .
+    (32) comparison -> comparison . PLUS comparison
+    (33) comparison -> comparison . MINUS comparison
+    (34) comparison -> comparison . STAR comparison
+    (35) comparison -> comparison . SLASH comparison
+    (36) comparison -> comparison . LESS comparison
+    (37) comparison -> comparison . EQEQUAL comparison
+    (38) comparison -> comparison . GREATER comparison
+
+    PLUS            reduce using rule 40 (comparison -> MINUS comparison .)
+    MINUS           reduce using rule 40 (comparison -> MINUS comparison .)
+    LESS            reduce using rule 40 (comparison -> MINUS comparison .)
+    EQEQUAL         reduce using rule 40 (comparison -> MINUS comparison .)
+    GREATER         reduce using rule 40 (comparison -> MINUS comparison .)
+    COMMA           reduce using rule 40 (comparison -> MINUS comparison .)
+    EQUAL           reduce using rule 40 (comparison -> MINUS comparison .)
+    NEWLINE         reduce using rule 40 (comparison -> MINUS comparison .)
+    SEMI            reduce using rule 40 (comparison -> MINUS comparison .)
+    RPAREN          reduce using rule 40 (comparison -> MINUS comparison .)
+    COLON           reduce using rule 40 (comparison -> MINUS comparison .)
+    STAR            shift and go to state 42
+    SLASH           shift and go to state 47
+
+  ! STAR            [ reduce using rule 40 (comparison -> MINUS comparison .) ]
+  ! SLASH           [ reduce using rule 40 (comparison -> MINUS comparison .) ]
+  ! PLUS            [ shift and go to state 46 ]
+  ! MINUS           [ shift and go to state 48 ]
+  ! LESS            [ shift and go to state 44 ]
+  ! EQEQUAL         [ shift and go to state 45 ]
+  ! GREATER         [ shift and go to state 43 ]
+
+
+state 35
 
     (6) funcdef -> DEF NAME . parameters COLON suite
     (7) parameters -> . LPAREN RPAREN
     (8) parameters -> . LPAREN varargslist RPAREN
 
-    LPAREN          shift and go to state 53
+    LPAREN          shift and go to state 56
 
-    parameters                     shift and go to state 52
-
-state 33
-
-    (37) comparison -> PLUS comparison .
-    (30) comparison -> comparison . PLUS comparison
-    (31) comparison -> comparison . MINUS comparison
-    (32) comparison -> comparison . STAR comparison
-    (33) comparison -> comparison . SLASH comparison
-    (34) comparison -> comparison . LESS comparison
-    (35) comparison -> comparison . EQEQUAL comparison
-    (36) comparison -> comparison . GREATER comparison
-
-    PLUS            reduce using rule 37 (comparison -> PLUS comparison .)
-    MINUS           reduce using rule 37 (comparison -> PLUS comparison .)
-    LESS            reduce using rule 37 (comparison -> PLUS comparison .)
-    EQEQUAL         reduce using rule 37 (comparison -> PLUS comparison .)
-    GREATER         reduce using rule 37 (comparison -> PLUS comparison .)
-    COMMA           reduce using rule 37 (comparison -> PLUS comparison .)
-    EQUAL           reduce using rule 37 (comparison -> PLUS comparison .)
-    NEWLINE         reduce using rule 37 (comparison -> PLUS comparison .)
-    SEMI            reduce using rule 37 (comparison -> PLUS comparison .)
-    RPAREN          reduce using rule 37 (comparison -> PLUS comparison .)
-    COLON           reduce using rule 37 (comparison -> PLUS comparison .)
-    STAR            shift and go to state 39
-    SLASH           shift and go to state 44
-
-  ! STAR            [ reduce using rule 37 (comparison -> PLUS comparison .) ]
-  ! SLASH           [ reduce using rule 37 (comparison -> PLUS comparison .) ]
-  ! PLUS            [ shift and go to state 43 ]
-  ! MINUS           [ shift and go to state 45 ]
-  ! LESS            [ shift and go to state 41 ]
-  ! EQEQUAL         [ shift and go to state 42 ]
-  ! GREATER         [ shift and go to state 40 ]
-
-
-state 34
-
-    (25) if_stmt -> IF test . COLON suite
-
-    COLON           shift and go to state 54
-
-
-state 35
-
-    (19) expr_stmt -> testlist EQUAL . testlist
-    (47) testlist -> . testlist_multi COMMA
-    (48) testlist -> . testlist_multi
-    (49) testlist_multi -> . testlist_multi COMMA test
-    (50) testlist_multi -> . test
-    (51) test -> . comparison
-    (30) comparison -> . comparison PLUS comparison
-    (31) comparison -> . comparison MINUS comparison
-    (32) comparison -> . comparison STAR comparison
-    (33) comparison -> . comparison SLASH comparison
-    (34) comparison -> . comparison LESS comparison
-    (35) comparison -> . comparison EQEQUAL comparison
-    (36) comparison -> . comparison GREATER comparison
-    (37) comparison -> . PLUS comparison
-    (38) comparison -> . MINUS comparison
-    (39) comparison -> . power
-    (40) power -> . atom
-    (41) power -> . atom trailer
-    (42) atom -> . NAME
-    (43) atom -> . NUMBER
-    (44) atom -> . STRING
-    (45) atom -> . LPAREN testlist RPAREN
-
-    PLUS            shift and go to state 9
-    MINUS           shift and go to state 5
-    NAME            shift and go to state 24
-    NUMBER          shift and go to state 19
-    STRING          shift and go to state 14
-    LPAREN          shift and go to state 1
-
-    comparison                     shift and go to state 25
-    power                          shift and go to state 15
-    testlist                       shift and go to state 55
-    testlist_multi                 shift and go to state 20
-    atom                           shift and go to state 21
-    test                           shift and go to state 11
+    parameters                     shift and go to state 55
 
 state 36
 
-    (47) testlist -> testlist_multi COMMA .
-    (49) testlist_multi -> testlist_multi COMMA . test
-    (51) test -> . comparison
-    (30) comparison -> . comparison PLUS comparison
-    (31) comparison -> . comparison MINUS comparison
-    (32) comparison -> . comparison STAR comparison
-    (33) comparison -> . comparison SLASH comparison
-    (34) comparison -> . comparison LESS comparison
-    (35) comparison -> . comparison EQEQUAL comparison
-    (36) comparison -> . comparison GREATER comparison
-    (37) comparison -> . PLUS comparison
-    (38) comparison -> . MINUS comparison
-    (39) comparison -> . power
-    (40) power -> . atom
-    (41) power -> . atom trailer
-    (42) atom -> . NAME
-    (43) atom -> . NUMBER
-    (44) atom -> . STRING
-    (45) atom -> . LPAREN testlist RPAREN
+    (39) comparison -> PLUS comparison .
+    (32) comparison -> comparison . PLUS comparison
+    (33) comparison -> comparison . MINUS comparison
+    (34) comparison -> comparison . STAR comparison
+    (35) comparison -> comparison . SLASH comparison
+    (36) comparison -> comparison . LESS comparison
+    (37) comparison -> comparison . EQEQUAL comparison
+    (38) comparison -> comparison . GREATER comparison
 
-    EQUAL           reduce using rule 47 (testlist -> testlist_multi COMMA .)
-    NEWLINE         reduce using rule 47 (testlist -> testlist_multi COMMA .)
-    SEMI            reduce using rule 47 (testlist -> testlist_multi COMMA .)
-    RPAREN          reduce using rule 47 (testlist -> testlist_multi COMMA .)
-    PLUS            shift and go to state 9
-    MINUS           shift and go to state 5
-    NAME            shift and go to state 24
-    NUMBER          shift and go to state 19
-    STRING          shift and go to state 14
-    LPAREN          shift and go to state 1
+    PLUS            reduce using rule 39 (comparison -> PLUS comparison .)
+    MINUS           reduce using rule 39 (comparison -> PLUS comparison .)
+    LESS            reduce using rule 39 (comparison -> PLUS comparison .)
+    EQEQUAL         reduce using rule 39 (comparison -> PLUS comparison .)
+    GREATER         reduce using rule 39 (comparison -> PLUS comparison .)
+    COMMA           reduce using rule 39 (comparison -> PLUS comparison .)
+    EQUAL           reduce using rule 39 (comparison -> PLUS comparison .)
+    NEWLINE         reduce using rule 39 (comparison -> PLUS comparison .)
+    SEMI            reduce using rule 39 (comparison -> PLUS comparison .)
+    RPAREN          reduce using rule 39 (comparison -> PLUS comparison .)
+    COLON           reduce using rule 39 (comparison -> PLUS comparison .)
+    STAR            shift and go to state 42
+    SLASH           shift and go to state 47
 
-    comparison                     shift and go to state 25
-    power                          shift and go to state 15
-    atom                           shift and go to state 21
-    test                           shift and go to state 56
+  ! STAR            [ reduce using rule 39 (comparison -> PLUS comparison .) ]
+  ! SLASH           [ reduce using rule 39 (comparison -> PLUS comparison .) ]
+  ! PLUS            [ shift and go to state 46 ]
+  ! MINUS           [ shift and go to state 48 ]
+  ! LESS            [ shift and go to state 44 ]
+  ! EQEQUAL         [ shift and go to state 45 ]
+  ! GREATER         [ shift and go to state 43 ]
+
 
 state 37
 
-    (46) trailer -> LPAREN . arglist RPAREN
-    (52) arglist -> . arglist COMMA argument
-    (53) arglist -> . argument
-    (54) argument -> . test
-    (51) test -> . comparison
-    (30) comparison -> . comparison PLUS comparison
-    (31) comparison -> . comparison MINUS comparison
-    (32) comparison -> . comparison STAR comparison
-    (33) comparison -> . comparison SLASH comparison
-    (34) comparison -> . comparison LESS comparison
-    (35) comparison -> . comparison EQEQUAL comparison
-    (36) comparison -> . comparison GREATER comparison
-    (37) comparison -> . PLUS comparison
-    (38) comparison -> . MINUS comparison
-    (39) comparison -> . power
-    (40) power -> . atom
-    (41) power -> . atom trailer
-    (42) atom -> . NAME
-    (43) atom -> . NUMBER
-    (44) atom -> . STRING
-    (45) atom -> . LPAREN testlist RPAREN
+    (27) if_stmt -> IF test . COLON suite
 
-    PLUS            shift and go to state 9
-    MINUS           shift and go to state 5
-    NAME            shift and go to state 24
-    NUMBER          shift and go to state 19
-    STRING          shift and go to state 14
-    LPAREN          shift and go to state 1
+    COLON           shift and go to state 57
 
-    comparison                     shift and go to state 25
-    power                          shift and go to state 15
-    argument                       shift and go to state 57
-    atom                           shift and go to state 21
-    test                           shift and go to state 58
-    arglist                        shift and go to state 59
 
 state 38
 
-    (41) power -> atom trailer .
+    (20) expr_stmt -> testlist EQUAL . testlist
+    (49) testlist -> . testlist_multi COMMA
+    (50) testlist -> . testlist_multi
+    (51) testlist_multi -> . testlist_multi COMMA test
+    (52) testlist_multi -> . test
+    (53) test -> . comparison
+    (32) comparison -> . comparison PLUS comparison
+    (33) comparison -> . comparison MINUS comparison
+    (34) comparison -> . comparison STAR comparison
+    (35) comparison -> . comparison SLASH comparison
+    (36) comparison -> . comparison LESS comparison
+    (37) comparison -> . comparison EQEQUAL comparison
+    (38) comparison -> . comparison GREATER comparison
+    (39) comparison -> . PLUS comparison
+    (40) comparison -> . MINUS comparison
+    (41) comparison -> . power
+    (42) power -> . atom
+    (43) power -> . atom trailer
+    (44) atom -> . NAME
+    (45) atom -> . NUMBER
+    (46) atom -> . STRING
+    (47) atom -> . LPAREN testlist RPAREN
 
-    PLUS            reduce using rule 41 (power -> atom trailer .)
-    MINUS           reduce using rule 41 (power -> atom trailer .)
-    STAR            reduce using rule 41 (power -> atom trailer .)
-    SLASH           reduce using rule 41 (power -> atom trailer .)
-    LESS            reduce using rule 41 (power -> atom trailer .)
-    EQEQUAL         reduce using rule 41 (power -> atom trailer .)
-    GREATER         reduce using rule 41 (power -> atom trailer .)
-    COMMA           reduce using rule 41 (power -> atom trailer .)
-    EQUAL           reduce using rule 41 (power -> atom trailer .)
-    NEWLINE         reduce using rule 41 (power -> atom trailer .)
-    SEMI            reduce using rule 41 (power -> atom trailer .)
-    RPAREN          reduce using rule 41 (power -> atom trailer .)
-    COLON           reduce using rule 41 (power -> atom trailer .)
+    PLUS            shift and go to state 10
+    MINUS           shift and go to state 6
+    NAME            shift and go to state 26
+    NUMBER          shift and go to state 21
+    STRING          shift and go to state 16
+    LPAREN          shift and go to state 1
 
+    comparison                     shift and go to state 27
+    power                          shift and go to state 17
+    testlist                       shift and go to state 58
+    testlist_multi                 shift and go to state 22
+    atom                           shift and go to state 23
+    test                           shift and go to state 13
 
 state 39
 
-    (32) comparison -> comparison STAR . comparison
-    (30) comparison -> . comparison PLUS comparison
-    (31) comparison -> . comparison MINUS comparison
-    (32) comparison -> . comparison STAR comparison
-    (33) comparison -> . comparison SLASH comparison
-    (34) comparison -> . comparison LESS comparison
-    (35) comparison -> . comparison EQEQUAL comparison
-    (36) comparison -> . comparison GREATER comparison
-    (37) comparison -> . PLUS comparison
-    (38) comparison -> . MINUS comparison
-    (39) comparison -> . power
-    (40) power -> . atom
-    (41) power -> . atom trailer
-    (42) atom -> . NAME
-    (43) atom -> . NUMBER
-    (44) atom -> . STRING
-    (45) atom -> . LPAREN testlist RPAREN
+    (49) testlist -> testlist_multi COMMA .
+    (51) testlist_multi -> testlist_multi COMMA . test
+    (53) test -> . comparison
+    (32) comparison -> . comparison PLUS comparison
+    (33) comparison -> . comparison MINUS comparison
+    (34) comparison -> . comparison STAR comparison
+    (35) comparison -> . comparison SLASH comparison
+    (36) comparison -> . comparison LESS comparison
+    (37) comparison -> . comparison EQEQUAL comparison
+    (38) comparison -> . comparison GREATER comparison
+    (39) comparison -> . PLUS comparison
+    (40) comparison -> . MINUS comparison
+    (41) comparison -> . power
+    (42) power -> . atom
+    (43) power -> . atom trailer
+    (44) atom -> . NAME
+    (45) atom -> . NUMBER
+    (46) atom -> . STRING
+    (47) atom -> . LPAREN testlist RPAREN
 
-    PLUS            shift and go to state 9
-    MINUS           shift and go to state 5
-    NAME            shift and go to state 24
-    NUMBER          shift and go to state 19
-    STRING          shift and go to state 14
+    EQUAL           reduce using rule 49 (testlist -> testlist_multi COMMA .)
+    NEWLINE         reduce using rule 49 (testlist -> testlist_multi COMMA .)
+    SEMI            reduce using rule 49 (testlist -> testlist_multi COMMA .)
+    RPAREN          reduce using rule 49 (testlist -> testlist_multi COMMA .)
+    PLUS            shift and go to state 10
+    MINUS           shift and go to state 6
+    NAME            shift and go to state 26
+    NUMBER          shift and go to state 21
+    STRING          shift and go to state 16
     LPAREN          shift and go to state 1
 
-    comparison                     shift and go to state 60
-    power                          shift and go to state 15
-    atom                           shift and go to state 21
+    comparison                     shift and go to state 27
+    power                          shift and go to state 17
+    atom                           shift and go to state 23
+    test                           shift and go to state 59
 
 state 40
 
-    (36) comparison -> comparison GREATER . comparison
-    (30) comparison -> . comparison PLUS comparison
-    (31) comparison -> . comparison MINUS comparison
-    (32) comparison -> . comparison STAR comparison
-    (33) comparison -> . comparison SLASH comparison
-    (34) comparison -> . comparison LESS comparison
-    (35) comparison -> . comparison EQEQUAL comparison
-    (36) comparison -> . comparison GREATER comparison
-    (37) comparison -> . PLUS comparison
-    (38) comparison -> . MINUS comparison
-    (39) comparison -> . power
-    (40) power -> . atom
-    (41) power -> . atom trailer
-    (42) atom -> . NAME
-    (43) atom -> . NUMBER
-    (44) atom -> . STRING
-    (45) atom -> . LPAREN testlist RPAREN
+    (48) trailer -> LPAREN . arglist RPAREN
+    (54) arglist -> . arglist COMMA argument
+    (55) arglist -> . argument
+    (56) argument -> . test
+    (53) test -> . comparison
+    (32) comparison -> . comparison PLUS comparison
+    (33) comparison -> . comparison MINUS comparison
+    (34) comparison -> . comparison STAR comparison
+    (35) comparison -> . comparison SLASH comparison
+    (36) comparison -> . comparison LESS comparison
+    (37) comparison -> . comparison EQEQUAL comparison
+    (38) comparison -> . comparison GREATER comparison
+    (39) comparison -> . PLUS comparison
+    (40) comparison -> . MINUS comparison
+    (41) comparison -> . power
+    (42) power -> . atom
+    (43) power -> . atom trailer
+    (44) atom -> . NAME
+    (45) atom -> . NUMBER
+    (46) atom -> . STRING
+    (47) atom -> . LPAREN testlist RPAREN
 
-    PLUS            shift and go to state 9
-    MINUS           shift and go to state 5
-    NAME            shift and go to state 24
-    NUMBER          shift and go to state 19
-    STRING          shift and go to state 14
+    PLUS            shift and go to state 10
+    MINUS           shift and go to state 6
+    NAME            shift and go to state 26
+    NUMBER          shift and go to state 21
+    STRING          shift and go to state 16
     LPAREN          shift and go to state 1
 
-    comparison                     shift and go to state 61
-    power                          shift and go to state 15
-    atom                           shift and go to state 21
+    comparison                     shift and go to state 27
+    power                          shift and go to state 17
+    argument                       shift and go to state 60
+    atom                           shift and go to state 23
+    test                           shift and go to state 61
+    arglist                        shift and go to state 62
 
 state 41
 
-    (34) comparison -> comparison LESS . comparison
-    (30) comparison -> . comparison PLUS comparison
-    (31) comparison -> . comparison MINUS comparison
-    (32) comparison -> . comparison STAR comparison
-    (33) comparison -> . comparison SLASH comparison
-    (34) comparison -> . comparison LESS comparison
-    (35) comparison -> . comparison EQEQUAL comparison
-    (36) comparison -> . comparison GREATER comparison
-    (37) comparison -> . PLUS comparison
-    (38) comparison -> . MINUS comparison
-    (39) comparison -> . power
-    (40) power -> . atom
-    (41) power -> . atom trailer
-    (42) atom -> . NAME
-    (43) atom -> . NUMBER
-    (44) atom -> . STRING
-    (45) atom -> . LPAREN testlist RPAREN
+    (43) power -> atom trailer .
 
-    PLUS            shift and go to state 9
-    MINUS           shift and go to state 5
-    NAME            shift and go to state 24
-    NUMBER          shift and go to state 19
-    STRING          shift and go to state 14
-    LPAREN          shift and go to state 1
+    PLUS            reduce using rule 43 (power -> atom trailer .)
+    MINUS           reduce using rule 43 (power -> atom trailer .)
+    STAR            reduce using rule 43 (power -> atom trailer .)
+    SLASH           reduce using rule 43 (power -> atom trailer .)
+    LESS            reduce using rule 43 (power -> atom trailer .)
+    EQEQUAL         reduce using rule 43 (power -> atom trailer .)
+    GREATER         reduce using rule 43 (power -> atom trailer .)
+    RPAREN          reduce using rule 43 (power -> atom trailer .)
+    COMMA           reduce using rule 43 (power -> atom trailer .)
+    NEWLINE         reduce using rule 43 (power -> atom trailer .)
+    SEMI            reduce using rule 43 (power -> atom trailer .)
+    EQUAL           reduce using rule 43 (power -> atom trailer .)
+    COLON           reduce using rule 43 (power -> atom trailer .)
 
-    comparison                     shift and go to state 62
-    power                          shift and go to state 15
-    atom                           shift and go to state 21
 
 state 42
 
-    (35) comparison -> comparison EQEQUAL . comparison
-    (30) comparison -> . comparison PLUS comparison
-    (31) comparison -> . comparison MINUS comparison
-    (32) comparison -> . comparison STAR comparison
-    (33) comparison -> . comparison SLASH comparison
-    (34) comparison -> . comparison LESS comparison
-    (35) comparison -> . comparison EQEQUAL comparison
-    (36) comparison -> . comparison GREATER comparison
-    (37) comparison -> . PLUS comparison
-    (38) comparison -> . MINUS comparison
-    (39) comparison -> . power
-    (40) power -> . atom
-    (41) power -> . atom trailer
-    (42) atom -> . NAME
-    (43) atom -> . NUMBER
-    (44) atom -> . STRING
-    (45) atom -> . LPAREN testlist RPAREN
+    (34) comparison -> comparison STAR . comparison
+    (32) comparison -> . comparison PLUS comparison
+    (33) comparison -> . comparison MINUS comparison
+    (34) comparison -> . comparison STAR comparison
+    (35) comparison -> . comparison SLASH comparison
+    (36) comparison -> . comparison LESS comparison
+    (37) comparison -> . comparison EQEQUAL comparison
+    (38) comparison -> . comparison GREATER comparison
+    (39) comparison -> . PLUS comparison
+    (40) comparison -> . MINUS comparison
+    (41) comparison -> . power
+    (42) power -> . atom
+    (43) power -> . atom trailer
+    (44) atom -> . NAME
+    (45) atom -> . NUMBER
+    (46) atom -> . STRING
+    (47) atom -> . LPAREN testlist RPAREN
 
-    PLUS            shift and go to state 9
-    MINUS           shift and go to state 5
-    NAME            shift and go to state 24
-    NUMBER          shift and go to state 19
-    STRING          shift and go to state 14
+    PLUS            shift and go to state 10
+    MINUS           shift and go to state 6
+    NAME            shift and go to state 26
+    NUMBER          shift and go to state 21
+    STRING          shift and go to state 16
     LPAREN          shift and go to state 1
 
     comparison                     shift and go to state 63
-    power                          shift and go to state 15
-    atom                           shift and go to state 21
+    power                          shift and go to state 17
+    atom                           shift and go to state 23
 
 state 43
 
-    (30) comparison -> comparison PLUS . comparison
-    (30) comparison -> . comparison PLUS comparison
-    (31) comparison -> . comparison MINUS comparison
-    (32) comparison -> . comparison STAR comparison
-    (33) comparison -> . comparison SLASH comparison
-    (34) comparison -> . comparison LESS comparison
-    (35) comparison -> . comparison EQEQUAL comparison
-    (36) comparison -> . comparison GREATER comparison
-    (37) comparison -> . PLUS comparison
-    (38) comparison -> . MINUS comparison
-    (39) comparison -> . power
-    (40) power -> . atom
-    (41) power -> . atom trailer
-    (42) atom -> . NAME
-    (43) atom -> . NUMBER
-    (44) atom -> . STRING
-    (45) atom -> . LPAREN testlist RPAREN
+    (38) comparison -> comparison GREATER . comparison
+    (32) comparison -> . comparison PLUS comparison
+    (33) comparison -> . comparison MINUS comparison
+    (34) comparison -> . comparison STAR comparison
+    (35) comparison -> . comparison SLASH comparison
+    (36) comparison -> . comparison LESS comparison
+    (37) comparison -> . comparison EQEQUAL comparison
+    (38) comparison -> . comparison GREATER comparison
+    (39) comparison -> . PLUS comparison
+    (40) comparison -> . MINUS comparison
+    (41) comparison -> . power
+    (42) power -> . atom
+    (43) power -> . atom trailer
+    (44) atom -> . NAME
+    (45) atom -> . NUMBER
+    (46) atom -> . STRING
+    (47) atom -> . LPAREN testlist RPAREN
 
-    PLUS            shift and go to state 9
-    MINUS           shift and go to state 5
-    NAME            shift and go to state 24
-    NUMBER          shift and go to state 19
-    STRING          shift and go to state 14
+    PLUS            shift and go to state 10
+    MINUS           shift and go to state 6
+    NAME            shift and go to state 26
+    NUMBER          shift and go to state 21
+    STRING          shift and go to state 16
     LPAREN          shift and go to state 1
 
     comparison                     shift and go to state 64
-    power                          shift and go to state 15
-    atom                           shift and go to state 21
+    power                          shift and go to state 17
+    atom                           shift and go to state 23
 
 state 44
 
-    (33) comparison -> comparison SLASH . comparison
-    (30) comparison -> . comparison PLUS comparison
-    (31) comparison -> . comparison MINUS comparison
-    (32) comparison -> . comparison STAR comparison
-    (33) comparison -> . comparison SLASH comparison
-    (34) comparison -> . comparison LESS comparison
-    (35) comparison -> . comparison EQEQUAL comparison
-    (36) comparison -> . comparison GREATER comparison
-    (37) comparison -> . PLUS comparison
-    (38) comparison -> . MINUS comparison
-    (39) comparison -> . power
-    (40) power -> . atom
-    (41) power -> . atom trailer
-    (42) atom -> . NAME
-    (43) atom -> . NUMBER
-    (44) atom -> . STRING
-    (45) atom -> . LPAREN testlist RPAREN
+    (36) comparison -> comparison LESS . comparison
+    (32) comparison -> . comparison PLUS comparison
+    (33) comparison -> . comparison MINUS comparison
+    (34) comparison -> . comparison STAR comparison
+    (35) comparison -> . comparison SLASH comparison
+    (36) comparison -> . comparison LESS comparison
+    (37) comparison -> . comparison EQEQUAL comparison
+    (38) comparison -> . comparison GREATER comparison
+    (39) comparison -> . PLUS comparison
+    (40) comparison -> . MINUS comparison
+    (41) comparison -> . power
+    (42) power -> . atom
+    (43) power -> . atom trailer
+    (44) atom -> . NAME
+    (45) atom -> . NUMBER
+    (46) atom -> . STRING
+    (47) atom -> . LPAREN testlist RPAREN
 
-    PLUS            shift and go to state 9
-    MINUS           shift and go to state 5
-    NAME            shift and go to state 24
-    NUMBER          shift and go to state 19
-    STRING          shift and go to state 14
+    PLUS            shift and go to state 10
+    MINUS           shift and go to state 6
+    NAME            shift and go to state 26
+    NUMBER          shift and go to state 21
+    STRING          shift and go to state 16
     LPAREN          shift and go to state 1
 
     comparison                     shift and go to state 65
-    power                          shift and go to state 15
-    atom                           shift and go to state 21
+    power                          shift and go to state 17
+    atom                           shift and go to state 23
 
 state 45
 
-    (31) comparison -> comparison MINUS . comparison
-    (30) comparison -> . comparison PLUS comparison
-    (31) comparison -> . comparison MINUS comparison
-    (32) comparison -> . comparison STAR comparison
-    (33) comparison -> . comparison SLASH comparison
-    (34) comparison -> . comparison LESS comparison
-    (35) comparison -> . comparison EQEQUAL comparison
-    (36) comparison -> . comparison GREATER comparison
-    (37) comparison -> . PLUS comparison
-    (38) comparison -> . MINUS comparison
-    (39) comparison -> . power
-    (40) power -> . atom
-    (41) power -> . atom trailer
-    (42) atom -> . NAME
-    (43) atom -> . NUMBER
-    (44) atom -> . STRING
-    (45) atom -> . LPAREN testlist RPAREN
+    (37) comparison -> comparison EQEQUAL . comparison
+    (32) comparison -> . comparison PLUS comparison
+    (33) comparison -> . comparison MINUS comparison
+    (34) comparison -> . comparison STAR comparison
+    (35) comparison -> . comparison SLASH comparison
+    (36) comparison -> . comparison LESS comparison
+    (37) comparison -> . comparison EQEQUAL comparison
+    (38) comparison -> . comparison GREATER comparison
+    (39) comparison -> . PLUS comparison
+    (40) comparison -> . MINUS comparison
+    (41) comparison -> . power
+    (42) power -> . atom
+    (43) power -> . atom trailer
+    (44) atom -> . NAME
+    (45) atom -> . NUMBER
+    (46) atom -> . STRING
+    (47) atom -> . LPAREN testlist RPAREN
 
-    PLUS            shift and go to state 9
-    MINUS           shift and go to state 5
-    NAME            shift and go to state 24
-    NUMBER          shift and go to state 19
-    STRING          shift and go to state 14
+    PLUS            shift and go to state 10
+    MINUS           shift and go to state 6
+    NAME            shift and go to state 26
+    NUMBER          shift and go to state 21
+    STRING          shift and go to state 16
     LPAREN          shift and go to state 1
 
     comparison                     shift and go to state 66
-    power                          shift and go to state 15
-    atom                           shift and go to state 21
+    power                          shift and go to state 17
+    atom                           shift and go to state 23
 
 state 46
+
+    (32) comparison -> comparison PLUS . comparison
+    (32) comparison -> . comparison PLUS comparison
+    (33) comparison -> . comparison MINUS comparison
+    (34) comparison -> . comparison STAR comparison
+    (35) comparison -> . comparison SLASH comparison
+    (36) comparison -> . comparison LESS comparison
+    (37) comparison -> . comparison EQEQUAL comparison
+    (38) comparison -> . comparison GREATER comparison
+    (39) comparison -> . PLUS comparison
+    (40) comparison -> . MINUS comparison
+    (41) comparison -> . power
+    (42) power -> . atom
+    (43) power -> . atom trailer
+    (44) atom -> . NAME
+    (45) atom -> . NUMBER
+    (46) atom -> . STRING
+    (47) atom -> . LPAREN testlist RPAREN
+
+    PLUS            shift and go to state 10
+    MINUS           shift and go to state 6
+    NAME            shift and go to state 26
+    NUMBER          shift and go to state 21
+    STRING          shift and go to state 16
+    LPAREN          shift and go to state 1
+
+    comparison                     shift and go to state 67
+    power                          shift and go to state 17
+    atom                           shift and go to state 23
+
+state 47
+
+    (35) comparison -> comparison SLASH . comparison
+    (32) comparison -> . comparison PLUS comparison
+    (33) comparison -> . comparison MINUS comparison
+    (34) comparison -> . comparison STAR comparison
+    (35) comparison -> . comparison SLASH comparison
+    (36) comparison -> . comparison LESS comparison
+    (37) comparison -> . comparison EQEQUAL comparison
+    (38) comparison -> . comparison GREATER comparison
+    (39) comparison -> . PLUS comparison
+    (40) comparison -> . MINUS comparison
+    (41) comparison -> . power
+    (42) power -> . atom
+    (43) power -> . atom trailer
+    (44) atom -> . NAME
+    (45) atom -> . NUMBER
+    (46) atom -> . STRING
+    (47) atom -> . LPAREN testlist RPAREN
+
+    PLUS            shift and go to state 10
+    MINUS           shift and go to state 6
+    NAME            shift and go to state 26
+    NUMBER          shift and go to state 21
+    STRING          shift and go to state 16
+    LPAREN          shift and go to state 1
+
+    comparison                     shift and go to state 68
+    power                          shift and go to state 17
+    atom                           shift and go to state 23
+
+state 48
+
+    (33) comparison -> comparison MINUS . comparison
+    (32) comparison -> . comparison PLUS comparison
+    (33) comparison -> . comparison MINUS comparison
+    (34) comparison -> . comparison STAR comparison
+    (35) comparison -> . comparison SLASH comparison
+    (36) comparison -> . comparison LESS comparison
+    (37) comparison -> . comparison EQEQUAL comparison
+    (38) comparison -> . comparison GREATER comparison
+    (39) comparison -> . PLUS comparison
+    (40) comparison -> . MINUS comparison
+    (41) comparison -> . power
+    (42) power -> . atom
+    (43) power -> . atom trailer
+    (44) atom -> . NAME
+    (45) atom -> . NUMBER
+    (46) atom -> . STRING
+    (47) atom -> . LPAREN testlist RPAREN
+
+    PLUS            shift and go to state 10
+    MINUS           shift and go to state 6
+    NAME            shift and go to state 26
+    NUMBER          shift and go to state 21
+    STRING          shift and go to state 16
+    LPAREN          shift and go to state 1
+
+    comparison                     shift and go to state 69
+    power                          shift and go to state 17
+    atom                           shift and go to state 23
+
+state 49
 
     (1) program -> file_input ENDMARKER .
 
     $end            reduce using rule 1 (program -> file_input ENDMARKER .)
 
 
-state 47
+state 50
 
     (2) file_input -> file_input NEWLINE .
 
@@ -1350,6 +1415,7 @@ state 47
     NEWLINE         reduce using rule 2 (file_input -> file_input NEWLINE .)
     IF              reduce using rule 2 (file_input -> file_input NEWLINE .)
     DEF             reduce using rule 2 (file_input -> file_input NEWLINE .)
+    PRINT           reduce using rule 2 (file_input -> file_input NEWLINE .)
     RETURN          reduce using rule 2 (file_input -> file_input NEWLINE .)
     PLUS            reduce using rule 2 (file_input -> file_input NEWLINE .)
     MINUS           reduce using rule 2 (file_input -> file_input NEWLINE .)
@@ -1359,7 +1425,7 @@ state 47
     LPAREN          reduce using rule 2 (file_input -> file_input NEWLINE .)
 
 
-state 48
+state 51
 
     (3) file_input -> file_input stmt .
 
@@ -1367,6 +1433,7 @@ state 48
     NEWLINE         reduce using rule 3 (file_input -> file_input stmt .)
     IF              reduce using rule 3 (file_input -> file_input stmt .)
     DEF             reduce using rule 3 (file_input -> file_input stmt .)
+    PRINT           reduce using rule 3 (file_input -> file_input stmt .)
     RETURN          reduce using rule 3 (file_input -> file_input stmt .)
     PLUS            reduce using rule 3 (file_input -> file_input stmt .)
     MINUS           reduce using rule 3 (file_input -> file_input stmt .)
@@ -1376,13 +1443,14 @@ state 48
     LPAREN          reduce using rule 3 (file_input -> file_input stmt .)
 
 
-state 49
+state 52
 
     (13) simple_stmt -> small_stmts NEWLINE .
 
     DEDENT          reduce using rule 13 (simple_stmt -> small_stmts NEWLINE .)
     IF              reduce using rule 13 (simple_stmt -> small_stmts NEWLINE .)
     DEF             reduce using rule 13 (simple_stmt -> small_stmts NEWLINE .)
+    PRINT           reduce using rule 13 (simple_stmt -> small_stmts NEWLINE .)
     RETURN          reduce using rule 13 (simple_stmt -> small_stmts NEWLINE .)
     PLUS            reduce using rule 13 (simple_stmt -> small_stmts NEWLINE .)
     MINUS           reduce using rule 13 (simple_stmt -> small_stmts NEWLINE .)
@@ -1394,440 +1462,448 @@ state 49
     NEWLINE         reduce using rule 13 (simple_stmt -> small_stmts NEWLINE .)
 
 
-state 50
+state 53
 
     (14) simple_stmt -> small_stmts SEMI . NEWLINE
     (15) small_stmts -> small_stmts SEMI . small_stmt
     (17) small_stmt -> . flow_stmt
     (18) small_stmt -> . expr_stmt
-    (21) flow_stmt -> . return_stmt
-    (19) expr_stmt -> . testlist EQUAL testlist
-    (20) expr_stmt -> . testlist
-    (22) return_stmt -> . RETURN testlist
-    (47) testlist -> . testlist_multi COMMA
-    (48) testlist -> . testlist_multi
-    (49) testlist_multi -> . testlist_multi COMMA test
-    (50) testlist_multi -> . test
-    (51) test -> . comparison
-    (30) comparison -> . comparison PLUS comparison
-    (31) comparison -> . comparison MINUS comparison
-    (32) comparison -> . comparison STAR comparison
-    (33) comparison -> . comparison SLASH comparison
-    (34) comparison -> . comparison LESS comparison
-    (35) comparison -> . comparison EQEQUAL comparison
-    (36) comparison -> . comparison GREATER comparison
-    (37) comparison -> . PLUS comparison
-    (38) comparison -> . MINUS comparison
-    (39) comparison -> . power
-    (40) power -> . atom
-    (41) power -> . atom trailer
-    (42) atom -> . NAME
-    (43) atom -> . NUMBER
-    (44) atom -> . STRING
-    (45) atom -> . LPAREN testlist RPAREN
+    (19) small_stmt -> . print_stmt
+    (22) flow_stmt -> . return_stmt
+    (20) expr_stmt -> . testlist EQUAL testlist
+    (21) expr_stmt -> . testlist
+    (23) print_stmt -> . PRINT test
+    (24) return_stmt -> . RETURN testlist
+    (49) testlist -> . testlist_multi COMMA
+    (50) testlist -> . testlist_multi
+    (51) testlist_multi -> . testlist_multi COMMA test
+    (52) testlist_multi -> . test
+    (53) test -> . comparison
+    (32) comparison -> . comparison PLUS comparison
+    (33) comparison -> . comparison MINUS comparison
+    (34) comparison -> . comparison STAR comparison
+    (35) comparison -> . comparison SLASH comparison
+    (36) comparison -> . comparison LESS comparison
+    (37) comparison -> . comparison EQEQUAL comparison
+    (38) comparison -> . comparison GREATER comparison
+    (39) comparison -> . PLUS comparison
+    (40) comparison -> . MINUS comparison
+    (41) comparison -> . power
+    (42) power -> . atom
+    (43) power -> . atom trailer
+    (44) atom -> . NAME
+    (45) atom -> . NUMBER
+    (46) atom -> . STRING
+    (47) atom -> . LPAREN testlist RPAREN
 
-    NEWLINE         shift and go to state 68
-    RETURN          shift and go to state 4
-    PLUS            shift and go to state 9
-    MINUS           shift and go to state 5
-    NAME            shift and go to state 24
-    NUMBER          shift and go to state 19
-    STRING          shift and go to state 14
+    NEWLINE         shift and go to state 71
+    PRINT           shift and go to state 4
+    RETURN          shift and go to state 5
+    PLUS            shift and go to state 10
+    MINUS           shift and go to state 6
+    NAME            shift and go to state 26
+    NUMBER          shift and go to state 21
+    STRING          shift and go to state 16
     LPAREN          shift and go to state 1
 
-    flow_stmt                      shift and go to state 7
-    comparison                     shift and go to state 25
-    power                          shift and go to state 15
-    small_stmt                     shift and go to state 67
-    testlist                       shift and go to state 17
+    flow_stmt                      shift and go to state 8
+    comparison                     shift and go to state 27
+    power                          shift and go to state 17
+    small_stmt                     shift and go to state 70
+    testlist                       shift and go to state 19
+    print_stmt                     shift and go to state 11
     return_stmt                    shift and go to state 3
-    atom                           shift and go to state 21
-    test                           shift and go to state 11
-    testlist_multi                 shift and go to state 20
-    expr_stmt                      shift and go to state 23
+    atom                           shift and go to state 23
+    test                           shift and go to state 13
+    testlist_multi                 shift and go to state 22
+    expr_stmt                      shift and go to state 25
 
-state 51
+state 54
 
-    (45) atom -> LPAREN testlist RPAREN .
+    (47) atom -> LPAREN testlist RPAREN .
 
-    LPAREN          reduce using rule 45 (atom -> LPAREN testlist RPAREN .)
-    PLUS            reduce using rule 45 (atom -> LPAREN testlist RPAREN .)
-    MINUS           reduce using rule 45 (atom -> LPAREN testlist RPAREN .)
-    STAR            reduce using rule 45 (atom -> LPAREN testlist RPAREN .)
-    SLASH           reduce using rule 45 (atom -> LPAREN testlist RPAREN .)
-    LESS            reduce using rule 45 (atom -> LPAREN testlist RPAREN .)
-    EQEQUAL         reduce using rule 45 (atom -> LPAREN testlist RPAREN .)
-    GREATER         reduce using rule 45 (atom -> LPAREN testlist RPAREN .)
-    COMMA           reduce using rule 45 (atom -> LPAREN testlist RPAREN .)
-    EQUAL           reduce using rule 45 (atom -> LPAREN testlist RPAREN .)
-    NEWLINE         reduce using rule 45 (atom -> LPAREN testlist RPAREN .)
-    SEMI            reduce using rule 45 (atom -> LPAREN testlist RPAREN .)
-    RPAREN          reduce using rule 45 (atom -> LPAREN testlist RPAREN .)
-    COLON           reduce using rule 45 (atom -> LPAREN testlist RPAREN .)
+    LPAREN          reduce using rule 47 (atom -> LPAREN testlist RPAREN .)
+    PLUS            reduce using rule 47 (atom -> LPAREN testlist RPAREN .)
+    MINUS           reduce using rule 47 (atom -> LPAREN testlist RPAREN .)
+    STAR            reduce using rule 47 (atom -> LPAREN testlist RPAREN .)
+    SLASH           reduce using rule 47 (atom -> LPAREN testlist RPAREN .)
+    LESS            reduce using rule 47 (atom -> LPAREN testlist RPAREN .)
+    EQEQUAL         reduce using rule 47 (atom -> LPAREN testlist RPAREN .)
+    GREATER         reduce using rule 47 (atom -> LPAREN testlist RPAREN .)
+    COMMA           reduce using rule 47 (atom -> LPAREN testlist RPAREN .)
+    EQUAL           reduce using rule 47 (atom -> LPAREN testlist RPAREN .)
+    NEWLINE         reduce using rule 47 (atom -> LPAREN testlist RPAREN .)
+    SEMI            reduce using rule 47 (atom -> LPAREN testlist RPAREN .)
+    RPAREN          reduce using rule 47 (atom -> LPAREN testlist RPAREN .)
+    COLON           reduce using rule 47 (atom -> LPAREN testlist RPAREN .)
 
 
-state 52
+state 55
 
     (6) funcdef -> DEF NAME parameters . COLON suite
 
-    COLON           shift and go to state 69
+    COLON           shift and go to state 72
 
 
-state 53
+state 56
 
     (7) parameters -> LPAREN . RPAREN
     (8) parameters -> LPAREN . varargslist RPAREN
     (9) varargslist -> . varargslist COMMA NAME
     (10) varargslist -> . NAME
 
-    RPAREN          shift and go to state 71
-    NAME            shift and go to state 72
+    RPAREN          shift and go to state 74
+    NAME            shift and go to state 75
 
-    varargslist                    shift and go to state 70
+    varargslist                    shift and go to state 73
 
-state 54
+state 57
 
-    (25) if_stmt -> IF test COLON . suite
-    (26) suite -> . simple_stmt
-    (27) suite -> . NEWLINE INDENT stmts DEDENT
+    (27) if_stmt -> IF test COLON . suite
+    (28) suite -> . simple_stmt
+    (29) suite -> . NEWLINE INDENT stmts DEDENT
     (13) simple_stmt -> . small_stmts NEWLINE
     (14) simple_stmt -> . small_stmts SEMI NEWLINE
     (15) small_stmts -> . small_stmts SEMI small_stmt
     (16) small_stmts -> . small_stmt
     (17) small_stmt -> . flow_stmt
     (18) small_stmt -> . expr_stmt
-    (21) flow_stmt -> . return_stmt
-    (19) expr_stmt -> . testlist EQUAL testlist
-    (20) expr_stmt -> . testlist
-    (22) return_stmt -> . RETURN testlist
-    (47) testlist -> . testlist_multi COMMA
-    (48) testlist -> . testlist_multi
-    (49) testlist_multi -> . testlist_multi COMMA test
-    (50) testlist_multi -> . test
-    (51) test -> . comparison
-    (30) comparison -> . comparison PLUS comparison
-    (31) comparison -> . comparison MINUS comparison
-    (32) comparison -> . comparison STAR comparison
-    (33) comparison -> . comparison SLASH comparison
-    (34) comparison -> . comparison LESS comparison
-    (35) comparison -> . comparison EQEQUAL comparison
-    (36) comparison -> . comparison GREATER comparison
-    (37) comparison -> . PLUS comparison
-    (38) comparison -> . MINUS comparison
-    (39) comparison -> . power
-    (40) power -> . atom
-    (41) power -> . atom trailer
-    (42) atom -> . NAME
-    (43) atom -> . NUMBER
-    (44) atom -> . STRING
-    (45) atom -> . LPAREN testlist RPAREN
+    (19) small_stmt -> . print_stmt
+    (22) flow_stmt -> . return_stmt
+    (20) expr_stmt -> . testlist EQUAL testlist
+    (21) expr_stmt -> . testlist
+    (23) print_stmt -> . PRINT test
+    (24) return_stmt -> . RETURN testlist
+    (49) testlist -> . testlist_multi COMMA
+    (50) testlist -> . testlist_multi
+    (51) testlist_multi -> . testlist_multi COMMA test
+    (52) testlist_multi -> . test
+    (53) test -> . comparison
+    (32) comparison -> . comparison PLUS comparison
+    (33) comparison -> . comparison MINUS comparison
+    (34) comparison -> . comparison STAR comparison
+    (35) comparison -> . comparison SLASH comparison
+    (36) comparison -> . comparison LESS comparison
+    (37) comparison -> . comparison EQEQUAL comparison
+    (38) comparison -> . comparison GREATER comparison
+    (39) comparison -> . PLUS comparison
+    (40) comparison -> . MINUS comparison
+    (41) comparison -> . power
+    (42) power -> . atom
+    (43) power -> . atom trailer
+    (44) atom -> . NAME
+    (45) atom -> . NUMBER
+    (46) atom -> . STRING
+    (47) atom -> . LPAREN testlist RPAREN
 
-    NEWLINE         shift and go to state 73
-    RETURN          shift and go to state 4
-    PLUS            shift and go to state 9
-    MINUS           shift and go to state 5
-    NAME            shift and go to state 24
-    NUMBER          shift and go to state 19
-    STRING          shift and go to state 14
+    NEWLINE         shift and go to state 76
+    PRINT           shift and go to state 4
+    RETURN          shift and go to state 5
+    PLUS            shift and go to state 10
+    MINUS           shift and go to state 6
+    NAME            shift and go to state 26
+    NUMBER          shift and go to state 21
+    STRING          shift and go to state 16
     LPAREN          shift and go to state 1
 
-    flow_stmt                      shift and go to state 7
-    comparison                     shift and go to state 25
-    power                          shift and go to state 15
+    flow_stmt                      shift and go to state 8
+    comparison                     shift and go to state 27
+    power                          shift and go to state 17
     small_stmt                     shift and go to state 2
-    simple_stmt                    shift and go to state 74
-    testlist                       shift and go to state 17
-    testlist_multi                 shift and go to state 20
+    simple_stmt                    shift and go to state 77
+    testlist                       shift and go to state 19
+    print_stmt                     shift and go to state 11
+    testlist_multi                 shift and go to state 22
     return_stmt                    shift and go to state 3
-    atom                           shift and go to state 21
-    test                           shift and go to state 11
-    suite                          shift and go to state 75
-    expr_stmt                      shift and go to state 23
-    small_stmts                    shift and go to state 28
-
-state 55
-
-    (19) expr_stmt -> testlist EQUAL testlist .
-
-    NEWLINE         reduce using rule 19 (expr_stmt -> testlist EQUAL testlist .)
-    SEMI            reduce using rule 19 (expr_stmt -> testlist EQUAL testlist .)
-
-
-state 56
-
-    (49) testlist_multi -> testlist_multi COMMA test .
-
-    COMMA           reduce using rule 49 (testlist_multi -> testlist_multi COMMA test .)
-    EQUAL           reduce using rule 49 (testlist_multi -> testlist_multi COMMA test .)
-    NEWLINE         reduce using rule 49 (testlist_multi -> testlist_multi COMMA test .)
-    SEMI            reduce using rule 49 (testlist_multi -> testlist_multi COMMA test .)
-    RPAREN          reduce using rule 49 (testlist_multi -> testlist_multi COMMA test .)
-
-
-state 57
-
-    (53) arglist -> argument .
-
-    RPAREN          reduce using rule 53 (arglist -> argument .)
-    COMMA           reduce using rule 53 (arglist -> argument .)
-
+    atom                           shift and go to state 23
+    test                           shift and go to state 13
+    suite                          shift and go to state 78
+    expr_stmt                      shift and go to state 25
+    small_stmts                    shift and go to state 30
 
 state 58
 
-    (54) argument -> test .
+    (20) expr_stmt -> testlist EQUAL testlist .
 
-    RPAREN          reduce using rule 54 (argument -> test .)
-    COMMA           reduce using rule 54 (argument -> test .)
+    NEWLINE         reduce using rule 20 (expr_stmt -> testlist EQUAL testlist .)
+    SEMI            reduce using rule 20 (expr_stmt -> testlist EQUAL testlist .)
 
 
 state 59
 
-    (46) trailer -> LPAREN arglist . RPAREN
-    (52) arglist -> arglist . COMMA argument
+    (51) testlist_multi -> testlist_multi COMMA test .
 
-    RPAREN          shift and go to state 77
-    COMMA           shift and go to state 76
+    COMMA           reduce using rule 51 (testlist_multi -> testlist_multi COMMA test .)
+    EQUAL           reduce using rule 51 (testlist_multi -> testlist_multi COMMA test .)
+    NEWLINE         reduce using rule 51 (testlist_multi -> testlist_multi COMMA test .)
+    SEMI            reduce using rule 51 (testlist_multi -> testlist_multi COMMA test .)
+    RPAREN          reduce using rule 51 (testlist_multi -> testlist_multi COMMA test .)
 
 
 state 60
 
-    (32) comparison -> comparison STAR comparison .
-    (30) comparison -> comparison . PLUS comparison
-    (31) comparison -> comparison . MINUS comparison
-    (32) comparison -> comparison . STAR comparison
-    (33) comparison -> comparison . SLASH comparison
-    (34) comparison -> comparison . LESS comparison
-    (35) comparison -> comparison . EQEQUAL comparison
-    (36) comparison -> comparison . GREATER comparison
+    (55) arglist -> argument .
 
-    PLUS            reduce using rule 32 (comparison -> comparison STAR comparison .)
-    MINUS           reduce using rule 32 (comparison -> comparison STAR comparison .)
-    STAR            reduce using rule 32 (comparison -> comparison STAR comparison .)
-    SLASH           reduce using rule 32 (comparison -> comparison STAR comparison .)
-    LESS            reduce using rule 32 (comparison -> comparison STAR comparison .)
-    EQEQUAL         reduce using rule 32 (comparison -> comparison STAR comparison .)
-    GREATER         reduce using rule 32 (comparison -> comparison STAR comparison .)
-    COMMA           reduce using rule 32 (comparison -> comparison STAR comparison .)
-    EQUAL           reduce using rule 32 (comparison -> comparison STAR comparison .)
-    NEWLINE         reduce using rule 32 (comparison -> comparison STAR comparison .)
-    SEMI            reduce using rule 32 (comparison -> comparison STAR comparison .)
-    RPAREN          reduce using rule 32 (comparison -> comparison STAR comparison .)
-    COLON           reduce using rule 32 (comparison -> comparison STAR comparison .)
-
-  ! PLUS            [ shift and go to state 43 ]
-  ! MINUS           [ shift and go to state 45 ]
-  ! STAR            [ shift and go to state 39 ]
-  ! SLASH           [ shift and go to state 44 ]
-  ! LESS            [ shift and go to state 41 ]
-  ! EQEQUAL         [ shift and go to state 42 ]
-  ! GREATER         [ shift and go to state 40 ]
+    RPAREN          reduce using rule 55 (arglist -> argument .)
+    COMMA           reduce using rule 55 (arglist -> argument .)
 
 
 state 61
 
-    (36) comparison -> comparison GREATER comparison .
-    (30) comparison -> comparison . PLUS comparison
-    (31) comparison -> comparison . MINUS comparison
-    (32) comparison -> comparison . STAR comparison
-    (33) comparison -> comparison . SLASH comparison
-    (34) comparison -> comparison . LESS comparison
-    (35) comparison -> comparison . EQEQUAL comparison
-    (36) comparison -> comparison . GREATER comparison
+    (56) argument -> test .
 
-    LESS            reduce using rule 36 (comparison -> comparison GREATER comparison .)
-    EQEQUAL         reduce using rule 36 (comparison -> comparison GREATER comparison .)
-    GREATER         reduce using rule 36 (comparison -> comparison GREATER comparison .)
-    COMMA           reduce using rule 36 (comparison -> comparison GREATER comparison .)
-    EQUAL           reduce using rule 36 (comparison -> comparison GREATER comparison .)
-    NEWLINE         reduce using rule 36 (comparison -> comparison GREATER comparison .)
-    SEMI            reduce using rule 36 (comparison -> comparison GREATER comparison .)
-    RPAREN          reduce using rule 36 (comparison -> comparison GREATER comparison .)
-    COLON           reduce using rule 36 (comparison -> comparison GREATER comparison .)
-    PLUS            shift and go to state 43
-    MINUS           shift and go to state 45
-    STAR            shift and go to state 39
-    SLASH           shift and go to state 44
-
-  ! PLUS            [ reduce using rule 36 (comparison -> comparison GREATER comparison .) ]
-  ! MINUS           [ reduce using rule 36 (comparison -> comparison GREATER comparison .) ]
-  ! STAR            [ reduce using rule 36 (comparison -> comparison GREATER comparison .) ]
-  ! SLASH           [ reduce using rule 36 (comparison -> comparison GREATER comparison .) ]
-  ! LESS            [ shift and go to state 41 ]
-  ! EQEQUAL         [ shift and go to state 42 ]
-  ! GREATER         [ shift and go to state 40 ]
+    RPAREN          reduce using rule 56 (argument -> test .)
+    COMMA           reduce using rule 56 (argument -> test .)
 
 
 state 62
 
-    (34) comparison -> comparison LESS comparison .
-    (30) comparison -> comparison . PLUS comparison
-    (31) comparison -> comparison . MINUS comparison
-    (32) comparison -> comparison . STAR comparison
-    (33) comparison -> comparison . SLASH comparison
-    (34) comparison -> comparison . LESS comparison
-    (35) comparison -> comparison . EQEQUAL comparison
-    (36) comparison -> comparison . GREATER comparison
+    (48) trailer -> LPAREN arglist . RPAREN
+    (54) arglist -> arglist . COMMA argument
 
-    LESS            reduce using rule 34 (comparison -> comparison LESS comparison .)
-    EQEQUAL         reduce using rule 34 (comparison -> comparison LESS comparison .)
-    GREATER         reduce using rule 34 (comparison -> comparison LESS comparison .)
-    COMMA           reduce using rule 34 (comparison -> comparison LESS comparison .)
-    EQUAL           reduce using rule 34 (comparison -> comparison LESS comparison .)
-    NEWLINE         reduce using rule 34 (comparison -> comparison LESS comparison .)
-    SEMI            reduce using rule 34 (comparison -> comparison LESS comparison .)
-    RPAREN          reduce using rule 34 (comparison -> comparison LESS comparison .)
-    COLON           reduce using rule 34 (comparison -> comparison LESS comparison .)
-    PLUS            shift and go to state 43
-    MINUS           shift and go to state 45
-    STAR            shift and go to state 39
-    SLASH           shift and go to state 44
-
-  ! PLUS            [ reduce using rule 34 (comparison -> comparison LESS comparison .) ]
-  ! MINUS           [ reduce using rule 34 (comparison -> comparison LESS comparison .) ]
-  ! STAR            [ reduce using rule 34 (comparison -> comparison LESS comparison .) ]
-  ! SLASH           [ reduce using rule 34 (comparison -> comparison LESS comparison .) ]
-  ! LESS            [ shift and go to state 41 ]
-  ! EQEQUAL         [ shift and go to state 42 ]
-  ! GREATER         [ shift and go to state 40 ]
+    RPAREN          shift and go to state 80
+    COMMA           shift and go to state 79
 
 
 state 63
 
-    (35) comparison -> comparison EQEQUAL comparison .
-    (30) comparison -> comparison . PLUS comparison
-    (31) comparison -> comparison . MINUS comparison
-    (32) comparison -> comparison . STAR comparison
-    (33) comparison -> comparison . SLASH comparison
-    (34) comparison -> comparison . LESS comparison
-    (35) comparison -> comparison . EQEQUAL comparison
-    (36) comparison -> comparison . GREATER comparison
+    (34) comparison -> comparison STAR comparison .
+    (32) comparison -> comparison . PLUS comparison
+    (33) comparison -> comparison . MINUS comparison
+    (34) comparison -> comparison . STAR comparison
+    (35) comparison -> comparison . SLASH comparison
+    (36) comparison -> comparison . LESS comparison
+    (37) comparison -> comparison . EQEQUAL comparison
+    (38) comparison -> comparison . GREATER comparison
 
-    LESS            reduce using rule 35 (comparison -> comparison EQEQUAL comparison .)
-    EQEQUAL         reduce using rule 35 (comparison -> comparison EQEQUAL comparison .)
-    GREATER         reduce using rule 35 (comparison -> comparison EQEQUAL comparison .)
-    COMMA           reduce using rule 35 (comparison -> comparison EQEQUAL comparison .)
-    EQUAL           reduce using rule 35 (comparison -> comparison EQEQUAL comparison .)
-    NEWLINE         reduce using rule 35 (comparison -> comparison EQEQUAL comparison .)
-    SEMI            reduce using rule 35 (comparison -> comparison EQEQUAL comparison .)
-    RPAREN          reduce using rule 35 (comparison -> comparison EQEQUAL comparison .)
-    COLON           reduce using rule 35 (comparison -> comparison EQEQUAL comparison .)
-    PLUS            shift and go to state 43
-    MINUS           shift and go to state 45
-    STAR            shift and go to state 39
-    SLASH           shift and go to state 44
+    PLUS            reduce using rule 34 (comparison -> comparison STAR comparison .)
+    MINUS           reduce using rule 34 (comparison -> comparison STAR comparison .)
+    STAR            reduce using rule 34 (comparison -> comparison STAR comparison .)
+    SLASH           reduce using rule 34 (comparison -> comparison STAR comparison .)
+    LESS            reduce using rule 34 (comparison -> comparison STAR comparison .)
+    EQEQUAL         reduce using rule 34 (comparison -> comparison STAR comparison .)
+    GREATER         reduce using rule 34 (comparison -> comparison STAR comparison .)
+    COMMA           reduce using rule 34 (comparison -> comparison STAR comparison .)
+    EQUAL           reduce using rule 34 (comparison -> comparison STAR comparison .)
+    NEWLINE         reduce using rule 34 (comparison -> comparison STAR comparison .)
+    SEMI            reduce using rule 34 (comparison -> comparison STAR comparison .)
+    RPAREN          reduce using rule 34 (comparison -> comparison STAR comparison .)
+    COLON           reduce using rule 34 (comparison -> comparison STAR comparison .)
 
-  ! PLUS            [ reduce using rule 35 (comparison -> comparison EQEQUAL comparison .) ]
-  ! MINUS           [ reduce using rule 35 (comparison -> comparison EQEQUAL comparison .) ]
-  ! STAR            [ reduce using rule 35 (comparison -> comparison EQEQUAL comparison .) ]
-  ! SLASH           [ reduce using rule 35 (comparison -> comparison EQEQUAL comparison .) ]
-  ! LESS            [ shift and go to state 41 ]
-  ! EQEQUAL         [ shift and go to state 42 ]
-  ! GREATER         [ shift and go to state 40 ]
+  ! PLUS            [ shift and go to state 46 ]
+  ! MINUS           [ shift and go to state 48 ]
+  ! STAR            [ shift and go to state 42 ]
+  ! SLASH           [ shift and go to state 47 ]
+  ! LESS            [ shift and go to state 44 ]
+  ! EQEQUAL         [ shift and go to state 45 ]
+  ! GREATER         [ shift and go to state 43 ]
 
 
 state 64
 
-    (30) comparison -> comparison PLUS comparison .
-    (30) comparison -> comparison . PLUS comparison
-    (31) comparison -> comparison . MINUS comparison
-    (32) comparison -> comparison . STAR comparison
-    (33) comparison -> comparison . SLASH comparison
-    (34) comparison -> comparison . LESS comparison
-    (35) comparison -> comparison . EQEQUAL comparison
-    (36) comparison -> comparison . GREATER comparison
+    (38) comparison -> comparison GREATER comparison .
+    (32) comparison -> comparison . PLUS comparison
+    (33) comparison -> comparison . MINUS comparison
+    (34) comparison -> comparison . STAR comparison
+    (35) comparison -> comparison . SLASH comparison
+    (36) comparison -> comparison . LESS comparison
+    (37) comparison -> comparison . EQEQUAL comparison
+    (38) comparison -> comparison . GREATER comparison
 
-    PLUS            reduce using rule 30 (comparison -> comparison PLUS comparison .)
-    MINUS           reduce using rule 30 (comparison -> comparison PLUS comparison .)
-    LESS            reduce using rule 30 (comparison -> comparison PLUS comparison .)
-    EQEQUAL         reduce using rule 30 (comparison -> comparison PLUS comparison .)
-    GREATER         reduce using rule 30 (comparison -> comparison PLUS comparison .)
-    COMMA           reduce using rule 30 (comparison -> comparison PLUS comparison .)
-    EQUAL           reduce using rule 30 (comparison -> comparison PLUS comparison .)
-    NEWLINE         reduce using rule 30 (comparison -> comparison PLUS comparison .)
-    SEMI            reduce using rule 30 (comparison -> comparison PLUS comparison .)
-    RPAREN          reduce using rule 30 (comparison -> comparison PLUS comparison .)
-    COLON           reduce using rule 30 (comparison -> comparison PLUS comparison .)
-    STAR            shift and go to state 39
-    SLASH           shift and go to state 44
+    LESS            reduce using rule 38 (comparison -> comparison GREATER comparison .)
+    EQEQUAL         reduce using rule 38 (comparison -> comparison GREATER comparison .)
+    GREATER         reduce using rule 38 (comparison -> comparison GREATER comparison .)
+    COMMA           reduce using rule 38 (comparison -> comparison GREATER comparison .)
+    EQUAL           reduce using rule 38 (comparison -> comparison GREATER comparison .)
+    NEWLINE         reduce using rule 38 (comparison -> comparison GREATER comparison .)
+    SEMI            reduce using rule 38 (comparison -> comparison GREATER comparison .)
+    RPAREN          reduce using rule 38 (comparison -> comparison GREATER comparison .)
+    COLON           reduce using rule 38 (comparison -> comparison GREATER comparison .)
+    PLUS            shift and go to state 46
+    MINUS           shift and go to state 48
+    STAR            shift and go to state 42
+    SLASH           shift and go to state 47
 
-  ! STAR            [ reduce using rule 30 (comparison -> comparison PLUS comparison .) ]
-  ! SLASH           [ reduce using rule 30 (comparison -> comparison PLUS comparison .) ]
-  ! PLUS            [ shift and go to state 43 ]
-  ! MINUS           [ shift and go to state 45 ]
-  ! LESS            [ shift and go to state 41 ]
-  ! EQEQUAL         [ shift and go to state 42 ]
-  ! GREATER         [ shift and go to state 40 ]
+  ! PLUS            [ reduce using rule 38 (comparison -> comparison GREATER comparison .) ]
+  ! MINUS           [ reduce using rule 38 (comparison -> comparison GREATER comparison .) ]
+  ! STAR            [ reduce using rule 38 (comparison -> comparison GREATER comparison .) ]
+  ! SLASH           [ reduce using rule 38 (comparison -> comparison GREATER comparison .) ]
+  ! LESS            [ shift and go to state 44 ]
+  ! EQEQUAL         [ shift and go to state 45 ]
+  ! GREATER         [ shift and go to state 43 ]
 
 
 state 65
 
-    (33) comparison -> comparison SLASH comparison .
-    (30) comparison -> comparison . PLUS comparison
-    (31) comparison -> comparison . MINUS comparison
-    (32) comparison -> comparison . STAR comparison
-    (33) comparison -> comparison . SLASH comparison
-    (34) comparison -> comparison . LESS comparison
-    (35) comparison -> comparison . EQEQUAL comparison
-    (36) comparison -> comparison . GREATER comparison
+    (36) comparison -> comparison LESS comparison .
+    (32) comparison -> comparison . PLUS comparison
+    (33) comparison -> comparison . MINUS comparison
+    (34) comparison -> comparison . STAR comparison
+    (35) comparison -> comparison . SLASH comparison
+    (36) comparison -> comparison . LESS comparison
+    (37) comparison -> comparison . EQEQUAL comparison
+    (38) comparison -> comparison . GREATER comparison
 
-    PLUS            reduce using rule 33 (comparison -> comparison SLASH comparison .)
-    MINUS           reduce using rule 33 (comparison -> comparison SLASH comparison .)
-    STAR            reduce using rule 33 (comparison -> comparison SLASH comparison .)
-    SLASH           reduce using rule 33 (comparison -> comparison SLASH comparison .)
-    LESS            reduce using rule 33 (comparison -> comparison SLASH comparison .)
-    EQEQUAL         reduce using rule 33 (comparison -> comparison SLASH comparison .)
-    GREATER         reduce using rule 33 (comparison -> comparison SLASH comparison .)
-    COMMA           reduce using rule 33 (comparison -> comparison SLASH comparison .)
-    EQUAL           reduce using rule 33 (comparison -> comparison SLASH comparison .)
-    NEWLINE         reduce using rule 33 (comparison -> comparison SLASH comparison .)
-    SEMI            reduce using rule 33 (comparison -> comparison SLASH comparison .)
-    RPAREN          reduce using rule 33 (comparison -> comparison SLASH comparison .)
-    COLON           reduce using rule 33 (comparison -> comparison SLASH comparison .)
+    LESS            reduce using rule 36 (comparison -> comparison LESS comparison .)
+    EQEQUAL         reduce using rule 36 (comparison -> comparison LESS comparison .)
+    GREATER         reduce using rule 36 (comparison -> comparison LESS comparison .)
+    COMMA           reduce using rule 36 (comparison -> comparison LESS comparison .)
+    EQUAL           reduce using rule 36 (comparison -> comparison LESS comparison .)
+    NEWLINE         reduce using rule 36 (comparison -> comparison LESS comparison .)
+    SEMI            reduce using rule 36 (comparison -> comparison LESS comparison .)
+    RPAREN          reduce using rule 36 (comparison -> comparison LESS comparison .)
+    COLON           reduce using rule 36 (comparison -> comparison LESS comparison .)
+    PLUS            shift and go to state 46
+    MINUS           shift and go to state 48
+    STAR            shift and go to state 42
+    SLASH           shift and go to state 47
 
-  ! PLUS            [ shift and go to state 43 ]
-  ! MINUS           [ shift and go to state 45 ]
-  ! STAR            [ shift and go to state 39 ]
-  ! SLASH           [ shift and go to state 44 ]
-  ! LESS            [ shift and go to state 41 ]
-  ! EQEQUAL         [ shift and go to state 42 ]
-  ! GREATER         [ shift and go to state 40 ]
+  ! PLUS            [ reduce using rule 36 (comparison -> comparison LESS comparison .) ]
+  ! MINUS           [ reduce using rule 36 (comparison -> comparison LESS comparison .) ]
+  ! STAR            [ reduce using rule 36 (comparison -> comparison LESS comparison .) ]
+  ! SLASH           [ reduce using rule 36 (comparison -> comparison LESS comparison .) ]
+  ! LESS            [ shift and go to state 44 ]
+  ! EQEQUAL         [ shift and go to state 45 ]
+  ! GREATER         [ shift and go to state 43 ]
 
 
 state 66
 
-    (31) comparison -> comparison MINUS comparison .
-    (30) comparison -> comparison . PLUS comparison
-    (31) comparison -> comparison . MINUS comparison
-    (32) comparison -> comparison . STAR comparison
-    (33) comparison -> comparison . SLASH comparison
-    (34) comparison -> comparison . LESS comparison
-    (35) comparison -> comparison . EQEQUAL comparison
-    (36) comparison -> comparison . GREATER comparison
+    (37) comparison -> comparison EQEQUAL comparison .
+    (32) comparison -> comparison . PLUS comparison
+    (33) comparison -> comparison . MINUS comparison
+    (34) comparison -> comparison . STAR comparison
+    (35) comparison -> comparison . SLASH comparison
+    (36) comparison -> comparison . LESS comparison
+    (37) comparison -> comparison . EQEQUAL comparison
+    (38) comparison -> comparison . GREATER comparison
 
-    PLUS            reduce using rule 31 (comparison -> comparison MINUS comparison .)
-    MINUS           reduce using rule 31 (comparison -> comparison MINUS comparison .)
-    LESS            reduce using rule 31 (comparison -> comparison MINUS comparison .)
-    EQEQUAL         reduce using rule 31 (comparison -> comparison MINUS comparison .)
-    GREATER         reduce using rule 31 (comparison -> comparison MINUS comparison .)
-    COMMA           reduce using rule 31 (comparison -> comparison MINUS comparison .)
-    EQUAL           reduce using rule 31 (comparison -> comparison MINUS comparison .)
-    NEWLINE         reduce using rule 31 (comparison -> comparison MINUS comparison .)
-    SEMI            reduce using rule 31 (comparison -> comparison MINUS comparison .)
-    RPAREN          reduce using rule 31 (comparison -> comparison MINUS comparison .)
-    COLON           reduce using rule 31 (comparison -> comparison MINUS comparison .)
-    STAR            shift and go to state 39
-    SLASH           shift and go to state 44
+    LESS            reduce using rule 37 (comparison -> comparison EQEQUAL comparison .)
+    EQEQUAL         reduce using rule 37 (comparison -> comparison EQEQUAL comparison .)
+    GREATER         reduce using rule 37 (comparison -> comparison EQEQUAL comparison .)
+    COMMA           reduce using rule 37 (comparison -> comparison EQEQUAL comparison .)
+    EQUAL           reduce using rule 37 (comparison -> comparison EQEQUAL comparison .)
+    NEWLINE         reduce using rule 37 (comparison -> comparison EQEQUAL comparison .)
+    SEMI            reduce using rule 37 (comparison -> comparison EQEQUAL comparison .)
+    RPAREN          reduce using rule 37 (comparison -> comparison EQEQUAL comparison .)
+    COLON           reduce using rule 37 (comparison -> comparison EQEQUAL comparison .)
+    PLUS            shift and go to state 46
+    MINUS           shift and go to state 48
+    STAR            shift and go to state 42
+    SLASH           shift and go to state 47
 
-  ! STAR            [ reduce using rule 31 (comparison -> comparison MINUS comparison .) ]
-  ! SLASH           [ reduce using rule 31 (comparison -> comparison MINUS comparison .) ]
-  ! PLUS            [ shift and go to state 43 ]
-  ! MINUS           [ shift and go to state 45 ]
-  ! LESS            [ shift and go to state 41 ]
-  ! EQEQUAL         [ shift and go to state 42 ]
-  ! GREATER         [ shift and go to state 40 ]
+  ! PLUS            [ reduce using rule 37 (comparison -> comparison EQEQUAL comparison .) ]
+  ! MINUS           [ reduce using rule 37 (comparison -> comparison EQEQUAL comparison .) ]
+  ! STAR            [ reduce using rule 37 (comparison -> comparison EQEQUAL comparison .) ]
+  ! SLASH           [ reduce using rule 37 (comparison -> comparison EQEQUAL comparison .) ]
+  ! LESS            [ shift and go to state 44 ]
+  ! EQEQUAL         [ shift and go to state 45 ]
+  ! GREATER         [ shift and go to state 43 ]
 
 
 state 67
+
+    (32) comparison -> comparison PLUS comparison .
+    (32) comparison -> comparison . PLUS comparison
+    (33) comparison -> comparison . MINUS comparison
+    (34) comparison -> comparison . STAR comparison
+    (35) comparison -> comparison . SLASH comparison
+    (36) comparison -> comparison . LESS comparison
+    (37) comparison -> comparison . EQEQUAL comparison
+    (38) comparison -> comparison . GREATER comparison
+
+    PLUS            reduce using rule 32 (comparison -> comparison PLUS comparison .)
+    MINUS           reduce using rule 32 (comparison -> comparison PLUS comparison .)
+    LESS            reduce using rule 32 (comparison -> comparison PLUS comparison .)
+    EQEQUAL         reduce using rule 32 (comparison -> comparison PLUS comparison .)
+    GREATER         reduce using rule 32 (comparison -> comparison PLUS comparison .)
+    COMMA           reduce using rule 32 (comparison -> comparison PLUS comparison .)
+    EQUAL           reduce using rule 32 (comparison -> comparison PLUS comparison .)
+    NEWLINE         reduce using rule 32 (comparison -> comparison PLUS comparison .)
+    SEMI            reduce using rule 32 (comparison -> comparison PLUS comparison .)
+    RPAREN          reduce using rule 32 (comparison -> comparison PLUS comparison .)
+    COLON           reduce using rule 32 (comparison -> comparison PLUS comparison .)
+    STAR            shift and go to state 42
+    SLASH           shift and go to state 47
+
+  ! STAR            [ reduce using rule 32 (comparison -> comparison PLUS comparison .) ]
+  ! SLASH           [ reduce using rule 32 (comparison -> comparison PLUS comparison .) ]
+  ! PLUS            [ shift and go to state 46 ]
+  ! MINUS           [ shift and go to state 48 ]
+  ! LESS            [ shift and go to state 44 ]
+  ! EQEQUAL         [ shift and go to state 45 ]
+  ! GREATER         [ shift and go to state 43 ]
+
+
+state 68
+
+    (35) comparison -> comparison SLASH comparison .
+    (32) comparison -> comparison . PLUS comparison
+    (33) comparison -> comparison . MINUS comparison
+    (34) comparison -> comparison . STAR comparison
+    (35) comparison -> comparison . SLASH comparison
+    (36) comparison -> comparison . LESS comparison
+    (37) comparison -> comparison . EQEQUAL comparison
+    (38) comparison -> comparison . GREATER comparison
+
+    PLUS            reduce using rule 35 (comparison -> comparison SLASH comparison .)
+    MINUS           reduce using rule 35 (comparison -> comparison SLASH comparison .)
+    STAR            reduce using rule 35 (comparison -> comparison SLASH comparison .)
+    SLASH           reduce using rule 35 (comparison -> comparison SLASH comparison .)
+    LESS            reduce using rule 35 (comparison -> comparison SLASH comparison .)
+    EQEQUAL         reduce using rule 35 (comparison -> comparison SLASH comparison .)
+    GREATER         reduce using rule 35 (comparison -> comparison SLASH comparison .)
+    COMMA           reduce using rule 35 (comparison -> comparison SLASH comparison .)
+    EQUAL           reduce using rule 35 (comparison -> comparison SLASH comparison .)
+    NEWLINE         reduce using rule 35 (comparison -> comparison SLASH comparison .)
+    SEMI            reduce using rule 35 (comparison -> comparison SLASH comparison .)
+    RPAREN          reduce using rule 35 (comparison -> comparison SLASH comparison .)
+    COLON           reduce using rule 35 (comparison -> comparison SLASH comparison .)
+
+  ! PLUS            [ shift and go to state 46 ]
+  ! MINUS           [ shift and go to state 48 ]
+  ! STAR            [ shift and go to state 42 ]
+  ! SLASH           [ shift and go to state 47 ]
+  ! LESS            [ shift and go to state 44 ]
+  ! EQEQUAL         [ shift and go to state 45 ]
+  ! GREATER         [ shift and go to state 43 ]
+
+
+state 69
+
+    (33) comparison -> comparison MINUS comparison .
+    (32) comparison -> comparison . PLUS comparison
+    (33) comparison -> comparison . MINUS comparison
+    (34) comparison -> comparison . STAR comparison
+    (35) comparison -> comparison . SLASH comparison
+    (36) comparison -> comparison . LESS comparison
+    (37) comparison -> comparison . EQEQUAL comparison
+    (38) comparison -> comparison . GREATER comparison
+
+    PLUS            reduce using rule 33 (comparison -> comparison MINUS comparison .)
+    MINUS           reduce using rule 33 (comparison -> comparison MINUS comparison .)
+    LESS            reduce using rule 33 (comparison -> comparison MINUS comparison .)
+    EQEQUAL         reduce using rule 33 (comparison -> comparison MINUS comparison .)
+    GREATER         reduce using rule 33 (comparison -> comparison MINUS comparison .)
+    COMMA           reduce using rule 33 (comparison -> comparison MINUS comparison .)
+    EQUAL           reduce using rule 33 (comparison -> comparison MINUS comparison .)
+    NEWLINE         reduce using rule 33 (comparison -> comparison MINUS comparison .)
+    SEMI            reduce using rule 33 (comparison -> comparison MINUS comparison .)
+    RPAREN          reduce using rule 33 (comparison -> comparison MINUS comparison .)
+    COLON           reduce using rule 33 (comparison -> comparison MINUS comparison .)
+    STAR            shift and go to state 42
+    SLASH           shift and go to state 47
+
+  ! STAR            [ reduce using rule 33 (comparison -> comparison MINUS comparison .) ]
+  ! SLASH           [ reduce using rule 33 (comparison -> comparison MINUS comparison .) ]
+  ! PLUS            [ shift and go to state 46 ]
+  ! MINUS           [ shift and go to state 48 ]
+  ! LESS            [ shift and go to state 44 ]
+  ! EQEQUAL         [ shift and go to state 45 ]
+  ! GREATER         [ shift and go to state 43 ]
+
+
+state 70
 
     (15) small_stmts -> small_stmts SEMI small_stmt .
 
@@ -1835,13 +1911,14 @@ state 67
     SEMI            reduce using rule 15 (small_stmts -> small_stmts SEMI small_stmt .)
 
 
-state 68
+state 71
 
     (14) simple_stmt -> small_stmts SEMI NEWLINE .
 
     DEDENT          reduce using rule 14 (simple_stmt -> small_stmts SEMI NEWLINE .)
     IF              reduce using rule 14 (simple_stmt -> small_stmts SEMI NEWLINE .)
     DEF             reduce using rule 14 (simple_stmt -> small_stmts SEMI NEWLINE .)
+    PRINT           reduce using rule 14 (simple_stmt -> small_stmts SEMI NEWLINE .)
     RETURN          reduce using rule 14 (simple_stmt -> small_stmts SEMI NEWLINE .)
     PLUS            reduce using rule 14 (simple_stmt -> small_stmts SEMI NEWLINE .)
     MINUS           reduce using rule 14 (simple_stmt -> small_stmts SEMI NEWLINE .)
@@ -1853,83 +1930,87 @@ state 68
     NEWLINE         reduce using rule 14 (simple_stmt -> small_stmts SEMI NEWLINE .)
 
 
-state 69
+state 72
 
     (6) funcdef -> DEF NAME parameters COLON . suite
-    (26) suite -> . simple_stmt
-    (27) suite -> . NEWLINE INDENT stmts DEDENT
+    (28) suite -> . simple_stmt
+    (29) suite -> . NEWLINE INDENT stmts DEDENT
     (13) simple_stmt -> . small_stmts NEWLINE
     (14) simple_stmt -> . small_stmts SEMI NEWLINE
     (15) small_stmts -> . small_stmts SEMI small_stmt
     (16) small_stmts -> . small_stmt
     (17) small_stmt -> . flow_stmt
     (18) small_stmt -> . expr_stmt
-    (21) flow_stmt -> . return_stmt
-    (19) expr_stmt -> . testlist EQUAL testlist
-    (20) expr_stmt -> . testlist
-    (22) return_stmt -> . RETURN testlist
-    (47) testlist -> . testlist_multi COMMA
-    (48) testlist -> . testlist_multi
-    (49) testlist_multi -> . testlist_multi COMMA test
-    (50) testlist_multi -> . test
-    (51) test -> . comparison
-    (30) comparison -> . comparison PLUS comparison
-    (31) comparison -> . comparison MINUS comparison
-    (32) comparison -> . comparison STAR comparison
-    (33) comparison -> . comparison SLASH comparison
-    (34) comparison -> . comparison LESS comparison
-    (35) comparison -> . comparison EQEQUAL comparison
-    (36) comparison -> . comparison GREATER comparison
-    (37) comparison -> . PLUS comparison
-    (38) comparison -> . MINUS comparison
-    (39) comparison -> . power
-    (40) power -> . atom
-    (41) power -> . atom trailer
-    (42) atom -> . NAME
-    (43) atom -> . NUMBER
-    (44) atom -> . STRING
-    (45) atom -> . LPAREN testlist RPAREN
+    (19) small_stmt -> . print_stmt
+    (22) flow_stmt -> . return_stmt
+    (20) expr_stmt -> . testlist EQUAL testlist
+    (21) expr_stmt -> . testlist
+    (23) print_stmt -> . PRINT test
+    (24) return_stmt -> . RETURN testlist
+    (49) testlist -> . testlist_multi COMMA
+    (50) testlist -> . testlist_multi
+    (51) testlist_multi -> . testlist_multi COMMA test
+    (52) testlist_multi -> . test
+    (53) test -> . comparison
+    (32) comparison -> . comparison PLUS comparison
+    (33) comparison -> . comparison MINUS comparison
+    (34) comparison -> . comparison STAR comparison
+    (35) comparison -> . comparison SLASH comparison
+    (36) comparison -> . comparison LESS comparison
+    (37) comparison -> . comparison EQEQUAL comparison
+    (38) comparison -> . comparison GREATER comparison
+    (39) comparison -> . PLUS comparison
+    (40) comparison -> . MINUS comparison
+    (41) comparison -> . power
+    (42) power -> . atom
+    (43) power -> . atom trailer
+    (44) atom -> . NAME
+    (45) atom -> . NUMBER
+    (46) atom -> . STRING
+    (47) atom -> . LPAREN testlist RPAREN
 
-    NEWLINE         shift and go to state 73
-    RETURN          shift and go to state 4
-    PLUS            shift and go to state 9
-    MINUS           shift and go to state 5
-    NAME            shift and go to state 24
-    NUMBER          shift and go to state 19
-    STRING          shift and go to state 14
+    NEWLINE         shift and go to state 76
+    PRINT           shift and go to state 4
+    RETURN          shift and go to state 5
+    PLUS            shift and go to state 10
+    MINUS           shift and go to state 6
+    NAME            shift and go to state 26
+    NUMBER          shift and go to state 21
+    STRING          shift and go to state 16
     LPAREN          shift and go to state 1
 
-    flow_stmt                      shift and go to state 7
-    comparison                     shift and go to state 25
-    expr_stmt                      shift and go to state 23
-    power                          shift and go to state 15
-    simple_stmt                    shift and go to state 74
-    testlist                       shift and go to state 17
+    flow_stmt                      shift and go to state 8
+    comparison                     shift and go to state 27
+    expr_stmt                      shift and go to state 25
+    power                          shift and go to state 17
+    simple_stmt                    shift and go to state 77
+    testlist                       shift and go to state 19
+    print_stmt                     shift and go to state 11
+    testlist_multi                 shift and go to state 22
     small_stmt                     shift and go to state 2
-    test                           shift and go to state 11
     return_stmt                    shift and go to state 3
-    atom                           shift and go to state 21
-    testlist_multi                 shift and go to state 20
-    suite                          shift and go to state 78
-    small_stmts                    shift and go to state 28
+    atom                           shift and go to state 23
+    test                           shift and go to state 13
+    suite                          shift and go to state 81
+    small_stmts                    shift and go to state 30
 
-state 70
+state 73
 
     (8) parameters -> LPAREN varargslist . RPAREN
     (9) varargslist -> varargslist . COMMA NAME
 
-    RPAREN          shift and go to state 80
-    COMMA           shift and go to state 79
+    RPAREN          shift and go to state 83
+    COMMA           shift and go to state 82
 
 
-state 71
+state 74
 
     (7) parameters -> LPAREN RPAREN .
 
     COLON           reduce using rule 7 (parameters -> LPAREN RPAREN .)
 
 
-state 72
+state 75
 
     (10) varargslist -> NAME .
 
@@ -1937,104 +2018,106 @@ state 72
     COMMA           reduce using rule 10 (varargslist -> NAME .)
 
 
-state 73
-
-    (27) suite -> NEWLINE . INDENT stmts DEDENT
-
-    INDENT          shift and go to state 81
-
-
-state 74
-
-    (26) suite -> simple_stmt .
-
-    ENDMARKER       reduce using rule 26 (suite -> simple_stmt .)
-    NEWLINE         reduce using rule 26 (suite -> simple_stmt .)
-    IF              reduce using rule 26 (suite -> simple_stmt .)
-    DEF             reduce using rule 26 (suite -> simple_stmt .)
-    RETURN          reduce using rule 26 (suite -> simple_stmt .)
-    PLUS            reduce using rule 26 (suite -> simple_stmt .)
-    MINUS           reduce using rule 26 (suite -> simple_stmt .)
-    NAME            reduce using rule 26 (suite -> simple_stmt .)
-    NUMBER          reduce using rule 26 (suite -> simple_stmt .)
-    STRING          reduce using rule 26 (suite -> simple_stmt .)
-    LPAREN          reduce using rule 26 (suite -> simple_stmt .)
-    DEDENT          reduce using rule 26 (suite -> simple_stmt .)
-
-
-state 75
-
-    (25) if_stmt -> IF test COLON suite .
-
-    DEDENT          reduce using rule 25 (if_stmt -> IF test COLON suite .)
-    IF              reduce using rule 25 (if_stmt -> IF test COLON suite .)
-    DEF             reduce using rule 25 (if_stmt -> IF test COLON suite .)
-    RETURN          reduce using rule 25 (if_stmt -> IF test COLON suite .)
-    PLUS            reduce using rule 25 (if_stmt -> IF test COLON suite .)
-    MINUS           reduce using rule 25 (if_stmt -> IF test COLON suite .)
-    NAME            reduce using rule 25 (if_stmt -> IF test COLON suite .)
-    NUMBER          reduce using rule 25 (if_stmt -> IF test COLON suite .)
-    STRING          reduce using rule 25 (if_stmt -> IF test COLON suite .)
-    LPAREN          reduce using rule 25 (if_stmt -> IF test COLON suite .)
-    ENDMARKER       reduce using rule 25 (if_stmt -> IF test COLON suite .)
-    NEWLINE         reduce using rule 25 (if_stmt -> IF test COLON suite .)
-
-
 state 76
 
-    (52) arglist -> arglist COMMA . argument
-    (54) argument -> . test
-    (51) test -> . comparison
-    (30) comparison -> . comparison PLUS comparison
-    (31) comparison -> . comparison MINUS comparison
-    (32) comparison -> . comparison STAR comparison
-    (33) comparison -> . comparison SLASH comparison
-    (34) comparison -> . comparison LESS comparison
-    (35) comparison -> . comparison EQEQUAL comparison
-    (36) comparison -> . comparison GREATER comparison
-    (37) comparison -> . PLUS comparison
-    (38) comparison -> . MINUS comparison
-    (39) comparison -> . power
-    (40) power -> . atom
-    (41) power -> . atom trailer
-    (42) atom -> . NAME
-    (43) atom -> . NUMBER
-    (44) atom -> . STRING
-    (45) atom -> . LPAREN testlist RPAREN
+    (29) suite -> NEWLINE . INDENT stmts DEDENT
 
-    PLUS            shift and go to state 9
-    MINUS           shift and go to state 5
-    NAME            shift and go to state 24
-    NUMBER          shift and go to state 19
-    STRING          shift and go to state 14
-    LPAREN          shift and go to state 1
+    INDENT          shift and go to state 84
 
-    comparison                     shift and go to state 25
-    power                          shift and go to state 15
-    argument                       shift and go to state 82
-    atom                           shift and go to state 21
-    test                           shift and go to state 58
 
 state 77
 
-    (46) trailer -> LPAREN arglist RPAREN .
+    (28) suite -> simple_stmt .
 
-    PLUS            reduce using rule 46 (trailer -> LPAREN arglist RPAREN .)
-    MINUS           reduce using rule 46 (trailer -> LPAREN arglist RPAREN .)
-    STAR            reduce using rule 46 (trailer -> LPAREN arglist RPAREN .)
-    SLASH           reduce using rule 46 (trailer -> LPAREN arglist RPAREN .)
-    LESS            reduce using rule 46 (trailer -> LPAREN arglist RPAREN .)
-    EQEQUAL         reduce using rule 46 (trailer -> LPAREN arglist RPAREN .)
-    GREATER         reduce using rule 46 (trailer -> LPAREN arglist RPAREN .)
-    COMMA           reduce using rule 46 (trailer -> LPAREN arglist RPAREN .)
-    EQUAL           reduce using rule 46 (trailer -> LPAREN arglist RPAREN .)
-    NEWLINE         reduce using rule 46 (trailer -> LPAREN arglist RPAREN .)
-    SEMI            reduce using rule 46 (trailer -> LPAREN arglist RPAREN .)
-    RPAREN          reduce using rule 46 (trailer -> LPAREN arglist RPAREN .)
-    COLON           reduce using rule 46 (trailer -> LPAREN arglist RPAREN .)
+    ENDMARKER       reduce using rule 28 (suite -> simple_stmt .)
+    NEWLINE         reduce using rule 28 (suite -> simple_stmt .)
+    IF              reduce using rule 28 (suite -> simple_stmt .)
+    DEF             reduce using rule 28 (suite -> simple_stmt .)
+    PRINT           reduce using rule 28 (suite -> simple_stmt .)
+    RETURN          reduce using rule 28 (suite -> simple_stmt .)
+    PLUS            reduce using rule 28 (suite -> simple_stmt .)
+    MINUS           reduce using rule 28 (suite -> simple_stmt .)
+    NAME            reduce using rule 28 (suite -> simple_stmt .)
+    NUMBER          reduce using rule 28 (suite -> simple_stmt .)
+    STRING          reduce using rule 28 (suite -> simple_stmt .)
+    LPAREN          reduce using rule 28 (suite -> simple_stmt .)
+    DEDENT          reduce using rule 28 (suite -> simple_stmt .)
 
 
 state 78
+
+    (27) if_stmt -> IF test COLON suite .
+
+    ENDMARKER       reduce using rule 27 (if_stmt -> IF test COLON suite .)
+    NEWLINE         reduce using rule 27 (if_stmt -> IF test COLON suite .)
+    IF              reduce using rule 27 (if_stmt -> IF test COLON suite .)
+    DEF             reduce using rule 27 (if_stmt -> IF test COLON suite .)
+    PRINT           reduce using rule 27 (if_stmt -> IF test COLON suite .)
+    RETURN          reduce using rule 27 (if_stmt -> IF test COLON suite .)
+    PLUS            reduce using rule 27 (if_stmt -> IF test COLON suite .)
+    MINUS           reduce using rule 27 (if_stmt -> IF test COLON suite .)
+    NAME            reduce using rule 27 (if_stmt -> IF test COLON suite .)
+    NUMBER          reduce using rule 27 (if_stmt -> IF test COLON suite .)
+    STRING          reduce using rule 27 (if_stmt -> IF test COLON suite .)
+    LPAREN          reduce using rule 27 (if_stmt -> IF test COLON suite .)
+    DEDENT          reduce using rule 27 (if_stmt -> IF test COLON suite .)
+
+
+state 79
+
+    (54) arglist -> arglist COMMA . argument
+    (56) argument -> . test
+    (53) test -> . comparison
+    (32) comparison -> . comparison PLUS comparison
+    (33) comparison -> . comparison MINUS comparison
+    (34) comparison -> . comparison STAR comparison
+    (35) comparison -> . comparison SLASH comparison
+    (36) comparison -> . comparison LESS comparison
+    (37) comparison -> . comparison EQEQUAL comparison
+    (38) comparison -> . comparison GREATER comparison
+    (39) comparison -> . PLUS comparison
+    (40) comparison -> . MINUS comparison
+    (41) comparison -> . power
+    (42) power -> . atom
+    (43) power -> . atom trailer
+    (44) atom -> . NAME
+    (45) atom -> . NUMBER
+    (46) atom -> . STRING
+    (47) atom -> . LPAREN testlist RPAREN
+
+    PLUS            shift and go to state 10
+    MINUS           shift and go to state 6
+    NAME            shift and go to state 26
+    NUMBER          shift and go to state 21
+    STRING          shift and go to state 16
+    LPAREN          shift and go to state 1
+
+    comparison                     shift and go to state 27
+    power                          shift and go to state 17
+    argument                       shift and go to state 85
+    atom                           shift and go to state 23
+    test                           shift and go to state 61
+
+state 80
+
+    (48) trailer -> LPAREN arglist RPAREN .
+
+    PLUS            reduce using rule 48 (trailer -> LPAREN arglist RPAREN .)
+    MINUS           reduce using rule 48 (trailer -> LPAREN arglist RPAREN .)
+    STAR            reduce using rule 48 (trailer -> LPAREN arglist RPAREN .)
+    SLASH           reduce using rule 48 (trailer -> LPAREN arglist RPAREN .)
+    LESS            reduce using rule 48 (trailer -> LPAREN arglist RPAREN .)
+    EQEQUAL         reduce using rule 48 (trailer -> LPAREN arglist RPAREN .)
+    GREATER         reduce using rule 48 (trailer -> LPAREN arglist RPAREN .)
+    COMMA           reduce using rule 48 (trailer -> LPAREN arglist RPAREN .)
+    EQUAL           reduce using rule 48 (trailer -> LPAREN arglist RPAREN .)
+    NEWLINE         reduce using rule 48 (trailer -> LPAREN arglist RPAREN .)
+    SEMI            reduce using rule 48 (trailer -> LPAREN arglist RPAREN .)
+    RPAREN          reduce using rule 48 (trailer -> LPAREN arglist RPAREN .)
+    COLON           reduce using rule 48 (trailer -> LPAREN arglist RPAREN .)
+
+
+state 81
 
     (6) funcdef -> DEF NAME parameters COLON suite .
 
@@ -2042,6 +2125,7 @@ state 78
     NEWLINE         reduce using rule 6 (funcdef -> DEF NAME parameters COLON suite .)
     IF              reduce using rule 6 (funcdef -> DEF NAME parameters COLON suite .)
     DEF             reduce using rule 6 (funcdef -> DEF NAME parameters COLON suite .)
+    PRINT           reduce using rule 6 (funcdef -> DEF NAME parameters COLON suite .)
     RETURN          reduce using rule 6 (funcdef -> DEF NAME parameters COLON suite .)
     PLUS            reduce using rule 6 (funcdef -> DEF NAME parameters COLON suite .)
     MINUS           reduce using rule 6 (funcdef -> DEF NAME parameters COLON suite .)
@@ -2052,100 +2136,104 @@ state 78
     DEDENT          reduce using rule 6 (funcdef -> DEF NAME parameters COLON suite .)
 
 
-state 79
+state 82
 
     (9) varargslist -> varargslist COMMA . NAME
 
-    NAME            shift and go to state 83
+    NAME            shift and go to state 86
 
 
-state 80
+state 83
 
     (8) parameters -> LPAREN varargslist RPAREN .
 
     COLON           reduce using rule 8 (parameters -> LPAREN varargslist RPAREN .)
 
 
-state 81
+state 84
 
-    (27) suite -> NEWLINE INDENT . stmts DEDENT
-    (28) stmts -> . stmts stmt
-    (29) stmts -> . stmt
+    (29) suite -> NEWLINE INDENT . stmts DEDENT
+    (30) stmts -> . stmts stmt
+    (31) stmts -> . stmt
     (11) stmt -> . simple_stmt
     (12) stmt -> . compound_stmt
     (13) simple_stmt -> . small_stmts NEWLINE
     (14) simple_stmt -> . small_stmts SEMI NEWLINE
-    (23) compound_stmt -> . if_stmt
-    (24) compound_stmt -> . funcdef
+    (25) compound_stmt -> . if_stmt
+    (26) compound_stmt -> . funcdef
     (15) small_stmts -> . small_stmts SEMI small_stmt
     (16) small_stmts -> . small_stmt
-    (25) if_stmt -> . IF test COLON suite
+    (27) if_stmt -> . IF test COLON suite
     (6) funcdef -> . DEF NAME parameters COLON suite
     (17) small_stmt -> . flow_stmt
     (18) small_stmt -> . expr_stmt
-    (21) flow_stmt -> . return_stmt
-    (19) expr_stmt -> . testlist EQUAL testlist
-    (20) expr_stmt -> . testlist
-    (22) return_stmt -> . RETURN testlist
-    (47) testlist -> . testlist_multi COMMA
-    (48) testlist -> . testlist_multi
-    (49) testlist_multi -> . testlist_multi COMMA test
-    (50) testlist_multi -> . test
-    (51) test -> . comparison
-    (30) comparison -> . comparison PLUS comparison
-    (31) comparison -> . comparison MINUS comparison
-    (32) comparison -> . comparison STAR comparison
-    (33) comparison -> . comparison SLASH comparison
-    (34) comparison -> . comparison LESS comparison
-    (35) comparison -> . comparison EQEQUAL comparison
-    (36) comparison -> . comparison GREATER comparison
-    (37) comparison -> . PLUS comparison
-    (38) comparison -> . MINUS comparison
-    (39) comparison -> . power
-    (40) power -> . atom
-    (41) power -> . atom trailer
-    (42) atom -> . NAME
-    (43) atom -> . NUMBER
-    (44) atom -> . STRING
-    (45) atom -> . LPAREN testlist RPAREN
+    (19) small_stmt -> . print_stmt
+    (22) flow_stmt -> . return_stmt
+    (20) expr_stmt -> . testlist EQUAL testlist
+    (21) expr_stmt -> . testlist
+    (23) print_stmt -> . PRINT test
+    (24) return_stmt -> . RETURN testlist
+    (49) testlist -> . testlist_multi COMMA
+    (50) testlist -> . testlist_multi
+    (51) testlist_multi -> . testlist_multi COMMA test
+    (52) testlist_multi -> . test
+    (53) test -> . comparison
+    (32) comparison -> . comparison PLUS comparison
+    (33) comparison -> . comparison MINUS comparison
+    (34) comparison -> . comparison STAR comparison
+    (35) comparison -> . comparison SLASH comparison
+    (36) comparison -> . comparison LESS comparison
+    (37) comparison -> . comparison EQEQUAL comparison
+    (38) comparison -> . comparison GREATER comparison
+    (39) comparison -> . PLUS comparison
+    (40) comparison -> . MINUS comparison
+    (41) comparison -> . power
+    (42) power -> . atom
+    (43) power -> . atom trailer
+    (44) atom -> . NAME
+    (45) atom -> . NUMBER
+    (46) atom -> . STRING
+    (47) atom -> . LPAREN testlist RPAREN
 
-    IF              shift and go to state 12
-    DEF             shift and go to state 6
-    RETURN          shift and go to state 4
-    PLUS            shift and go to state 9
-    MINUS           shift and go to state 5
-    NAME            shift and go to state 24
-    NUMBER          shift and go to state 19
-    STRING          shift and go to state 14
+    IF              shift and go to state 14
+    DEF             shift and go to state 7
+    PRINT           shift and go to state 4
+    RETURN          shift and go to state 5
+    PLUS            shift and go to state 10
+    MINUS           shift and go to state 6
+    NAME            shift and go to state 26
+    NUMBER          shift and go to state 21
+    STRING          shift and go to state 16
     LPAREN          shift and go to state 1
 
-    flow_stmt                      shift and go to state 7
-    comparison                     shift and go to state 25
-    expr_stmt                      shift and go to state 23
-    if_stmt                        shift and go to state 26
+    flow_stmt                      shift and go to state 8
+    comparison                     shift and go to state 27
+    expr_stmt                      shift and go to state 25
+    if_stmt                        shift and go to state 28
     small_stmt                     shift and go to state 2
-    stmts                          shift and go to state 84
-    testlist                       shift and go to state 17
-    stmt                           shift and go to state 85
-    testlist_multi                 shift and go to state 20
-    simple_stmt                    shift and go to state 16
-    power                          shift and go to state 15
-    test                           shift and go to state 11
+    stmts                          shift and go to state 87
+    testlist                       shift and go to state 19
+    print_stmt                     shift and go to state 11
+    stmt                           shift and go to state 88
+    testlist_multi                 shift and go to state 22
+    simple_stmt                    shift and go to state 18
+    power                          shift and go to state 17
+    test                           shift and go to state 13
     return_stmt                    shift and go to state 3
-    atom                           shift and go to state 21
-    funcdef                        shift and go to state 22
-    compound_stmt                  shift and go to state 13
-    small_stmts                    shift and go to state 28
+    atom                           shift and go to state 23
+    funcdef                        shift and go to state 24
+    compound_stmt                  shift and go to state 15
+    small_stmts                    shift and go to state 30
 
-state 82
+state 85
 
-    (52) arglist -> arglist COMMA argument .
+    (54) arglist -> arglist COMMA argument .
 
-    RPAREN          reduce using rule 52 (arglist -> arglist COMMA argument .)
-    COMMA           reduce using rule 52 (arglist -> arglist COMMA argument .)
+    RPAREN          reduce using rule 54 (arglist -> arglist COMMA argument .)
+    COMMA           reduce using rule 54 (arglist -> arglist COMMA argument .)
 
 
-state 83
+state 86
 
     (9) varargslist -> varargslist COMMA NAME .
 
@@ -2153,122 +2241,129 @@ state 83
     COMMA           reduce using rule 9 (varargslist -> varargslist COMMA NAME .)
 
 
-state 84
+state 87
 
-    (27) suite -> NEWLINE INDENT stmts . DEDENT
-    (28) stmts -> stmts . stmt
+    (29) suite -> NEWLINE INDENT stmts . DEDENT
+    (30) stmts -> stmts . stmt
     (11) stmt -> . simple_stmt
     (12) stmt -> . compound_stmt
     (13) simple_stmt -> . small_stmts NEWLINE
     (14) simple_stmt -> . small_stmts SEMI NEWLINE
-    (23) compound_stmt -> . if_stmt
-    (24) compound_stmt -> . funcdef
+    (25) compound_stmt -> . if_stmt
+    (26) compound_stmt -> . funcdef
     (15) small_stmts -> . small_stmts SEMI small_stmt
     (16) small_stmts -> . small_stmt
-    (25) if_stmt -> . IF test COLON suite
+    (27) if_stmt -> . IF test COLON suite
     (6) funcdef -> . DEF NAME parameters COLON suite
     (17) small_stmt -> . flow_stmt
     (18) small_stmt -> . expr_stmt
-    (21) flow_stmt -> . return_stmt
-    (19) expr_stmt -> . testlist EQUAL testlist
-    (20) expr_stmt -> . testlist
-    (22) return_stmt -> . RETURN testlist
-    (47) testlist -> . testlist_multi COMMA
-    (48) testlist -> . testlist_multi
-    (49) testlist_multi -> . testlist_multi COMMA test
-    (50) testlist_multi -> . test
-    (51) test -> . comparison
-    (30) comparison -> . comparison PLUS comparison
-    (31) comparison -> . comparison MINUS comparison
-    (32) comparison -> . comparison STAR comparison
-    (33) comparison -> . comparison SLASH comparison
-    (34) comparison -> . comparison LESS comparison
-    (35) comparison -> . comparison EQEQUAL comparison
-    (36) comparison -> . comparison GREATER comparison
-    (37) comparison -> . PLUS comparison
-    (38) comparison -> . MINUS comparison
-    (39) comparison -> . power
-    (40) power -> . atom
-    (41) power -> . atom trailer
-    (42) atom -> . NAME
-    (43) atom -> . NUMBER
-    (44) atom -> . STRING
-    (45) atom -> . LPAREN testlist RPAREN
+    (19) small_stmt -> . print_stmt
+    (22) flow_stmt -> . return_stmt
+    (20) expr_stmt -> . testlist EQUAL testlist
+    (21) expr_stmt -> . testlist
+    (23) print_stmt -> . PRINT test
+    (24) return_stmt -> . RETURN testlist
+    (49) testlist -> . testlist_multi COMMA
+    (50) testlist -> . testlist_multi
+    (51) testlist_multi -> . testlist_multi COMMA test
+    (52) testlist_multi -> . test
+    (53) test -> . comparison
+    (32) comparison -> . comparison PLUS comparison
+    (33) comparison -> . comparison MINUS comparison
+    (34) comparison -> . comparison STAR comparison
+    (35) comparison -> . comparison SLASH comparison
+    (36) comparison -> . comparison LESS comparison
+    (37) comparison -> . comparison EQEQUAL comparison
+    (38) comparison -> . comparison GREATER comparison
+    (39) comparison -> . PLUS comparison
+    (40) comparison -> . MINUS comparison
+    (41) comparison -> . power
+    (42) power -> . atom
+    (43) power -> . atom trailer
+    (44) atom -> . NAME
+    (45) atom -> . NUMBER
+    (46) atom -> . STRING
+    (47) atom -> . LPAREN testlist RPAREN
 
-    DEDENT          shift and go to state 86
-    IF              shift and go to state 12
-    DEF             shift and go to state 6
-    RETURN          shift and go to state 4
-    PLUS            shift and go to state 9
-    MINUS           shift and go to state 5
-    NAME            shift and go to state 24
-    NUMBER          shift and go to state 19
-    STRING          shift and go to state 14
+    DEDENT          shift and go to state 89
+    IF              shift and go to state 14
+    DEF             shift and go to state 7
+    PRINT           shift and go to state 4
+    RETURN          shift and go to state 5
+    PLUS            shift and go to state 10
+    MINUS           shift and go to state 6
+    NAME            shift and go to state 26
+    NUMBER          shift and go to state 21
+    STRING          shift and go to state 16
     LPAREN          shift and go to state 1
 
-    flow_stmt                      shift and go to state 7
-    comparison                     shift and go to state 25
-    expr_stmt                      shift and go to state 23
-    if_stmt                        shift and go to state 26
+    flow_stmt                      shift and go to state 8
+    comparison                     shift and go to state 27
+    expr_stmt                      shift and go to state 25
+    if_stmt                        shift and go to state 28
     small_stmt                     shift and go to state 2
-    testlist                       shift and go to state 17
-    stmt                           shift and go to state 87
-    testlist_multi                 shift and go to state 20
-    simple_stmt                    shift and go to state 16
-    power                          shift and go to state 15
-    test                           shift and go to state 11
+    testlist                       shift and go to state 19
+    print_stmt                     shift and go to state 11
+    stmt                           shift and go to state 90
+    testlist_multi                 shift and go to state 22
+    simple_stmt                    shift and go to state 18
+    power                          shift and go to state 17
+    test                           shift and go to state 13
     return_stmt                    shift and go to state 3
-    atom                           shift and go to state 21
-    funcdef                        shift and go to state 22
-    compound_stmt                  shift and go to state 13
-    small_stmts                    shift and go to state 28
+    atom                           shift and go to state 23
+    funcdef                        shift and go to state 24
+    compound_stmt                  shift and go to state 15
+    small_stmts                    shift and go to state 30
 
-state 85
+state 88
 
-    (29) stmts -> stmt .
+    (31) stmts -> stmt .
 
-    DEDENT          reduce using rule 29 (stmts -> stmt .)
-    IF              reduce using rule 29 (stmts -> stmt .)
-    DEF             reduce using rule 29 (stmts -> stmt .)
-    RETURN          reduce using rule 29 (stmts -> stmt .)
-    PLUS            reduce using rule 29 (stmts -> stmt .)
-    MINUS           reduce using rule 29 (stmts -> stmt .)
-    NAME            reduce using rule 29 (stmts -> stmt .)
-    NUMBER          reduce using rule 29 (stmts -> stmt .)
-    STRING          reduce using rule 29 (stmts -> stmt .)
-    LPAREN          reduce using rule 29 (stmts -> stmt .)
-
-
-state 86
-
-    (27) suite -> NEWLINE INDENT stmts DEDENT .
-
-    ENDMARKER       reduce using rule 27 (suite -> NEWLINE INDENT stmts DEDENT .)
-    NEWLINE         reduce using rule 27 (suite -> NEWLINE INDENT stmts DEDENT .)
-    IF              reduce using rule 27 (suite -> NEWLINE INDENT stmts DEDENT .)
-    DEF             reduce using rule 27 (suite -> NEWLINE INDENT stmts DEDENT .)
-    RETURN          reduce using rule 27 (suite -> NEWLINE INDENT stmts DEDENT .)
-    PLUS            reduce using rule 27 (suite -> NEWLINE INDENT stmts DEDENT .)
-    MINUS           reduce using rule 27 (suite -> NEWLINE INDENT stmts DEDENT .)
-    NAME            reduce using rule 27 (suite -> NEWLINE INDENT stmts DEDENT .)
-    NUMBER          reduce using rule 27 (suite -> NEWLINE INDENT stmts DEDENT .)
-    STRING          reduce using rule 27 (suite -> NEWLINE INDENT stmts DEDENT .)
-    LPAREN          reduce using rule 27 (suite -> NEWLINE INDENT stmts DEDENT .)
-    DEDENT          reduce using rule 27 (suite -> NEWLINE INDENT stmts DEDENT .)
+    DEDENT          reduce using rule 31 (stmts -> stmt .)
+    IF              reduce using rule 31 (stmts -> stmt .)
+    DEF             reduce using rule 31 (stmts -> stmt .)
+    PRINT           reduce using rule 31 (stmts -> stmt .)
+    RETURN          reduce using rule 31 (stmts -> stmt .)
+    PLUS            reduce using rule 31 (stmts -> stmt .)
+    MINUS           reduce using rule 31 (stmts -> stmt .)
+    NAME            reduce using rule 31 (stmts -> stmt .)
+    NUMBER          reduce using rule 31 (stmts -> stmt .)
+    STRING          reduce using rule 31 (stmts -> stmt .)
+    LPAREN          reduce using rule 31 (stmts -> stmt .)
 
 
-state 87
+state 89
 
-    (28) stmts -> stmts stmt .
+    (29) suite -> NEWLINE INDENT stmts DEDENT .
 
-    DEDENT          reduce using rule 28 (stmts -> stmts stmt .)
-    IF              reduce using rule 28 (stmts -> stmts stmt .)
-    DEF             reduce using rule 28 (stmts -> stmts stmt .)
-    RETURN          reduce using rule 28 (stmts -> stmts stmt .)
-    PLUS            reduce using rule 28 (stmts -> stmts stmt .)
-    MINUS           reduce using rule 28 (stmts -> stmts stmt .)
-    NAME            reduce using rule 28 (stmts -> stmts stmt .)
-    NUMBER          reduce using rule 28 (stmts -> stmts stmt .)
-    STRING          reduce using rule 28 (stmts -> stmts stmt .)
-    LPAREN          reduce using rule 28 (stmts -> stmts stmt .)
+    ENDMARKER       reduce using rule 29 (suite -> NEWLINE INDENT stmts DEDENT .)
+    NEWLINE         reduce using rule 29 (suite -> NEWLINE INDENT stmts DEDENT .)
+    IF              reduce using rule 29 (suite -> NEWLINE INDENT stmts DEDENT .)
+    DEF             reduce using rule 29 (suite -> NEWLINE INDENT stmts DEDENT .)
+    PRINT           reduce using rule 29 (suite -> NEWLINE INDENT stmts DEDENT .)
+    RETURN          reduce using rule 29 (suite -> NEWLINE INDENT stmts DEDENT .)
+    PLUS            reduce using rule 29 (suite -> NEWLINE INDENT stmts DEDENT .)
+    MINUS           reduce using rule 29 (suite -> NEWLINE INDENT stmts DEDENT .)
+    NAME            reduce using rule 29 (suite -> NEWLINE INDENT stmts DEDENT .)
+    NUMBER          reduce using rule 29 (suite -> NEWLINE INDENT stmts DEDENT .)
+    STRING          reduce using rule 29 (suite -> NEWLINE INDENT stmts DEDENT .)
+    LPAREN          reduce using rule 29 (suite -> NEWLINE INDENT stmts DEDENT .)
+    DEDENT          reduce using rule 29 (suite -> NEWLINE INDENT stmts DEDENT .)
+
+
+state 90
+
+    (30) stmts -> stmts stmt .
+
+    DEDENT          reduce using rule 30 (stmts -> stmts stmt .)
+    IF              reduce using rule 30 (stmts -> stmts stmt .)
+    DEF             reduce using rule 30 (stmts -> stmts stmt .)
+    PRINT           reduce using rule 30 (stmts -> stmts stmt .)
+    RETURN          reduce using rule 30 (stmts -> stmts stmt .)
+    PLUS            reduce using rule 30 (stmts -> stmts stmt .)
+    MINUS           reduce using rule 30 (stmts -> stmts stmt .)
+    NAME            reduce using rule 30 (stmts -> stmts stmt .)
+    NUMBER          reduce using rule 30 (stmts -> stmts stmt .)
+    STRING          reduce using rule 30 (stmts -> stmts stmt .)
+    LPAREN          reduce using rule 30 (stmts -> stmts stmt .)
 

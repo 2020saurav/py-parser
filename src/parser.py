@@ -17,7 +17,7 @@ def Assign(left, right):
             if not isinstance(child, ast.Name):
                 raise SyntaxError("that assignment not supported")
             names.append(child.name)
-        ass_list = [ast.AssName(name, 'OP_ASSIGN') for name in names]
+        ass_list = [ast.AssName(name, 'EQUAL') for name in names]
         return ast.Assign([ast.AssTuple(ass_list)], right)
     else:
         raise SyntaxError("Can't do that yet")
@@ -101,7 +101,8 @@ def p_small_stmts(p):
 #    import_stmt | global_stmt | exec_stmt | assert_stmt
 def p_small_stmt(p):
     """small_stmt : flow_stmt
-                  | expr_stmt"""
+                  | expr_stmt
+                  | print_stmt"""
     p[0] = p[1]
 
 # expr_stmt: testlist (augassign (yield_expr|testlist) |
@@ -120,6 +121,10 @@ def p_expr_stmt(p):
 def p_flow_stmt(p):
     "flow_stmt : return_stmt"
     p[0] = p[1]
+
+def p_print_stmt(p):
+	"print_stmt : PRINT test"
+	p[0] = ast.Print(p[1],p[2])
 
 # return_stmt: 'return' [testlist]
 def p_return_stmt(p):
