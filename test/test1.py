@@ -1,2 +1,2 @@
-if a>1:
-	print a
+for i in range(0,12):
+	print i

@@ -46,6 +46,98 @@ def p_file_input(p):
             p[0] = p[1]
             
 
+
+# stmt: simple_stmt | compound_stmt
+def p_stmt_simple(p):
+    """stmt : simple_stmt"""
+    # simple_stmt is a list
+    p[0] = p[1]
+    
+def p_stmt_compound(p):
+    """stmt : compound_stmt"""
+    p[0] = [p[1]]
+
+# simple_stmt: small_stmt (';' small_stmt)* [';'] NEWLINE
+def p_simple_stmt(p):
+    """simple_stmt : small_stmts NEWLINE
+                   | small_stmts SEMI NEWLINE"""
+    p[0] = p[1]
+
+def p_small_stmts(p):
+    """small_stmts : small_stmts SEMI small_stmt
+                   | small_stmt"""
+    if len(p) == 4:
+        p[0] = p[1] + [p[3]]
+    else:
+        p[0] = [p[1]]
+
+# small_stmt: expr_stmt | print_stmt  | del_stmt | 
+#			  pass_stmt | flow_stmt |assert_stmt |
+#    import_stmt | global_stmt | exec_stmt 
+def p_small_stmt(p):
+    """small_stmt : flow_stmt
+                  | expr_stmt
+                  | print_stmt"""
+    p[0] = p[1]
+
+# expr_stmt: testlist (augassign (yield_expr|testlist) |
+#                      ('=' (yield_expr|testlist))*)
+# augassign: ('+=' | '-=' | '*=' | '/=' | '%=' | '&=' | '|=' | '^=' |
+#             '<<=' | '>>=' | '**=' | '//=')
+def p_expr_stmt(p):
+    """expr_stmt : testlist EQUAL testlist
+                 | testlist """
+    if len(p) == 2:
+        # a list of expressions
+        p[0] = ast.Discard(p[1])
+    else:
+        p[0] = Assign(p[1], p[3])
+
+def p_flow_stmt(p):
+    "flow_stmt : return_stmt"
+    p[0] = p[1]
+
+def p_print_stmt(p):
+	"print_stmt : PRINT test"
+	p[0] = ast.Print(p[2], None)
+
+# return_stmt: 'return' [testlist]
+def p_return_stmt(p):
+    "return_stmt : RETURN testlist"
+    p[0] = ast.Return(p[2])
+
+
+def p_compound_stmt(p):
+    """compound_stmt : if_stmt
+    				 | for_stmt
+                     | funcdef"""
+    p[0] = p[1]
+
+def p_if_stmt(p):
+    'if_stmt : IF test COLON suite'
+    p[0] = ast.If([(p[2], p[4])], None)
+
+def p_for_stmt(p): # not very sure if 'test' is correct TODO
+	"""for_stmt :	FOR NAME IN test COLON suite
+	"""
+	p[0] = ast.For(p[2],p[4],p[6],None)
+
+def p_suite(p):
+    """suite : simple_stmt
+             | NEWLINE INDENT stmts DEDENT"""
+    if len(p) == 2:
+        p[0] = ast.Stmt(p[1])
+    else:
+        p[0] = ast.Stmt(p[3])
+    
+
+def p_stmts(p):
+    """stmts : stmts stmt
+             | stmt"""
+    if len(p) == 3:
+        p[0] = p[1] + p[2]
+    else:
+        p[0] = p[1]
 # funcdef: [decorators] 'def' NAME parameters ':' suite
 # ignoring decorators
 def p_funcdef(p):
@@ -72,91 +164,6 @@ def p_varargslist(p):
         p[0].append(p[3])
     else:
         p[0] = [p[1]]
-
-# stmt: simple_stmt | compound_stmt
-def p_stmt_simple(p):
-    """stmt : simple_stmt"""
-    # simple_stmt is a list
-    p[0] = p[1]
-    
-def p_stmt_compound(p):
-    """stmt : compound_stmt"""
-    p[0] = [p[1]]
-
-# simple_stmt: small_stmt (';' small_stmt)* [';'] NEWLINE
-def p_simple_stmt(p):
-    """simple_stmt : small_stmts NEWLINE
-                   | small_stmts SEMI NEWLINE"""
-    p[0] = p[1]
-
-def p_small_stmts(p):
-    """small_stmts : small_stmts SEMI small_stmt
-                   | small_stmt"""
-    if len(p) == 4:
-        p[0] = p[1] + [p[3]]
-    else:
-        p[0] = [p[1]]
-
-# small_stmt: expr_stmt | print_stmt  | del_stmt | pass_stmt | flow_stmt |
-#    import_stmt | global_stmt | exec_stmt | assert_stmt
-def p_small_stmt(p):
-    """small_stmt : flow_stmt
-                  | expr_stmt
-                  | print_stmt"""
-    p[0] = p[1]
-
-# expr_stmt: testlist (augassign (yield_expr|testlist) |
-#                      ('=' (yield_expr|testlist))*)
-# augassign: ('+=' | '-=' | '*=' | '/=' | '%=' | '&=' | '|=' | '^=' |
-#             '<<=' | '>>=' | '**=' | '//=')
-def p_expr_stmt(p):
-    """expr_stmt : testlist EQUAL testlist
-                 | testlist """
-    if len(p) == 2:
-        # a list of expressions
-        p[0] = ast.Discard(p[1])
-    else:
-        p[0] = Assign(p[1], p[3])
-
-def p_flow_stmt(p):
-    "flow_stmt : return_stmt"
-    p[0] = p[1]
-
-def p_print_stmt(p):
-	"print_stmt : PRINT test"
-	p[0] = ast.Print(p[1],p[2])
-
-# return_stmt: 'return' [testlist]
-def p_return_stmt(p):
-    "return_stmt : RETURN testlist"
-    p[0] = ast.Return(p[2])
-
-
-def p_compound_stmt(p):
-    """compound_stmt : if_stmt
-                     | funcdef"""
-    p[0] = p[1]
-
-def p_if_stmt(p):
-    'if_stmt : IF test COLON suite'
-    p[0] = ast.If([(p[2], p[4])], None)
-
-def p_suite(p):
-    """suite : simple_stmt
-             | NEWLINE INDENT stmts DEDENT"""
-    if len(p) == 2:
-        p[0] = ast.Stmt(p[1])
-    else:
-        p[0] = ast.Stmt(p[3])
-    
-
-def p_stmts(p):
-    """stmts : stmts stmt
-             | stmt"""
-    if len(p) == 3:
-        p[0] = p[1] + p[2]
-    else:
-        p[0] = p[1]
 
 ## No using Python's approach because Ply supports precedence
 
