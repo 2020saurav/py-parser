@@ -16,6 +16,7 @@ class ZGenerator(object):
         return str(getattr(self, method, self.generic_visit)(*args))
 
     def generic_visit(self,node):
+        print node
         return node
 
     def visit_Program(self,node):

@@ -1,4 +1,4 @@
-import ourAST as ast
+from compiler import ast
 import yacc
 import lexer # our lexer
 tokens = lexer.tokens
@@ -19,7 +19,7 @@ def p_file_input_star_2(p):
 	"""
 		file_input_star : stmt
 	"""
-	p[0] = ast.Program(stmts=p[1])
+	p[0] = ast.Stmt(p[1])
 
 def p_file_input_star_3(p):
 	"""
@@ -32,13 +32,13 @@ def p_stmt_3(p):
 	"""
 		stmt : single_stmt 
 	"""
-	p[0] = ast.StmtList(p[1])
+	p[0] = p[1]
 
 def p_stmt_4(p):
 	"""
 		stmt : compound_stmt
 	"""
-	p[0] = ast.StmtList(p[1])
+	p[0] = p[1]
 
 def p_stmt_1(p):
 	"""
@@ -156,13 +156,14 @@ def p_callparamlist_1(p):
 	"""
 		callparamlist : callparamlist COMMA callparam
 	"""
-	p[0] = p[1].add(p[3])
+	p[0] = p[1].append(p[3])
 
 def p_callparamlist_2(p):
 	"""
 		callparamlist :  callparam
 	"""
-	p[0] = ast.ParamList(p[1])
+	# p[0] = ast.ParamList(p[1])
+	p[0] = [p[1]]
 
 def p_callparam_1(p):
 	"""
@@ -174,7 +175,7 @@ def p_callparam_2(p):
 	"""
 		callparam : arith_expression
 	"""
-	p[0] = ast.Param('default',p[1])
+	p[0] = p[1]
 
 def p_small_assign_stmt(p):
 	"""
@@ -223,7 +224,12 @@ def p_arith_expression(p):
 	if len(p) == 2:
 		p[0] = p[1]
 	else:
-		p[0] = ast.Arith(p[2],p[1],p[3])
+		if(p[2]=='+'):
+			p[0] = ast.Add(p[1],p[3])
+		else:
+			p[0] = ast.Sub(p[1],p[3])
+	# else:
+		# p[0] = ast.Arith(p[2],p[1],p[3])
 
 def p_term(p):
 	"""
@@ -234,7 +240,11 @@ def p_term(p):
 	if len(p) == 2:
 		p[0] = p[1]
 	else:
-		p[0] = ast.Arith(p[2],p[1],p[3])
+		if(p[2]=='*'):
+			p[0] = ast.Mul(p[1],p[3])
+		else:
+			p[0] = ast.Div(p[1],p[3])
+		# p[0] = ast.Arith(p[2],p[1],p[3])
 
 def p_factor_1(p):
 	"""
@@ -291,13 +301,13 @@ def p_for_stmt(p):
 	""" 
 		for_stmt : FOR NAME IN small_expression COLON suite
 	"""
-	p[0] = ast.Stmt('for',[p[2],p[4],p[6]])
+	p[0] = ast.GenExprFor(p[2],p[4],p[6])
 
 def p_suite(p):
 	"""
 		suite : NEWLINE INDENT stmt DEDENT
 	"""
-	p[0] = ast.Suite(p[3])
+	p[0] = p[3]
 
 def p_test(p):
 	"""
@@ -377,49 +387,52 @@ def p_trailer_3(p):
 	"""
 		trailer : LPAREN callparamlist RPAREN
 	"""
-	p[0] = ast.Trailer('(',p[2])
+	# p[0] = ast.Trailer('(',p[2])
+	p[0] = ("CALL", p[2])
 
 def p_trailer_star_1(p):
 	"""
 		trailer_star : trailer
 	"""
-	p[0] = ast.TrailerList(p[1])
+	# p[0] = ast.TrailerList(p[1])
+	p[0] = p[1]
 
 def p_trailer_star_2(p):
 	"""
 		trailer_star : trailer_star trailer
 	"""
-	p[0] = p[1].add(p[2])
+	p[0] = p[1].append(p[2])
 
 def p_trailer_item_1(p):
 	"""
 		trailer_item : atom
 	"""
-	p[0] = ast.Item('direct',p[1])
+	# p[0] = ast.Item('direct',p[1])
+	p[0] = p[1]
 
 def p_trailer_item_2(p):
 	"""
 		trailer_item : atom trailer_star
 	"""
-	p[0] = ast.Item('trailer',p[1],p[2])
-
+	# p[0] = ast.Item('trailer',p[1],p[2])
+	p[0] = ast.AssList(p[1],p[2])
 def p_atom_0(p):
 	"""
 		atom : AT NAME
 	"""
-	p[0] = ast.Atom('@',p[2])
+	p[0] = ast.Decorators(p[2])
 
 def p_atom_1(p):
 	"""
 		atom : NAME
 	"""
-	p[0] = ast.Atom('name',p[1])
+	p[0] = ast.Name(p[1])
 
 def p_atom_2(p):
 	"""
 		atom : constants
 	"""
-	p[0] = ast.Atom('constants',p[1])
+	p[0] = ast.Const(p[1])
 
 def p_subscript(p):
 	"""
@@ -434,7 +447,7 @@ def p_empty(p):
 
 def p_error(p):
 	if p:
-		print p
+		print "shit",p
 		# parse_error(
 		# 	'before: %s' % p.value,
 		# 	'')
@@ -457,8 +470,8 @@ data = open('../test/test1.py')
 # I dont know how to print content from this AST
 t =  z.parse(data.read())
 # print dir(t)
-p = (t.__class__.__name__)
-print p
+# p = (t.__class__.__name__)
+# print p
 # print dir(t.stmts)
 # print z.parse("a=4")
 # print z.mlexer.input("a=4")
