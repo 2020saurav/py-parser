@@ -102,7 +102,7 @@ def p_flow_stmt(p):
 
 def p_print_stmt(p):
 	"print_stmt : PRINT test"
-	p[0] = ast.Print(p[2], None)
+	p[0] = ast.Printnl(p[2], None)
 
 # return_stmt: 'return' [testlist]
 def p_return_stmt(p):
@@ -143,8 +143,7 @@ def p_elif_expr(p):
 	"""
 	if(len(p)>2):
 		p[0] = ast.If([(p[2], p[4])], p[5])
-	else:
-		p[0] =[]
+
 
 def p_for_stmt(p): # not very sure if 'test' is correct TODO
 	"""for_stmt :	FOR NAME IN test COLON suite
@@ -358,7 +357,7 @@ class G1Parser(object):
 	def parse(self, code):
 		self.mlexer.input(code)
 		result = self.parser.parse(lexer = self.mlexer)
-		return result
+		return ast.Module(None, result)
 
 z = G1Parser()
 data = open('../test/test1.py')
