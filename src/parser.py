@@ -142,7 +142,7 @@ def p_elif_expr(p):
 					| ELIF test COLON suite elif_expr
 	"""
 	if(len(p)>2):
-		p[0] = ast.If([(p[2], p[4])], p[5])
+		p[0] = ast.IfExp(p[2], p[4], p[5])
 
 
 def p_for_stmt(p): # not very sure if 'test' is correct TODO
@@ -364,7 +364,9 @@ data = open('../test/test1.py')
 # I dont know how to print content from this AST
 t =  z.parse(data.read())
 # print dir(t)
-print (t)
-# print dir(t.stmts)
-# print z.parse("a=4")
-# print z.mlexer.input("a=4")
+# print (t)
+nodes = t.node.nodes
+for node in nodes:
+	print node
+	print type(node)
+	print ""
