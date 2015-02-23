@@ -2,13 +2,13 @@ from compiler import ast
 import yacc
 import lexer # our lexer
 tokens = lexer.tokens
-import Queue
-from subprocess import call
+
+
 # Helper function
 def Assign(left, right):
     names = []
     if isinstance(left, ast.Name):
-        # yacc assignment on left
+        # Single assignment on left
         return ast.Assign([ast.AssName(left.name, 'EQUAL')], right)
     elif isinstance(left, ast.Tuple):
         # List of things - make sure they are Name nodes
@@ -72,7 +72,7 @@ def p_small_stmts(p):
         p[0] = [p[1]]
 
 # small_stmt: expr_stmt | print_stmt  | del_stmt | 
-#			  pass_stmt | flow_stmt |assert_stmt |
+#             pass_stmt | flow_stmt |assert_stmt |
 #    import_stmt | global_stmt | exec_stmt 
 def p_small_stmt(p):
     """small_stmt : flow_stmt
@@ -101,8 +101,8 @@ def p_flow_stmt(p):
     p[0] = p[1]
 
 def p_print_stmt(p):
-	"print_stmt : PRINT test"
-	p[0] = ast.Printnl(p[2], None)
+    "print_stmt : PRINT test"
+    p[0] = ast.Print(p[2], None)
 
 # return_stmt: 'return' [testlist]
 def p_return_stmt(p):
@@ -110,18 +110,18 @@ def p_return_stmt(p):
     p[0] = ast.Return(p[2])
 
 def p_pass_stmt(p):
-	"pass_stmt : PASS"
-	p[0] = ast.Pass()
+    "pass_stmt : PASS"
+    p[0] = ast.Pass()
 
 def p_import_stmt(p): # extremely oversimplified. "from","dots","as" to be done
-	"""import_stmt 	:	IMPORT NAME
-	"""
-	p[0] = ast.Import(p[2])
+    """import_stmt  :   IMPORT NAME
+    """
+    p[0] = ast.Import(p[2])
 
 def p_compound_stmt(p):
     """compound_stmt : if_stmt
-    				 | for_stmt
-    				 | while_stmt
+                     | for_stmt
+                     | while_stmt
                      | funcdef"""
     p[0] = p[1]
 
@@ -130,34 +130,35 @@ def p_compound_stmt(p):
 #     p[0] = ast.If([(p[2], p[4])], None)
 
 def p_if_stmt(p):
-	"""if_stmt 	:	IF test COLON suite elif_expr
-				|	IF test COLON suite elif_expr ELSE COLON suite
-	"""
-	if len(p) == 6:
-		p[0] = ast.IfExp(p[2], p[4], p[5])
-	else:
-		p[0] = ast.IfExp(p[2], p[4], [(p[5],p[8])])
+    """if_stmt  :   IF test COLON suite elif_expr
+                |   IF test COLON suite elif_expr ELSE COLON suite
+    """
+    if len(p) == 6:
+        p[0] = ast.If([(p[2], p[4])], p[5])
+    else:
+        p[0] = ast.If([(p[2], p[4])], [(p[5],p[8])])
 def p_elif_expr(p):
-	"""elif_expr 	:
-					| ELIF test COLON suite elif_expr
-	"""
-	if(len(p)>2):
-		p[0] = ast.IfExp(p[2], p[4], p[5])
-
+    """elif_expr    :
+                    | ELIF test COLON suite elif_expr
+    """
+    if(len(p)>2):
+        p[0] = ast.If([(p[2], p[4])], p[5])
+    else:
+        p[0] =[]
 
 def p_for_stmt(p): # not very sure if 'test' is correct TODO
-	"""for_stmt :	FOR NAME IN test COLON suite
-	"""
-	p[0] = ast.For(p[2],p[4],p[6],None)
+    """for_stmt :   FOR NAME IN test COLON suite
+    """
+    p[0] = ast.For(p[2],p[4],p[6],None)
 
 def p_while_stmt(p):
-	"""while_stmt 	:	WHILE test COLON suite 
-					|	WHILE test COLON suite ELSE COLON suite
-	"""
-	if(len(p)==5):
-		p[0] = ast.While(p[2],p[4], None)
-	else:
-		p[0] = ast.While(p[2],p[4],p[7])
+    """while_stmt   :   WHILE test COLON suite 
+                    |   WHILE test COLON suite ELSE COLON suite
+    """
+    if(len(p)==5):
+        p[0] = ast.While(p[2],p[4], None)
+    else:
+        p[0] = ast.While(p[2],p[4],p[7])
 
 
 def p_suite(p):
@@ -349,48 +350,68 @@ def p_error(p):
 
 
 class G1Parser(object):
-	def __init__(self, mlexer=None):
-		if mlexer is None:
-			mlexer = lexer.G1Lexer()
-		self.mlexer = mlexer
-		self.parser = yacc.yacc(start="program")
-	def parse(self, code):
-		self.mlexer.input(code)
-		result = self.parser.parse(lexer = self.mlexer)
-		return ast.Module(None, result)
+    def __init__(self, mlexer=None):
+        if mlexer is None:
+            mlexer = lexer.G1Lexer()
+        self.mlexer = mlexer
+        self.parser = yacc.yacc(start="program")
+    def parse(self, code):
+        self.mlexer.input(code)
+        result = self.parser.parse(lexer = self.mlexer)
+        return result
 
+z = G1Parser()
+data = open('../test/test1.py')
+# I dont know how to print content from this AST
+t =  z.parse(data.read())
+# print dir(t)
+# print t.getChildren()
+# print t.getChildNodes()
+# print dir(t.stmts)
+# print z.parse("a=4")
+# print z.mlexer.input("a=4")
 
-def getContent(data):
-	return data[:data.find("(")]
+# x=t.asList()
+# print x
+# for child in t.getChildren():
+#     x=child.__iter__()
+#     y= x.next()
+#     # print y.getChildren()
+#     print '\n'
 
-if __name__=="__main__":
-	z = G1Parser()
-	data = open('../test/test1.py')
-	# I dont know how to print content from this AST
-	root =  z.parse(data.read())
-	# print dir(t)
-	# root = t
-	# for node in nodes:
-	# 	print node
-	# 	# print type(node)
-	# 	print ""
-	# print root.getChildren()
-	q = Queue.Queue(maxsize=0)
-	dotFile = open("dot.dot","w+")
-	dotFile.write( "digraph G \n{\n")
-	nodeId = 0
-	q.put((root,nodeId))
-	while not q.empty():
-		parent = q.get(True)
-		pname = parent[0]
-		pId = parent[1]
-		for child in pname.node.nodes:
-			nodeId+=1
-			content = getContent(str(child))
-			dotFile.write("\tnode"+str(nodeId)+" [label=\"" + content + "\"];\n")
-			dotFile.write("\tnode"+str(pId)+" -> node"+str(nodeId)+";\n")
+def makeGraph(root):
+    edges=[]
+    name="file_input"
+    x=root.__iter__()
+    # t=root.getChildren()
+    for child in root.getChildNodes():
+        y=x.next()
+        edges.append((name,y))
+        # print child
+        newedges=addEdges(child,y)
+        for e in newedges:
+            edges.append(e)
 
-	dotFile.write("}")
-	dotFile.close()
-	call(["dot","-Tpng","dot.dot","-o","dot.png"])
+    return edges
 
+def addEdges(node,name):
+    edges=[]
+    x=node.__iter__()
+    # t=node.getChildren()
+    if not next(x, False):
+        return []
+    for child in node.getChildNodes():
+        # print "-----------------------------"
+        y=x.next()
+        edges.append((name,y))  
+        newedges=addEdges(child,y)
+        for e in newedges:
+            edges.append(e)
+
+    return edges          
+
+edges=makeGraph(t)
+
+for e in edges:
+    print e
+    print '\n'  
