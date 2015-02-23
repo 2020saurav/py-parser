@@ -110,6 +110,7 @@ def p_return_stmt(p):
 def p_compound_stmt(p):
     """compound_stmt : if_stmt
     				 | for_stmt
+    				 | while_stmt
                      | funcdef"""
     p[0] = p[1]
 
@@ -138,6 +139,16 @@ def p_for_stmt(p): # not very sure if 'test' is correct TODO
 	"""for_stmt :	FOR NAME IN test COLON suite
 	"""
 	p[0] = ast.For(p[2],p[4],p[6],None)
+
+def p_while_stmt(p):
+	"""while_stmt 	:	WHILE test COLON suite 
+					|	WHILE test COLON suite ELSE COLON suite
+	"""
+	if(len(p)==5):
+		p[0] = ast.While(p[2],p[4], None)
+	else:
+		p[0] = ast.While(p[2],p[4],p[7])
+
 
 def p_suite(p):
     """suite : simple_stmt
