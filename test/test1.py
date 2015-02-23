@@ -1,2 +1,8 @@
-for i in range(0,12):
-	print i
+def factorial(n):
+	if(n<0):
+		return 0
+	elif(n<2):
+		return 1
+	else:
+		return n*factorial(n-1)
+print factorial(5)
