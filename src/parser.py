@@ -360,36 +360,45 @@ class G1Parser(object):
 		return ast.Module(None, result)
 
 
-def getContent(data):
-	return data[:data.find("(")]
+def getContent(x):
+	data = str(x)
+	name = data[:data.find("(")]
+	content = name
+	# add more information according to above
+	if(name=="Import"):
+		content = content + "\\n" + str(x.names)
+	elif(name=="Function"):
+		content = content + "\\n" + str(x.name)
+
+	return content
 
 if __name__=="__main__":
 	z = G1Parser()
 	data = open('../test/test1.py')
-	# I dont know how to print content from this AST
+	# I dont know how to print content from this AST : NOW I DO :D
 	root =  z.parse(data.read())
-	# print dir(t)
-	# root = t
-	# for node in nodes:
-	# 	print node
-	# 	# print type(node)
-	# 	print ""
-	# print root.getChildren()
 	q = Queue.Queue(maxsize=0)
 	dotFile = open("dot.dot","w+")
 	dotFile.write( "digraph G \n{\n")
 	nodeId = 0
+	dotFile.write("\tnode"+str(nodeId)+" [label=\"Program\"];\n")
 	q.put((root,nodeId))
 	while not q.empty():
 		parent = q.get(True)
 		pname = parent[0]
 		pId = parent[1]
-		for child in pname.node.nodes:
+		for child in pname.getChildren():
+			if not child:
+				continue
 			nodeId+=1
-			content = getContent(str(child))
+			content = getContent(child)
 			dotFile.write("\tnode"+str(nodeId)+" [label=\"" + content + "\"];\n")
 			dotFile.write("\tnode"+str(pId)+" -> node"+str(nodeId)+";\n")
-
+			try:
+				child.getChildren()
+				q.put((child, nodeId))
+			except:
+				pass
 	dotFile.write("}")
 	dotFile.close()
 	call(["dot","-Tpng","dot.dot","-o","dot.png"])
