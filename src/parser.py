@@ -134,9 +134,9 @@ def p_if_stmt(p):
 				|	IF test COLON suite elif_expr ELSE COLON suite
 	"""
 	if len(p) == 6:
-		p[0] = ast.If([(p[2], p[4])], p[5])
+		p[0] = ast.IfExp(p[2], p[4], p[5])
 	else:
-		p[0] = ast.If([(p[2], p[4])], [(p[5],p[8])])
+		p[0] = ast.IfExp(p[2], p[4], [(p[5],p[8])])
 def p_elif_expr(p):
 	"""elif_expr 	:
 					| ELIF test COLON suite elif_expr
