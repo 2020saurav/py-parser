@@ -77,7 +77,10 @@ def p_small_stmts(p):
 def p_small_stmt(p):
     """small_stmt : flow_stmt
                   | expr_stmt
-                  | print_stmt"""
+                  | print_stmt
+                  | pass_stmt
+                  | import_stmt
+                 """
     p[0] = p[1]
 
 # expr_stmt: testlist (augassign (yield_expr|testlist) |
@@ -106,6 +109,14 @@ def p_return_stmt(p):
     "return_stmt : RETURN testlist"
     p[0] = ast.Return(p[2])
 
+def p_pass_stmt(p):
+	"pass_stmt : PASS"
+	p[0] = ast.Pass()
+
+def p_import_stmt(p): # extremely oversimplified. "from","dots","as" to be done
+	"""import_stmt 	:	IMPORT NAME
+	"""
+	p[0] = ast.Import(p[2])
 
 def p_compound_stmt(p):
     """compound_stmt : if_stmt
