@@ -1,6 +1,9 @@
 import yacc
 import lexer # our lexer
 tokens = lexer.tokens
+from subprocess import call
+import sys
+import time
 
 ## NB: compound_stmt in single_input is followed by extra NEWLINE!
 # file_input: (NEWLINE | stmt)* ENDMARKER
@@ -170,7 +173,6 @@ def p_argument(p):
 def p_error(p):
     raise SyntaxError(str(p))
 
-
 class G1Parser(object):
 	def __init__(self, mlexer=None):
 		if mlexer is None:
@@ -181,8 +183,12 @@ class G1Parser(object):
 		self.mlexer.input(code)
 		result = self.parser.parse(lexer = self.mlexer, debug=True)
 		return result
-		
+
 if __name__=="__main__":
 	z = G1Parser()
 	data = open('../test/test1.py')
+	sys.stderr = open('dump','w')
 	root =  z.parse(data.read())
+	sys.stderr.close()
+	call(["python","converter.py"])
+	call(["dot","-Tpng","dot.dot","-o","dot.png"])
