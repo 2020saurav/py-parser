@@ -1180,27 +1180,34 @@ state 44
     (49) comparison -> comparison . EQEQUAL comparison
     (50) comparison -> comparison . GREATER comparison
 
-    PLUS            reduce using rule 52 (comparison -> MINUS comparison .)
-    MINUS           reduce using rule 52 (comparison -> MINUS comparison .)
-    LESS            reduce using rule 52 (comparison -> MINUS comparison .)
-    EQEQUAL         reduce using rule 52 (comparison -> MINUS comparison .)
-    GREATER         reduce using rule 52 (comparison -> MINUS comparison .)
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for STAR resolved as shift
+  ! shift/reduce conflict for SLASH resolved as shift
+  ! shift/reduce conflict for LESS resolved as shift
+  ! shift/reduce conflict for EQEQUAL resolved as shift
+  ! shift/reduce conflict for GREATER resolved as shift
     COMMA           reduce using rule 52 (comparison -> MINUS comparison .)
     EQUAL           reduce using rule 52 (comparison -> MINUS comparison .)
     NEWLINE         reduce using rule 52 (comparison -> MINUS comparison .)
     SEMI            reduce using rule 52 (comparison -> MINUS comparison .)
     COLON           reduce using rule 52 (comparison -> MINUS comparison .)
     RPAREN          reduce using rule 52 (comparison -> MINUS comparison .)
+    PLUS            shift and go to state 57
+    MINUS           shift and go to state 59
     STAR            shift and go to state 53
     SLASH           shift and go to state 58
+    LESS            shift and go to state 55
+    EQEQUAL         shift and go to state 56
+    GREATER         shift and go to state 54
 
+  ! PLUS            [ reduce using rule 52 (comparison -> MINUS comparison .) ]
+  ! MINUS           [ reduce using rule 52 (comparison -> MINUS comparison .) ]
   ! STAR            [ reduce using rule 52 (comparison -> MINUS comparison .) ]
   ! SLASH           [ reduce using rule 52 (comparison -> MINUS comparison .) ]
-  ! PLUS            [ shift and go to state 57 ]
-  ! MINUS           [ shift and go to state 59 ]
-  ! LESS            [ shift and go to state 55 ]
-  ! EQEQUAL         [ shift and go to state 56 ]
-  ! GREATER         [ shift and go to state 54 ]
+  ! LESS            [ reduce using rule 52 (comparison -> MINUS comparison .) ]
+  ! EQEQUAL         [ reduce using rule 52 (comparison -> MINUS comparison .) ]
+  ! GREATER         [ reduce using rule 52 (comparison -> MINUS comparison .) ]
 
 
 state 45
@@ -1281,27 +1288,34 @@ state 48
     (49) comparison -> comparison . EQEQUAL comparison
     (50) comparison -> comparison . GREATER comparison
 
-    PLUS            reduce using rule 51 (comparison -> PLUS comparison .)
-    MINUS           reduce using rule 51 (comparison -> PLUS comparison .)
-    LESS            reduce using rule 51 (comparison -> PLUS comparison .)
-    EQEQUAL         reduce using rule 51 (comparison -> PLUS comparison .)
-    GREATER         reduce using rule 51 (comparison -> PLUS comparison .)
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for STAR resolved as shift
+  ! shift/reduce conflict for SLASH resolved as shift
+  ! shift/reduce conflict for LESS resolved as shift
+  ! shift/reduce conflict for EQEQUAL resolved as shift
+  ! shift/reduce conflict for GREATER resolved as shift
     COMMA           reduce using rule 51 (comparison -> PLUS comparison .)
     EQUAL           reduce using rule 51 (comparison -> PLUS comparison .)
     NEWLINE         reduce using rule 51 (comparison -> PLUS comparison .)
     SEMI            reduce using rule 51 (comparison -> PLUS comparison .)
     COLON           reduce using rule 51 (comparison -> PLUS comparison .)
     RPAREN          reduce using rule 51 (comparison -> PLUS comparison .)
+    PLUS            shift and go to state 57
+    MINUS           shift and go to state 59
     STAR            shift and go to state 53
     SLASH           shift and go to state 58
+    LESS            shift and go to state 55
+    EQEQUAL         shift and go to state 56
+    GREATER         shift and go to state 54
 
+  ! PLUS            [ reduce using rule 51 (comparison -> PLUS comparison .) ]
+  ! MINUS           [ reduce using rule 51 (comparison -> PLUS comparison .) ]
   ! STAR            [ reduce using rule 51 (comparison -> PLUS comparison .) ]
   ! SLASH           [ reduce using rule 51 (comparison -> PLUS comparison .) ]
-  ! PLUS            [ shift and go to state 57 ]
-  ! MINUS           [ shift and go to state 59 ]
-  ! LESS            [ shift and go to state 55 ]
-  ! EQEQUAL         [ shift and go to state 56 ]
-  ! GREATER         [ shift and go to state 54 ]
+  ! LESS            [ reduce using rule 51 (comparison -> PLUS comparison .) ]
+  ! EQEQUAL         [ reduce using rule 51 (comparison -> PLUS comparison .) ]
+  ! GREATER         [ reduce using rule 51 (comparison -> PLUS comparison .) ]
 
 
 state 49
@@ -2026,27 +2040,34 @@ state 76
     (49) comparison -> comparison . EQEQUAL comparison
     (50) comparison -> comparison . GREATER comparison
 
-    PLUS            reduce using rule 46 (comparison -> comparison STAR comparison .)
-    MINUS           reduce using rule 46 (comparison -> comparison STAR comparison .)
-    STAR            reduce using rule 46 (comparison -> comparison STAR comparison .)
-    SLASH           reduce using rule 46 (comparison -> comparison STAR comparison .)
-    LESS            reduce using rule 46 (comparison -> comparison STAR comparison .)
-    EQEQUAL         reduce using rule 46 (comparison -> comparison STAR comparison .)
-    GREATER         reduce using rule 46 (comparison -> comparison STAR comparison .)
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for STAR resolved as shift
+  ! shift/reduce conflict for SLASH resolved as shift
+  ! shift/reduce conflict for LESS resolved as shift
+  ! shift/reduce conflict for EQEQUAL resolved as shift
+  ! shift/reduce conflict for GREATER resolved as shift
     COMMA           reduce using rule 46 (comparison -> comparison STAR comparison .)
     EQUAL           reduce using rule 46 (comparison -> comparison STAR comparison .)
     NEWLINE         reduce using rule 46 (comparison -> comparison STAR comparison .)
     SEMI            reduce using rule 46 (comparison -> comparison STAR comparison .)
     COLON           reduce using rule 46 (comparison -> comparison STAR comparison .)
     RPAREN          reduce using rule 46 (comparison -> comparison STAR comparison .)
+    PLUS            shift and go to state 57
+    MINUS           shift and go to state 59
+    STAR            shift and go to state 53
+    SLASH           shift and go to state 58
+    LESS            shift and go to state 55
+    EQEQUAL         shift and go to state 56
+    GREATER         shift and go to state 54
 
-  ! PLUS            [ shift and go to state 57 ]
-  ! MINUS           [ shift and go to state 59 ]
-  ! STAR            [ shift and go to state 53 ]
-  ! SLASH           [ shift and go to state 58 ]
-  ! LESS            [ shift and go to state 55 ]
-  ! EQEQUAL         [ shift and go to state 56 ]
-  ! GREATER         [ shift and go to state 54 ]
+  ! PLUS            [ reduce using rule 46 (comparison -> comparison STAR comparison .) ]
+  ! MINUS           [ reduce using rule 46 (comparison -> comparison STAR comparison .) ]
+  ! STAR            [ reduce using rule 46 (comparison -> comparison STAR comparison .) ]
+  ! SLASH           [ reduce using rule 46 (comparison -> comparison STAR comparison .) ]
+  ! LESS            [ reduce using rule 46 (comparison -> comparison STAR comparison .) ]
+  ! EQEQUAL         [ reduce using rule 46 (comparison -> comparison STAR comparison .) ]
+  ! GREATER         [ reduce using rule 46 (comparison -> comparison STAR comparison .) ]
 
 
 state 77
@@ -2060,9 +2081,13 @@ state 77
     (49) comparison -> comparison . EQEQUAL comparison
     (50) comparison -> comparison . GREATER comparison
 
-    LESS            reduce using rule 50 (comparison -> comparison GREATER comparison .)
-    EQEQUAL         reduce using rule 50 (comparison -> comparison GREATER comparison .)
-    GREATER         reduce using rule 50 (comparison -> comparison GREATER comparison .)
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for STAR resolved as shift
+  ! shift/reduce conflict for SLASH resolved as shift
+  ! shift/reduce conflict for LESS resolved as shift
+  ! shift/reduce conflict for EQEQUAL resolved as shift
+  ! shift/reduce conflict for GREATER resolved as shift
     COMMA           reduce using rule 50 (comparison -> comparison GREATER comparison .)
     EQUAL           reduce using rule 50 (comparison -> comparison GREATER comparison .)
     NEWLINE         reduce using rule 50 (comparison -> comparison GREATER comparison .)
@@ -2073,14 +2098,17 @@ state 77
     MINUS           shift and go to state 59
     STAR            shift and go to state 53
     SLASH           shift and go to state 58
+    LESS            shift and go to state 55
+    EQEQUAL         shift and go to state 56
+    GREATER         shift and go to state 54
 
   ! PLUS            [ reduce using rule 50 (comparison -> comparison GREATER comparison .) ]
   ! MINUS           [ reduce using rule 50 (comparison -> comparison GREATER comparison .) ]
   ! STAR            [ reduce using rule 50 (comparison -> comparison GREATER comparison .) ]
   ! SLASH           [ reduce using rule 50 (comparison -> comparison GREATER comparison .) ]
-  ! LESS            [ shift and go to state 55 ]
-  ! EQEQUAL         [ shift and go to state 56 ]
-  ! GREATER         [ shift and go to state 54 ]
+  ! LESS            [ reduce using rule 50 (comparison -> comparison GREATER comparison .) ]
+  ! EQEQUAL         [ reduce using rule 50 (comparison -> comparison GREATER comparison .) ]
+  ! GREATER         [ reduce using rule 50 (comparison -> comparison GREATER comparison .) ]
 
 
 state 78
@@ -2094,9 +2122,13 @@ state 78
     (49) comparison -> comparison . EQEQUAL comparison
     (50) comparison -> comparison . GREATER comparison
 
-    LESS            reduce using rule 48 (comparison -> comparison LESS comparison .)
-    EQEQUAL         reduce using rule 48 (comparison -> comparison LESS comparison .)
-    GREATER         reduce using rule 48 (comparison -> comparison LESS comparison .)
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for STAR resolved as shift
+  ! shift/reduce conflict for SLASH resolved as shift
+  ! shift/reduce conflict for LESS resolved as shift
+  ! shift/reduce conflict for EQEQUAL resolved as shift
+  ! shift/reduce conflict for GREATER resolved as shift
     COMMA           reduce using rule 48 (comparison -> comparison LESS comparison .)
     EQUAL           reduce using rule 48 (comparison -> comparison LESS comparison .)
     NEWLINE         reduce using rule 48 (comparison -> comparison LESS comparison .)
@@ -2107,14 +2139,17 @@ state 78
     MINUS           shift and go to state 59
     STAR            shift and go to state 53
     SLASH           shift and go to state 58
+    LESS            shift and go to state 55
+    EQEQUAL         shift and go to state 56
+    GREATER         shift and go to state 54
 
   ! PLUS            [ reduce using rule 48 (comparison -> comparison LESS comparison .) ]
   ! MINUS           [ reduce using rule 48 (comparison -> comparison LESS comparison .) ]
   ! STAR            [ reduce using rule 48 (comparison -> comparison LESS comparison .) ]
   ! SLASH           [ reduce using rule 48 (comparison -> comparison LESS comparison .) ]
-  ! LESS            [ shift and go to state 55 ]
-  ! EQEQUAL         [ shift and go to state 56 ]
-  ! GREATER         [ shift and go to state 54 ]
+  ! LESS            [ reduce using rule 48 (comparison -> comparison LESS comparison .) ]
+  ! EQEQUAL         [ reduce using rule 48 (comparison -> comparison LESS comparison .) ]
+  ! GREATER         [ reduce using rule 48 (comparison -> comparison LESS comparison .) ]
 
 
 state 79
@@ -2128,9 +2163,13 @@ state 79
     (49) comparison -> comparison . EQEQUAL comparison
     (50) comparison -> comparison . GREATER comparison
 
-    LESS            reduce using rule 49 (comparison -> comparison EQEQUAL comparison .)
-    EQEQUAL         reduce using rule 49 (comparison -> comparison EQEQUAL comparison .)
-    GREATER         reduce using rule 49 (comparison -> comparison EQEQUAL comparison .)
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for STAR resolved as shift
+  ! shift/reduce conflict for SLASH resolved as shift
+  ! shift/reduce conflict for LESS resolved as shift
+  ! shift/reduce conflict for EQEQUAL resolved as shift
+  ! shift/reduce conflict for GREATER resolved as shift
     COMMA           reduce using rule 49 (comparison -> comparison EQEQUAL comparison .)
     EQUAL           reduce using rule 49 (comparison -> comparison EQEQUAL comparison .)
     NEWLINE         reduce using rule 49 (comparison -> comparison EQEQUAL comparison .)
@@ -2141,14 +2180,17 @@ state 79
     MINUS           shift and go to state 59
     STAR            shift and go to state 53
     SLASH           shift and go to state 58
+    LESS            shift and go to state 55
+    EQEQUAL         shift and go to state 56
+    GREATER         shift and go to state 54
 
   ! PLUS            [ reduce using rule 49 (comparison -> comparison EQEQUAL comparison .) ]
   ! MINUS           [ reduce using rule 49 (comparison -> comparison EQEQUAL comparison .) ]
   ! STAR            [ reduce using rule 49 (comparison -> comparison EQEQUAL comparison .) ]
   ! SLASH           [ reduce using rule 49 (comparison -> comparison EQEQUAL comparison .) ]
-  ! LESS            [ shift and go to state 55 ]
-  ! EQEQUAL         [ shift and go to state 56 ]
-  ! GREATER         [ shift and go to state 54 ]
+  ! LESS            [ reduce using rule 49 (comparison -> comparison EQEQUAL comparison .) ]
+  ! EQEQUAL         [ reduce using rule 49 (comparison -> comparison EQEQUAL comparison .) ]
+  ! GREATER         [ reduce using rule 49 (comparison -> comparison EQEQUAL comparison .) ]
 
 
 state 80
@@ -2162,27 +2204,34 @@ state 80
     (49) comparison -> comparison . EQEQUAL comparison
     (50) comparison -> comparison . GREATER comparison
 
-    PLUS            reduce using rule 44 (comparison -> comparison PLUS comparison .)
-    MINUS           reduce using rule 44 (comparison -> comparison PLUS comparison .)
-    LESS            reduce using rule 44 (comparison -> comparison PLUS comparison .)
-    EQEQUAL         reduce using rule 44 (comparison -> comparison PLUS comparison .)
-    GREATER         reduce using rule 44 (comparison -> comparison PLUS comparison .)
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for STAR resolved as shift
+  ! shift/reduce conflict for SLASH resolved as shift
+  ! shift/reduce conflict for LESS resolved as shift
+  ! shift/reduce conflict for EQEQUAL resolved as shift
+  ! shift/reduce conflict for GREATER resolved as shift
     COMMA           reduce using rule 44 (comparison -> comparison PLUS comparison .)
     EQUAL           reduce using rule 44 (comparison -> comparison PLUS comparison .)
     NEWLINE         reduce using rule 44 (comparison -> comparison PLUS comparison .)
     SEMI            reduce using rule 44 (comparison -> comparison PLUS comparison .)
     COLON           reduce using rule 44 (comparison -> comparison PLUS comparison .)
     RPAREN          reduce using rule 44 (comparison -> comparison PLUS comparison .)
+    PLUS            shift and go to state 57
+    MINUS           shift and go to state 59
     STAR            shift and go to state 53
     SLASH           shift and go to state 58
+    LESS            shift and go to state 55
+    EQEQUAL         shift and go to state 56
+    GREATER         shift and go to state 54
 
+  ! PLUS            [ reduce using rule 44 (comparison -> comparison PLUS comparison .) ]
+  ! MINUS           [ reduce using rule 44 (comparison -> comparison PLUS comparison .) ]
   ! STAR            [ reduce using rule 44 (comparison -> comparison PLUS comparison .) ]
   ! SLASH           [ reduce using rule 44 (comparison -> comparison PLUS comparison .) ]
-  ! PLUS            [ shift and go to state 57 ]
-  ! MINUS           [ shift and go to state 59 ]
-  ! LESS            [ shift and go to state 55 ]
-  ! EQEQUAL         [ shift and go to state 56 ]
-  ! GREATER         [ shift and go to state 54 ]
+  ! LESS            [ reduce using rule 44 (comparison -> comparison PLUS comparison .) ]
+  ! EQEQUAL         [ reduce using rule 44 (comparison -> comparison PLUS comparison .) ]
+  ! GREATER         [ reduce using rule 44 (comparison -> comparison PLUS comparison .) ]
 
 
 state 81
@@ -2196,27 +2245,34 @@ state 81
     (49) comparison -> comparison . EQEQUAL comparison
     (50) comparison -> comparison . GREATER comparison
 
-    PLUS            reduce using rule 47 (comparison -> comparison SLASH comparison .)
-    MINUS           reduce using rule 47 (comparison -> comparison SLASH comparison .)
-    STAR            reduce using rule 47 (comparison -> comparison SLASH comparison .)
-    SLASH           reduce using rule 47 (comparison -> comparison SLASH comparison .)
-    LESS            reduce using rule 47 (comparison -> comparison SLASH comparison .)
-    EQEQUAL         reduce using rule 47 (comparison -> comparison SLASH comparison .)
-    GREATER         reduce using rule 47 (comparison -> comparison SLASH comparison .)
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for STAR resolved as shift
+  ! shift/reduce conflict for SLASH resolved as shift
+  ! shift/reduce conflict for LESS resolved as shift
+  ! shift/reduce conflict for EQEQUAL resolved as shift
+  ! shift/reduce conflict for GREATER resolved as shift
     COMMA           reduce using rule 47 (comparison -> comparison SLASH comparison .)
     EQUAL           reduce using rule 47 (comparison -> comparison SLASH comparison .)
     NEWLINE         reduce using rule 47 (comparison -> comparison SLASH comparison .)
     SEMI            reduce using rule 47 (comparison -> comparison SLASH comparison .)
     COLON           reduce using rule 47 (comparison -> comparison SLASH comparison .)
     RPAREN          reduce using rule 47 (comparison -> comparison SLASH comparison .)
+    PLUS            shift and go to state 57
+    MINUS           shift and go to state 59
+    STAR            shift and go to state 53
+    SLASH           shift and go to state 58
+    LESS            shift and go to state 55
+    EQEQUAL         shift and go to state 56
+    GREATER         shift and go to state 54
 
-  ! PLUS            [ shift and go to state 57 ]
-  ! MINUS           [ shift and go to state 59 ]
-  ! STAR            [ shift and go to state 53 ]
-  ! SLASH           [ shift and go to state 58 ]
-  ! LESS            [ shift and go to state 55 ]
-  ! EQEQUAL         [ shift and go to state 56 ]
-  ! GREATER         [ shift and go to state 54 ]
+  ! PLUS            [ reduce using rule 47 (comparison -> comparison SLASH comparison .) ]
+  ! MINUS           [ reduce using rule 47 (comparison -> comparison SLASH comparison .) ]
+  ! STAR            [ reduce using rule 47 (comparison -> comparison SLASH comparison .) ]
+  ! SLASH           [ reduce using rule 47 (comparison -> comparison SLASH comparison .) ]
+  ! LESS            [ reduce using rule 47 (comparison -> comparison SLASH comparison .) ]
+  ! EQEQUAL         [ reduce using rule 47 (comparison -> comparison SLASH comparison .) ]
+  ! GREATER         [ reduce using rule 47 (comparison -> comparison SLASH comparison .) ]
 
 
 state 82
@@ -2230,27 +2286,34 @@ state 82
     (49) comparison -> comparison . EQEQUAL comparison
     (50) comparison -> comparison . GREATER comparison
 
-    PLUS            reduce using rule 45 (comparison -> comparison MINUS comparison .)
-    MINUS           reduce using rule 45 (comparison -> comparison MINUS comparison .)
-    LESS            reduce using rule 45 (comparison -> comparison MINUS comparison .)
-    EQEQUAL         reduce using rule 45 (comparison -> comparison MINUS comparison .)
-    GREATER         reduce using rule 45 (comparison -> comparison MINUS comparison .)
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for STAR resolved as shift
+  ! shift/reduce conflict for SLASH resolved as shift
+  ! shift/reduce conflict for LESS resolved as shift
+  ! shift/reduce conflict for EQEQUAL resolved as shift
+  ! shift/reduce conflict for GREATER resolved as shift
     COMMA           reduce using rule 45 (comparison -> comparison MINUS comparison .)
     EQUAL           reduce using rule 45 (comparison -> comparison MINUS comparison .)
     NEWLINE         reduce using rule 45 (comparison -> comparison MINUS comparison .)
     SEMI            reduce using rule 45 (comparison -> comparison MINUS comparison .)
     COLON           reduce using rule 45 (comparison -> comparison MINUS comparison .)
     RPAREN          reduce using rule 45 (comparison -> comparison MINUS comparison .)
+    PLUS            shift and go to state 57
+    MINUS           shift and go to state 59
     STAR            shift and go to state 53
     SLASH           shift and go to state 58
+    LESS            shift and go to state 55
+    EQEQUAL         shift and go to state 56
+    GREATER         shift and go to state 54
 
+  ! PLUS            [ reduce using rule 45 (comparison -> comparison MINUS comparison .) ]
+  ! MINUS           [ reduce using rule 45 (comparison -> comparison MINUS comparison .) ]
   ! STAR            [ reduce using rule 45 (comparison -> comparison MINUS comparison .) ]
   ! SLASH           [ reduce using rule 45 (comparison -> comparison MINUS comparison .) ]
-  ! PLUS            [ shift and go to state 57 ]
-  ! MINUS           [ shift and go to state 59 ]
-  ! LESS            [ shift and go to state 55 ]
-  ! EQEQUAL         [ shift and go to state 56 ]
-  ! GREATER         [ shift and go to state 54 ]
+  ! LESS            [ reduce using rule 45 (comparison -> comparison MINUS comparison .) ]
+  ! EQEQUAL         [ reduce using rule 45 (comparison -> comparison MINUS comparison .) ]
+  ! GREATER         [ reduce using rule 45 (comparison -> comparison MINUS comparison .) ]
 
 
 state 83
@@ -3321,3 +3384,69 @@ state 119
     LPAREN          reduce using rule 31 (elif_expr -> ELIF test COLON suite elif_expr .)
     DEDENT          reduce using rule 31 (elif_expr -> ELIF test COLON suite elif_expr .)
 
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for PLUS in state 44 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 44 resolved as shift
+WARNING: shift/reduce conflict for STAR in state 44 resolved as shift
+WARNING: shift/reduce conflict for SLASH in state 44 resolved as shift
+WARNING: shift/reduce conflict for LESS in state 44 resolved as shift
+WARNING: shift/reduce conflict for EQEQUAL in state 44 resolved as shift
+WARNING: shift/reduce conflict for GREATER in state 44 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 48 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 48 resolved as shift
+WARNING: shift/reduce conflict for STAR in state 48 resolved as shift
+WARNING: shift/reduce conflict for SLASH in state 48 resolved as shift
+WARNING: shift/reduce conflict for LESS in state 48 resolved as shift
+WARNING: shift/reduce conflict for EQEQUAL in state 48 resolved as shift
+WARNING: shift/reduce conflict for GREATER in state 48 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 76 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 76 resolved as shift
+WARNING: shift/reduce conflict for STAR in state 76 resolved as shift
+WARNING: shift/reduce conflict for SLASH in state 76 resolved as shift
+WARNING: shift/reduce conflict for LESS in state 76 resolved as shift
+WARNING: shift/reduce conflict for EQEQUAL in state 76 resolved as shift
+WARNING: shift/reduce conflict for GREATER in state 76 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 77 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 77 resolved as shift
+WARNING: shift/reduce conflict for STAR in state 77 resolved as shift
+WARNING: shift/reduce conflict for SLASH in state 77 resolved as shift
+WARNING: shift/reduce conflict for LESS in state 77 resolved as shift
+WARNING: shift/reduce conflict for EQEQUAL in state 77 resolved as shift
+WARNING: shift/reduce conflict for GREATER in state 77 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 78 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 78 resolved as shift
+WARNING: shift/reduce conflict for STAR in state 78 resolved as shift
+WARNING: shift/reduce conflict for SLASH in state 78 resolved as shift
+WARNING: shift/reduce conflict for LESS in state 78 resolved as shift
+WARNING: shift/reduce conflict for EQEQUAL in state 78 resolved as shift
+WARNING: shift/reduce conflict for GREATER in state 78 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 79 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 79 resolved as shift
+WARNING: shift/reduce conflict for STAR in state 79 resolved as shift
+WARNING: shift/reduce conflict for SLASH in state 79 resolved as shift
+WARNING: shift/reduce conflict for LESS in state 79 resolved as shift
+WARNING: shift/reduce conflict for EQEQUAL in state 79 resolved as shift
+WARNING: shift/reduce conflict for GREATER in state 79 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 80 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 80 resolved as shift
+WARNING: shift/reduce conflict for STAR in state 80 resolved as shift
+WARNING: shift/reduce conflict for SLASH in state 80 resolved as shift
+WARNING: shift/reduce conflict for LESS in state 80 resolved as shift
+WARNING: shift/reduce conflict for EQEQUAL in state 80 resolved as shift
+WARNING: shift/reduce conflict for GREATER in state 80 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 81 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 81 resolved as shift
+WARNING: shift/reduce conflict for STAR in state 81 resolved as shift
+WARNING: shift/reduce conflict for SLASH in state 81 resolved as shift
+WARNING: shift/reduce conflict for LESS in state 81 resolved as shift
+WARNING: shift/reduce conflict for EQEQUAL in state 81 resolved as shift
+WARNING: shift/reduce conflict for GREATER in state 81 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 82 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 82 resolved as shift
+WARNING: shift/reduce conflict for STAR in state 82 resolved as shift
+WARNING: shift/reduce conflict for SLASH in state 82 resolved as shift
+WARNING: shift/reduce conflict for LESS in state 82 resolved as shift
+WARNING: shift/reduce conflict for EQEQUAL in state 82 resolved as shift
+WARNING: shift/reduce conflict for GREATER in state 82 resolved as shift
