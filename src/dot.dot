@@ -3,9 +3,9 @@ digraph G
 	node0 [label="Program"];
 	node1 [label="Stmt"];
 	node0 -> node1;
-	node2 [label="Import\nsys"];
+	node2 [label="Import"];
 	node1 -> node2;
-	node3 [label="Function\nfactorial"];
+	node3 [label="Function"];
 	node1 -> node3;
 	node4 [label="For"];
 	node1 -> node4;
@@ -19,13 +19,13 @@ digraph G
 	node3 -> node8;
 	node9 [label="Stmt"];
 	node3 -> node9;
-	node10 [label=""];
+	node10 [label="inde"];
 	node4 -> node10;
 	node11 [label="CallFunc"];
 	node4 -> node11;
 	node12 [label="Stmt"];
 	node4 -> node12;
-	node13 [label=""Hello"];
+	node13 [label="Hello"];
 	node5 -> node13;
 	node14 [label="IfExp"];
 	node9 -> node14;
@@ -45,9 +45,9 @@ digraph G
 	node14 -> node21;
 	node22 [label="rang"];
 	node15 -> node22;
-	node23 [label=""];
+	node23 [label="1"];
 	node16 -> node23;
-	node24 [label="1"];
+	node24 [label="2"];
 	node17 -> node24;
 	node25 [label="Name"];
 	node18 -> node25;
@@ -63,14 +63,14 @@ digraph G
 	node20 -> node30;
 	node31 [label="factoria"];
 	node25 -> node31;
-	node32 [label=""];
+	node32 [label="inde"];
 	node26 -> node32;
-	node33 [label=""];
+	node33 [label="nu"];
 	node27 -> node33;
-	node34 [label=""];
+	node34 [label="2"];
 	node29 -> node34;
 	node35 [label="Const"];
 	node30 -> node35;
-	node36 [label=""];
+	node36 [label="2"];
 	node35 -> node36;
 }

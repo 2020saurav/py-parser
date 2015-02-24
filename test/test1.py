@@ -1,11 +1,11 @@
 import sys
-def factorial(n):
-	if(n<2):
-		return 1
+def factorial (num):
+	if(num<20):
+		return 21
 	else:
-		return n*factorial(n-1)
+		return num*factorial(num-1)
 
-for i in range(1,10):
-	print factorial(i)
+for index in range(10,25):
+	print factorial(index)
 
 print "Hello"

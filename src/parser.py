@@ -167,6 +167,7 @@ def p_suite(p):
         p[0] = ast.Stmt(p[1])
     else:
         p[0] = ast.Stmt(p[3])
+
     
 
 def p_stmts(p):
@@ -353,22 +354,22 @@ class G1Parser(object):
 		if mlexer is None:
 			mlexer = lexer.G1Lexer()
 		self.mlexer = mlexer
-		self.parser = yacc.yacc(start="program")
+		self.parser = yacc.yacc(start="program", debug=True)
 	def parse(self, code):
 		self.mlexer.input(code)
-		result = self.parser.parse(lexer = self.mlexer)
+		result = self.parser.parse(lexer = self.mlexer, debug=1)
 		return ast.Module(None, result)
 
 
 def getContent(x):
 	data = str(x)
 	name = data[:data.find("(")]
-	content = name
+	content = name.translate(None,'"')
 	# add more information according to above
-	if(name=="Import"):
-		content = content + "\\n" + str(x.names)
-	elif(name=="Function"):
-		content = content + "\\n" + str(x.name)
+	# if(name=="Import"):
+	# 	content = content + "\\n" + str(x.names)
+	# elif(name=="Function"):
+	# 	content = content + "\\n" + str(x.name)
 
 	return content
 
