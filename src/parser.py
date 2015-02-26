@@ -3,61 +3,133 @@ import lexer # our lexer
 tokens = lexer.tokens
 from subprocess import call
 import sys
-import time
 
-## NB: compound_stmt in single_input is followed by extra NEWLINE!
+
 # file_input: (NEWLINE | stmt)* ENDMARKER
-
-def p_program(p):
-    """program : file_input ENDMARKER"""
-
 def p_file_input(p):
-    """file_input : file_input NEWLINE
-                  | file_input stmt
-                  | NEWLINE
-                  | stmt"""
+	"""file_input :	single_stmt ENDMARKER
+	"""
+# Our temporary symbol
+def p_single_stmt(p):
+	"""single_stmt	:	single_stmt NEWLINE
+					|	single_stmt stmt
+					|
+	"""
+# funcdef: [decorators] 'def' NAME parameters ':' suite
+def p_funcdef(p):
+    "funcdef : DEF NAME parameters COLON suite"
+
+
+# parameters: '(' [varargslist] ')'
+def p_parameters(p):
+    """parameters : LPAREN RPAREN
+                  | LPAREN varargslist RPAREN"""
+
+#varargslist: ( | fpdef ['=' test] (',' fpdef ['=' test])* [',']) 
+
+def p_varargslist(p):
+    """varargslist 	:
+    				| fpdef EQUAL test fpdeflist COMMA
+    				| fpdef EQUAL test fpdeflist
+    				| fpdef fpdeflist COMMA
+    				| fpdef fpdeflist
+    """
+
+def p_fpdeflist(p):
+	"""fpdeflist 	:
+					| fpdeflist COMMA fpdef
+					| fpdeflist COMMA fpdef EQUAL test
+	"""
+
+# fpdef: NAME | '(' fplist ')'
+def p_fpdef(p):
+	"""fpdef 	: NAME 
+				| LPAREN fplist RPAREN
+	"""
+
+# fplist: fpdef (',' fpdef)* [',']
+def p_fplist(p):
+	"""fplist 	: fpdef fplist1 COMMA
+				| fpdef fplist1	
+	"""
+# our temp symbol
+def p_fplist1(p):
+	"""fplist1 	:
+				| fplist1 COMMA fpdef
+	"""
 
 # stmt: simple_stmt | compound_stmt
-def p_stmt_simple(p):
-    """stmt : simple_stmt"""
-    
-def p_stmt_compound(p):
-    """stmt : compound_stmt"""
+def p_stmt(p):
+	"""stmt 	: simple_stmt
+				| compound_stmt
+	"""
 
 # simple_stmt: small_stmt (';' small_stmt)* [';'] NEWLINE
 def p_simple_stmt(p):
-    """simple_stmt : small_stmts NEWLINE
-                   | small_stmts SEMI NEWLINE"""
+	"""simple_stmt 	: small_stmts NEWLINE
+					| small_stmts SEMI NEWLINE
+	"""
 
+# our temp symbol
 def p_small_stmts(p):
-    """small_stmts : small_stmts SEMI small_stmt
-                   | small_stmt"""
+	"""small_stmts 	: small_stmts SEMI small_stmt
+					| small_stmt
+	"""
 
-# small_stmt: expr_stmt | print_stmt  | del_stmt | 
-#			  pass_stmt | flow_stmt |assert_stmt |
-#    import_stmt | global_stmt | exec_stmt 
+# small_stmt: 	expr_stmt 	| print_stmt  	| del_stmt 	| 
+#			  	pass_stmt 	| flow_stmt 	|assert_stmt|
+#    			import_stmt | global_stmt 	| exec_stmt 
+
 def p_small_stmt(p):
-    """small_stmt : flow_stmt
-                  | expr_stmt
-                  | print_stmt
-                  | pass_stmt
-                  | import_stmt
-                 """
+	"""small_stmt 	: flow_stmt
+					| expr_stmt
+					| print_stmt
+					| pass_stmt
+					| import_stmt
+					| global_stmt
+					| assert_stmt
+					"""
 
-# expr_stmt: testlist (augassign (yield_expr|testlist) |
-#                      ('=' (yield_expr|testlist))*)
-# augassign: ('+=' | '-=' | '*=' | '/=' | '%=' | '&=' | '|=' | '^=' |
-#             '<<=' | '>>=' | '**=' | '//=')
+# expr_stmt: testlist (augassign testlist | ('=' testlist)*)
 def p_expr_stmt(p):
-    """expr_stmt : testlist EQUAL testlist
-                 | testlist """
+	"""expr_stmt 	: testlist augassign testlist
+					| testlist eqtestlist
+	"""
+# our new symbol
+def p_eqtestlist(p):
+	"""eqtestlist 	:
+					| eqtestlist EQUAL testlist
+	"""
+
+# augassign: ('+=' | '-=' | '*=' | '/=' | '%=' | '**=' | '//=')
+def p_augassign(p):
+	"""augassign 	: PLUSEQUAL 
+					| MINEQUAL 
+					| STAREQUAL 
+					| SLASHEQUAL 
+					| PERCENTEQUAL 
+					| STARSTAREQUAL 
+					| SLASHSLASHEQUAL 
+	"""
+
+# print_stmt: 'print' [ test (',' test)* [','] ] 
+
+def p_print_stmt(p):
+	"""print_stmt 	:	PRINT
+					|	PRINT testlist
+	"""
+# CORRECT UPTIL HERE ^
+
+# these 2 below are added to run without error for now, replace with exact rules.
+def p_global_stmt(p):
+	"""global_stmt 	: GLOBAL testlist
+	"""
+def p_assert_stmt(p):
+	"""assert_stmt 	: ASSERT testlist
+	"""
 
 def p_flow_stmt(p):
     "flow_stmt : return_stmt"
-
-def p_print_stmt(p):
-	"print_stmt : PRINT test"
-
 # return_stmt: 'return' [testlist]
 def p_return_stmt(p):
     "return_stmt : RETURN testlist"
@@ -96,21 +168,11 @@ def p_suite(p):
 def p_stmts(p):
     """stmts : stmts stmt
              | stmt"""
-# funcdef: [decorators] 'def' NAME parameters ':' suite
-# ignoring decorators
-def p_funcdef(p):
-    "funcdef : DEF NAME parameters COLON suite"
-    
-# parameters: '(' [varargslist] ')'
-def p_parameters(p):
-    """parameters : LPAREN RPAREN
-                  | LPAREN varargslist RPAREN"""
 
-# varargslist: (fpdef ['=' test] ',')* ('*' NAME [',' '**' NAME] | '**' NAME) | 
-# highly simplified
-def p_varargslist(p):
-    """varargslist : varargslist COMMA NAME
-                   | NAME"""
+    
+
+
+
 
 def p_comparison(p):
     """comparison : comparison PLUS comparison
@@ -178,7 +240,7 @@ class G1Parser(object):
 		if mlexer is None:
 			mlexer = lexer.G1Lexer()
 		self.mlexer = mlexer
-		self.parser = yacc.yacc(start="program", debug=True)
+		self.parser = yacc.yacc(start="file_input", debug=True)
 	def parse(self, code):
 		self.mlexer.input(code)
 		result = self.parser.parse(lexer = self.mlexer, debug=True)
