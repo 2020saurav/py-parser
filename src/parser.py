@@ -170,8 +170,8 @@ def p_compound_stmt(p):
 						| for_stmt
 						| while_stmt
 						| funcdef
+						| classdef
 	"""
-						# | classdef
 
 # if_stmt: 'if' test ':' suite ('elif' test ':' suite)* ['else' ':' suite]
 def p_if_stmt(p):
@@ -338,8 +338,143 @@ def p_factor(p):
 				| TILDE factor
 	"""
 
+# without lak:
 
+# power: atom trailer* ['**' factor]
+def p_power(p):
+	"""power 	: atom trailerlist
+				| atom trailerlist STARSTAR factor
+	"""
 
+# our new symbol
+def p_trailerlist(p):
+	"""trailerlist 	: 
+					| trailer trailerlist
+	"""
+
+# atom: ('(' [testlist_comp] ')' |
+#       '[' [listmaker] ']' |
+#       '{' [dictorsetmaker] '}' |
+#       '`' testlist1 '`' |
+#       NAME | NUMBER | STRING+)
+def p_atom(p):
+	"""atom 	: LPAREN RPAREN
+				| LPAREN testlist_comp RPAREN
+				| LSQB RSQB
+				| LSQB listmaker RSQB
+				| LBRACE RBRACE
+				| LBRACE dictorsetmaker RBRACE
+				| BACKQUOTE testlist1
+				| NAME
+				| NUMBER
+				| FNUMBER
+				| stringlist
+	"""
+
+# our new symbol
+def p_stringlist(p):
+	"""stringlist 	: STRING 
+					| STRING stringlist
+					| TRIPLESTRING
+					| TRIPLESTRING stringlist
+	"""
+
+# listmaker: test (',' test)* [','] 
+def p_listmaker(p):
+	"""listmaker 	: testlist
+	"""
+
+# testlist_comp: test (',' test)* [','] 
+def p_testlist_comp(p):
+	"""testlist_comp 	: testlist
+	"""
+
+# trailer: '(' [arglist] ')' | '[' subscriptlist ']' | '.' NAME
+def p_trailer(p):
+	"""trailer 	: LPAREN RPAREN
+				| LPAREN arglist RPAREN
+				| LSQB RSQB
+				| LSQB subscriptlist RSQB
+				| DOT NAME
+	"""
+
+# subscriptlist: subscript (',' subscript)* [',']
+def p_subscriptlist(p):
+	"""subscriptlist 	: subscript
+						| subscript COMMA
+						| subscript COMMA subscriptlist
+	"""
+
+# subscript: '.' '.' '.' | test | [test] ':' [test] [sliceop]
+def p_subscript(p):
+	"""subscript 	: DOT DOT DOT
+					| test
+					| test COLON test sliceop
+					| COLON test sliceop
+					| test COLON sliceop
+					| test COLON test
+					| test COLON
+					| COLON test
+					| COLON sliceop
+					| COLON
+	"""
+
+# sliceop: ':' [test]
+def p_sliceop(p):
+	"""sliceop 	: COLON
+				| COLON test
+	"""
+
+# exprlist: expr (',' expr)* [',']
+def p_exprlist(p):
+	"""exprlist 	: expr
+					| expr COMMA
+					| expr COMMA exprlist
+	"""
+
+# testlist: test (',' test)* [',']
+def p_testlist(p):
+	"""testlist 	: test
+					| test COMMA
+					| test COMMA testlist
+	"""
+
+# dictorsetmaker:  (test ':' test  (',' test ':' test)* [',']) 
+#					| (test  (',' test)* [',']) 
+def p_dictorsetmaker(p):
+	"""dictorsetmaker 	: testcolonlist
+						| testlist
+	"""
+
+# our new symbol
+def p_testcolonlist(p):
+	"""testcolonlist 	: test COLON test
+						| test COLON test COMMA
+						| test COLON test COMMA testcolonlist
+	"""
+
+# classdef: 'class' NAME ['(' [testlist] ')'] ':' suite
+def p_classdef(p):
+	"""classdef 	: CLASS NAME COLON suite
+					| CLASS NAME LPAREN testlist RPAREN COLON suite
+	"""
+
+# arglist: (argument ',')* argument [',']
+def p_arglist(p):
+	"""arglist 	: argument
+				| argument COMMA
+				| argument COMMA arglist
+	"""
+# argument: test | test '=' test
+def p_argument(p):
+	"""argument 	: test
+					| test EQUAL test
+	"""
+# testlist1: test (',' test)*
+def p_testlist1(p):
+	"""testlist1 	: test
+					| test COMMA testlist1
+	"""
 
 
 
@@ -357,68 +492,7 @@ def p_stmts(p):
     """stmts : stmts stmt
              | stmt"""
 
-    
 
-
-
-
-# def p_comparison(p):
-#     """comparison : comparison PLUS comparison
-#                   | comparison MINUS comparison
-#                   | comparison STAR comparison
-#                   | comparison SLASH comparison
-#                   | comparison LESS comparison
-#                   | comparison EQEQUAL comparison
-#                   | comparison GREATER comparison
-#                   | PLUS comparison
-#                   | MINUS comparison
-#                   | power"""
-
-# power: atom trailer* ['**' factor]
-# trailers enables function calls.  I only allow one level of calls
-# so this is 'trailer'
-def p_power(p):
-    """power : atom
-             | atom trailer"""
-
-def p_atom_name(p):
-    """atom : NAME"""
-
-def p_atom_number(p):
-    """atom : NUMBER
-            | STRING"""
-
-def p_atom_tuple(p):
-    """atom : LPAREN testlist RPAREN"""
-
-# trailer: '(' [arglist] ')' | '[' subscriptlist ']' | '.' NAME
-def p_trailer(p):
-    "trailer : LPAREN arglist RPAREN"
-
-# testlist: test (',' test)* [',']
-# Contains shift/reduce error
-def p_testlist(p):
-    """testlist : testlist_multi COMMA
-                | testlist_multi """
-
-def p_testlist_multi(p):
-    """testlist_multi : testlist_multi COMMA test
-                      | test"""
-
-# # test: or_test ['if' or_test 'else' test] | lambdef
-# #  as I don't support 'and', 'or', and 'not' this works down to 'comparison'
-# def p_test(p):
-#     "test : comparison"
-
-# arglist: (argument ',')* (argument [',']| '*' test [',' '**' test] | '**' test)
-# XXX INCOMPLETE: this doesn't allow the trailing comma
-def p_arglist(p):
-    """arglist : arglist COMMA argument
-               | argument"""
-
-# argument: test [gen_for] | test '=' test  # Really [keyword '='] test
-def p_argument(p):
-    "argument : test"
 
 def p_error(p):
     raise SyntaxError(str(p))

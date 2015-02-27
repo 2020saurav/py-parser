@@ -7,361 +7,771 @@ Result : <NoneType @ 0x8b8800> (None)
 
 State  : 2
 Stack  : single_stmt . LexToken(DEF,'def',1,0)
-Action : Shift and goto state 15
+Action : Shift and goto state 25
 
-State  : 15
+State  : 25
 Stack  : single_stmt DEF . LexToken(NAME,'f',1,4)
-Action : Shift and goto state 55
+Action : Shift and goto state 95
 
-State  : 55
+State  : 95
 Stack  : single_stmt DEF NAME . LexToken(LPAREN,'(',1,5)
-Action : Shift and goto state 85
+Action : Shift and goto state 161
 
-State  : 85
+State  : 161
 Stack  : single_stmt DEF NAME LPAREN . LexToken(NAME,'a',1,6)
-Action : Shift and goto state 111
+Action : Shift and goto state 211
 
-State  : 111
+State  : 211
 Stack  : single_stmt DEF NAME LPAREN NAME . LexToken(COMMA,',',1,7)
 Action : Reduce rule [fpdef -> NAME] with ['a'] and goto state 16
 Result : <NoneType @ 0x8b8800> (None)
 
-State  : 112
+State  : 212
 Stack  : single_stmt DEF NAME LPAREN fpdef . LexToken(COMMA,',',1,7)
 Action : Reduce rule [fpdeflist -> <empty>] with [] and goto state 13
 Result : <NoneType @ 0x8b8800> (None)
 
-State  : 125
+State  : 246
 Stack  : single_stmt DEF NAME LPAREN fpdef fpdeflist . LexToken(COMMA,',',1,7)
-Action : Shift and goto state 138
+Action : Shift and goto state 267
 
-State  : 138
+State  : 267
 Stack  : single_stmt DEF NAME LPAREN fpdef fpdeflist COMMA . LexToken(NAME,'b',1,8)
-Action : Shift and goto state 111
+Action : Shift and goto state 211
 
-State  : 111
+State  : 211
 Stack  : single_stmt DEF NAME LPAREN fpdef fpdeflist COMMA NAME . LexToken(COMMA,',',1,9)
 Action : Reduce rule [fpdef -> NAME] with ['b'] and goto state 16
 Result : <NoneType @ 0x8b8800> (None)
 
-State  : 148
+State  : 281
 Stack  : single_stmt DEF NAME LPAREN fpdef fpdeflist COMMA fpdef . LexToken(COMMA,',',1,9)
 Action : Reduce rule [fpdeflist -> fpdeflist COMMA fpdef] with [None,',',None] and goto state 14
 Result : <NoneType @ 0x8b8800> (None)
 
-State  : 125
+State  : 246
 Stack  : single_stmt DEF NAME LPAREN fpdef fpdeflist . LexToken(COMMA,',',1,9)
-Action : Shift and goto state 138
+Action : Shift and goto state 267
 
-State  : 138
+State  : 267
 Stack  : single_stmt DEF NAME LPAREN fpdef fpdeflist COMMA . LexToken(RPAREN,')',1,10)
 Action : Reduce rule [varargslist -> fpdef fpdeflist COMMA] with [None,None,','] and goto state 11
 Result : <NoneType @ 0x8b8800> (None)
 
-State  : 113
+State  : 213
 Stack  : single_stmt DEF NAME LPAREN varargslist . LexToken(RPAREN,')',1,10)
-Action : Shift and goto state 126
+Action : Shift and goto state 247
 
-State  : 126
+State  : 247
 Stack  : single_stmt DEF NAME LPAREN varargslist RPAREN . LexToken(COLON,':',1,11)
 Action : Reduce rule [parameters -> LPAREN varargslist RPAREN] with ['(',None,')'] and goto state 7
 Result : <NoneType @ 0x8b8800> (None)
 
-State  : 84
+State  : 160
 Stack  : single_stmt DEF NAME parameters . LexToken(COLON,':',1,11)
-Action : Shift and goto state 109
+Action : Shift and goto state 209
 
-State  : 109
+State  : 209
 Stack  : single_stmt DEF NAME parameters COLON . LexToken(NEWLINE,'\n',1,12)
-Action : Shift and goto state 105
+Action : Shift and goto state 222
 
-State  : 105
+State  : 222
 Stack  : single_stmt DEF NAME parameters COLON NEWLINE . LexToken(INDENT,None,2,-100)
-Action : Shift and goto state 121
+Action : Shift and goto state 253
 
-State  : 121
+State  : 253
 Stack  : single_stmt DEF NAME parameters COLON NEWLINE INDENT . LexToken(PRINT,'print',2,14)
-Action : Shift and goto state 11
+Action : Shift and goto state 24
 
-State  : 11
+State  : 24
 Stack  : single_stmt DEF NAME parameters COLON NEWLINE INDENT PRINT . LexToken(NAME,'a',2,20)
-Action : Shift and goto state 41
+Action : Shift and goto state 53
 
-State  : 41
+State  : 53
 Stack  : single_stmt DEF NAME parameters COLON NEWLINE INDENT PRINT NAME . LexToken(PLUS,'+',2,21)
-Action : Reduce rule [atom -> NAME] with ['a'] and goto state 89
+Action : Reduce rule [atom -> NAME] with ['a'] and goto state 138
 Result : <NoneType @ 0x8b8800> (None)
 
-State  : 19
+State  : 49
 Stack  : single_stmt DEF NAME parameters COLON NEWLINE INDENT PRINT atom . LexToken(PLUS,'+',2,21)
-Action : Reduce rule [power -> atom] with [None] and goto state 87
+Action : Reduce rule [trailerlist -> <empty>] with [] and goto state 129
 Result : <NoneType @ 0x8b8800> (None)
 
-State  : 20
+State  : 117
+Stack  : single_stmt DEF NAME parameters COLON NEWLINE INDENT PRINT atom trailerlist . LexToken(PLUS,'+',2,21)
+Action : Reduce rule [power -> atom trailerlist] with [None,None] and goto state 127
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 32
 Stack  : single_stmt DEF NAME parameters COLON NEWLINE INDENT PRINT power . LexToken(PLUS,'+',2,21)
-Action : Reduce rule [comparison -> power] with [None] and goto state 86
+Action : Reduce rule [factor -> power] with [None] and goto state 123
 Result : <NoneType @ 0x8b8800> (None)
 
-State  : 32
-Stack  : single_stmt DEF NAME parameters COLON NEWLINE INDENT PRINT comparison . LexToken(PLUS,'+',2,21)
-Action : Shift and goto state 66
-
-State  : 66
-Stack  : single_stmt DEF NAME parameters COLON NEWLINE INDENT PRINT comparison PLUS . LexToken(NAME,'b',2,22)
-Action : Shift and goto state 41
-
-State  : 41
-Stack  : single_stmt DEF NAME parameters COLON NEWLINE INDENT PRINT comparison PLUS NAME . LexToken(NEWLINE,'\n',2,23)
-Action : Reduce rule [atom -> NAME] with ['b'] and goto state 89
+State  : 9
+Stack  : single_stmt DEF NAME parameters COLON NEWLINE INDENT PRINT factor . LexToken(PLUS,'+',2,21)
+Action : Reduce rule [factorlist -> <empty>] with [] and goto state 118
 Result : <NoneType @ 0x8b8800> (None)
 
-State  : 19
-Stack  : single_stmt DEF NAME parameters COLON NEWLINE INDENT PRINT comparison PLUS atom . LexToken(NEWLINE,'\n',2,23)
-Action : Reduce rule [power -> atom] with [None] and goto state 87
+State  : 74
+Stack  : single_stmt DEF NAME parameters COLON NEWLINE INDENT PRINT factor factorlist . LexToken(PLUS,'+',2,21)
+Action : Reduce rule [term -> factor factorlist] with [None,None] and goto state 117
 Result : <NoneType @ 0x8b8800> (None)
 
 State  : 20
-Stack  : single_stmt DEF NAME parameters COLON NEWLINE INDENT PRINT comparison PLUS power . LexToken(NEWLINE,'\n',2,23)
-Action : Reduce rule [comparison -> power] with [None] and goto state 86
+Stack  : single_stmt DEF NAME parameters COLON NEWLINE INDENT PRINT term . LexToken(PLUS,'+',2,21)
+Action : Shift and goto state 89
+
+State  : 89
+Stack  : single_stmt DEF NAME parameters COLON NEWLINE INDENT PRINT term PLUS . LexToken(NAME,'b',2,22)
+Action : Shift and goto state 53
+
+State  : 53
+Stack  : single_stmt DEF NAME parameters COLON NEWLINE INDENT PRINT term PLUS NAME . LexToken(NEWLINE,'\n',2,23)
+Action : Reduce rule [atom -> NAME] with ['b'] and goto state 138
 Result : <NoneType @ 0x8b8800> (None)
 
-State  : 97
-Stack  : single_stmt DEF NAME parameters COLON NEWLINE INDENT PRINT comparison PLUS comparison . LexToken(NEWLINE,'\n',2,23)
-Action : Reduce rule [comparison -> comparison PLUS comparison] with [None,'+',None] and goto state 77
+State  : 49
+Stack  : single_stmt DEF NAME parameters COLON NEWLINE INDENT PRINT term PLUS atom . LexToken(NEWLINE,'\n',2,23)
+Action : Reduce rule [trailerlist -> <empty>] with [] and goto state 129
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 117
+Stack  : single_stmt DEF NAME parameters COLON NEWLINE INDENT PRINT term PLUS atom trailerlist . LexToken(NEWLINE,'\n',2,23)
+Action : Reduce rule [power -> atom trailerlist] with [None,None] and goto state 127
 Result : <NoneType @ 0x8b8800> (None)
 
 State  : 32
-Stack  : single_stmt DEF NAME parameters COLON NEWLINE INDENT PRINT comparison . LexToken(NEWLINE,'\n',2,23)
-Action : Reduce rule [test -> comparison] with [None] and goto state 98
+Stack  : single_stmt DEF NAME parameters COLON NEWLINE INDENT PRINT term PLUS power . LexToken(NEWLINE,'\n',2,23)
+Action : Reduce rule [factor -> power] with [None] and goto state 123
 Result : <NoneType @ 0x8b8800> (None)
 
-State  : 25
-Stack  : single_stmt DEF NAME parameters COLON NEWLINE INDENT PRINT test . LexToken(NEWLINE,'\n',2,23)
-Action : Reduce rule [testlist_multi -> test] with [None] and goto state 97
+State  : 9
+Stack  : single_stmt DEF NAME parameters COLON NEWLINE INDENT PRINT term PLUS factor . LexToken(NEWLINE,'\n',2,23)
+Action : Reduce rule [factorlist -> <empty>] with [] and goto state 118
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 74
+Stack  : single_stmt DEF NAME parameters COLON NEWLINE INDENT PRINT term PLUS factor factorlist . LexToken(NEWLINE,'\n',2,23)
+Action : Reduce rule [term -> factor factorlist] with [None,None] and goto state 117
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 157
+Stack  : single_stmt DEF NAME parameters COLON NEWLINE INDENT PRINT term PLUS term . LexToken(NEWLINE,'\n',2,23)
+Action : Reduce rule [termlist -> <empty>] with [] and goto state 114
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 206
+Stack  : single_stmt DEF NAME parameters COLON NEWLINE INDENT PRINT term PLUS term termlist . LexToken(NEWLINE,'\n',2,23)
+Action : Reduce rule [termlist -> PLUS term termlist] with ['+',None,None] and goto state 115
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 90
+Stack  : single_stmt DEF NAME parameters COLON NEWLINE INDENT PRINT term termlist . LexToken(NEWLINE,'\n',2,23)
+Action : Reduce rule [arith_expr -> term termlist] with [None,None] and goto state 113
 Result : <NoneType @ 0x8b8800> (None)
 
 State  : 38
-Stack  : single_stmt DEF NAME parameters COLON NEWLINE INDENT PRINT testlist_multi . LexToken(NEWLINE,'\n',2,23)
-Action : Reduce rule [testlist -> testlist_multi] with [None] and goto state 95
+Stack  : single_stmt DEF NAME parameters COLON NEWLINE INDENT PRINT arith_expr . LexToken(NEWLINE,'\n',2,23)
+Action : Reduce rule [arithexprlist -> <empty>] with [] and goto state 110
 Result : <NoneType @ 0x8b8800> (None)
 
-State  : 52
+State  : 108
+Stack  : single_stmt DEF NAME parameters COLON NEWLINE INDENT PRINT arith_expr arithexprlist . LexToken(NEWLINE,'\n',2,23)
+Action : Reduce rule [shift_expr -> arith_expr arithexprlist] with [None,None] and goto state 109
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 28
+Stack  : single_stmt DEF NAME parameters COLON NEWLINE INDENT PRINT shift_expr . LexToken(NEWLINE,'\n',2,23)
+Action : Reduce rule [shiftexprlist -> <empty>] with [] and goto state 107
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 98
+Stack  : single_stmt DEF NAME parameters COLON NEWLINE INDENT PRINT shift_expr shiftexprlist . LexToken(NEWLINE,'\n',2,23)
+Action : Reduce rule [and_expr -> shift_expr shiftexprlist] with [None,None] and goto state 106
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 11
+Stack  : single_stmt DEF NAME parameters COLON NEWLINE INDENT PRINT and_expr . LexToken(NEWLINE,'\n',2,23)
+Action : Reduce rule [andexprlist -> <empty>] with [] and goto state 104
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 78
+Stack  : single_stmt DEF NAME parameters COLON NEWLINE INDENT PRINT and_expr andexprlist . LexToken(NEWLINE,'\n',2,23)
+Action : Reduce rule [xor_expr -> and_expr andexprlist] with [None,None] and goto state 103
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 45
+Stack  : single_stmt DEF NAME parameters COLON NEWLINE INDENT PRINT xor_expr . LexToken(NEWLINE,'\n',2,23)
+Action : Reduce rule [xorexprlist -> <empty>] with [] and goto state 101
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 114
+Stack  : single_stmt DEF NAME parameters COLON NEWLINE INDENT PRINT xor_expr xorexprlist . LexToken(NEWLINE,'\n',2,23)
+Action : Reduce rule [expr -> xor_expr xorexprlist] with [None,None] and goto state 100
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 54
+Stack  : single_stmt DEF NAME parameters COLON NEWLINE INDENT PRINT expr . LexToken(NEWLINE,'\n',2,23)
+Action : Reduce rule [compexprlist -> <empty>] with [] and goto state 88
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 134
+Stack  : single_stmt DEF NAME parameters COLON NEWLINE INDENT PRINT expr compexprlist . LexToken(NEWLINE,'\n',2,23)
+Action : Reduce rule [comparison -> expr compexprlist] with [None,None] and goto state 87
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 35
+Stack  : single_stmt DEF NAME parameters COLON NEWLINE INDENT PRINT comparison . LexToken(NEWLINE,'\n',2,23)
+Action : Reduce rule [not_test -> comparison] with [None] and goto state 86
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 58
+Stack  : single_stmt DEF NAME parameters COLON NEWLINE INDENT PRINT not_test . LexToken(NEWLINE,'\n',2,23)
+Action : Reduce rule [andtestlist -> <empty>] with [] and goto state 83
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 138
+Stack  : single_stmt DEF NAME parameters COLON NEWLINE INDENT PRINT not_test andtestlist . LexToken(NEWLINE,'\n',2,23)
+Action : Reduce rule [and_test -> not_test andtestlist] with [None,None] and goto state 82
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 63
+Stack  : single_stmt DEF NAME parameters COLON NEWLINE INDENT PRINT and_test . LexToken(NEWLINE,'\n',2,23)
+Action : Reduce rule [ortestlist -> <empty>] with [] and goto state 80
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 141
+Stack  : single_stmt DEF NAME parameters COLON NEWLINE INDENT PRINT and_test ortestlist . LexToken(NEWLINE,'\n',2,23)
+Action : Reduce rule [or_test -> and_test ortestlist] with [None,None] and goto state 79
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 22
+Stack  : single_stmt DEF NAME parameters COLON NEWLINE INDENT PRINT or_test . LexToken(NEWLINE,'\n',2,23)
+Action : Reduce rule [test -> or_test] with [None] and goto state 77
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 16
+Stack  : single_stmt DEF NAME parameters COLON NEWLINE INDENT PRINT test . LexToken(NEWLINE,'\n',2,23)
+Action : Reduce rule [testlist -> test] with [None] and goto state 171
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 94
 Stack  : single_stmt DEF NAME parameters COLON NEWLINE INDENT PRINT testlist . LexToken(NEWLINE,'\n',2,23)
 Action : Reduce rule [print_stmt -> PRINT testlist] with ['print',None] and goto state 47
 Result : <NoneType @ 0x8b8800> (None)
 
-State  : 24
+State  : 48
 Stack  : single_stmt DEF NAME parameters COLON NEWLINE INDENT print_stmt . LexToken(NEWLINE,'\n',2,23)
 Action : Reduce rule [small_stmt -> print_stmt] with [None] and goto state 30
 Result : <NoneType @ 0x8b8800> (None)
 
-State  : 5
+State  : 4
 Stack  : single_stmt DEF NAME parameters COLON NEWLINE INDENT small_stmt . LexToken(NEWLINE,'\n',2,23)
 Action : Reduce rule [small_stmts -> small_stmt] with [None] and goto state 27
 Result : <NoneType @ 0x8b8800> (None)
 
-State  : 47
+State  : 41
 Stack  : single_stmt DEF NAME parameters COLON NEWLINE INDENT small_stmts . LexToken(NEWLINE,'\n',2,23)
-Action : Shift and goto state 79
+Action : Shift and goto state 110
 
-State  : 79
+State  : 110
 Stack  : single_stmt DEF NAME parameters COLON NEWLINE INDENT small_stmts NEWLINE . LexToken(DEDENT,None,3,-100)
 Action : Reduce rule [simple_stmt -> small_stmts NEWLINE] with [None,'\n'] and goto state 24
 Result : <NoneType @ 0x8b8800> (None)
 
-State  : 33
+State  : 12
 Stack  : single_stmt DEF NAME parameters COLON NEWLINE INDENT simple_stmt . LexToken(DEDENT,None,3,-100)
 Action : Reduce rule [stmt -> simple_stmt] with [None] and goto state 22
 Result : <NoneType @ 0x8b8800> (None)
 
-State  : 135
+State  : 274
 Stack  : single_stmt DEF NAME parameters COLON NEWLINE INDENT stmt . LexToken(DEDENT,None,3,-100)
-Action : Reduce rule [stmts -> stmt] with [None] and goto state 76
+Action : Reduce rule [stmts -> stmt] with [None] and goto state 189
 Result : <NoneType @ 0x8b8800> (None)
 
-State  : 134
+State  : 273
 Stack  : single_stmt DEF NAME parameters COLON NEWLINE INDENT stmts . LexToken(DEDENT,None,3,-100)
-Action : Shift and goto state 144
+Action : Shift and goto state 284
 
-State  : 144
+State  : 284
 Stack  : single_stmt DEF NAME parameters COLON NEWLINE INDENT stmts DEDENT . LexToken(NAME,'f',3,24)
-Action : Reduce rule [suite -> NEWLINE INDENT stmts DEDENT] with ['\n',None,None,None] and goto state 74
+Action : Reduce rule [suite -> NEWLINE INDENT stmts DEDENT] with ['\n',None,None,None] and goto state 76
 Result : <NoneType @ 0x8b8800> (None)
 
-State  : 123
+State  : 244
 Stack  : single_stmt DEF NAME parameters COLON suite . LexToken(NAME,'f',3,24)
 Action : Reduce rule [funcdef -> DEF NAME parameters COLON suite] with ['def','f',None,':',None] and goto state 5
 Result : <NoneType @ 0x8b8800> (None)
 
-State  : 39
+State  : 50
 Stack  : single_stmt funcdef . LexToken(NAME,'f',3,24)
 Action : Reduce rule [compound_stmt -> funcdef] with [None] and goto state 65
 Result : <NoneType @ 0x8b8800> (None)
 
-State  : 27
+State  : 30
 Stack  : single_stmt compound_stmt . LexToken(NAME,'f',3,24)
 Action : Reduce rule [stmt -> compound_stmt] with [None] and goto state 23
 Result : <NoneType @ 0x8b8800> (None)
 
-State  : 35
+State  : 33
 Stack  : single_stmt stmt . LexToken(NAME,'f',3,24)
 Action : Reduce rule [single_stmt -> single_stmt stmt] with [None,None] and goto state 3
 Result : <NoneType @ 0x8b8800> (None)
 
 State  : 2
 Stack  : single_stmt . LexToken(NAME,'f',3,24)
-Action : Shift and goto state 41
+Action : Shift and goto state 53
 
-State  : 41
+State  : 53
 Stack  : single_stmt NAME . LexToken(LPAREN,'(',3,25)
-Action : Reduce rule [atom -> NAME] with ['f'] and goto state 89
+Action : Reduce rule [atom -> NAME] with ['f'] and goto state 138
 Result : <NoneType @ 0x8b8800> (None)
 
-State  : 19
+State  : 49
 Stack  : single_stmt atom . LexToken(LPAREN,'(',3,25)
+Action : Shift and goto state 119
+
+State  : 119
+Stack  : single_stmt atom LPAREN . LexToken(NUMBER,1,3,26)
 Action : Shift and goto state 56
 
 State  : 56
-Stack  : single_stmt atom LPAREN . LexToken(NUMBER,1,3,26)
-Action : Shift and goto state 6
-
-State  : 6
 Stack  : single_stmt atom LPAREN NUMBER . LexToken(COMMA,',',3,27)
-Action : Reduce rule [atom -> NUMBER] with [1] and goto state 90
+Action : Reduce rule [atom -> NUMBER] with [1] and goto state 139
 Result : <NoneType @ 0x8b8800> (None)
 
-State  : 19
+State  : 49
 Stack  : single_stmt atom LPAREN atom . LexToken(COMMA,',',3,27)
-Action : Reduce rule [power -> atom] with [None] and goto state 87
+Action : Reduce rule [trailerlist -> <empty>] with [] and goto state 129
 Result : <NoneType @ 0x8b8800> (None)
 
-State  : 20
+State  : 117
+Stack  : single_stmt atom LPAREN atom trailerlist . LexToken(COMMA,',',3,27)
+Action : Reduce rule [power -> atom trailerlist] with [None,None] and goto state 127
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 32
 Stack  : single_stmt atom LPAREN power . LexToken(COMMA,',',3,27)
-Action : Reduce rule [comparison -> power] with [None] and goto state 86
+Action : Reduce rule [factor -> power] with [None] and goto state 123
 Result : <NoneType @ 0x8b8800> (None)
 
-State  : 32
-Stack  : single_stmt atom LPAREN comparison . LexToken(COMMA,',',3,27)
-Action : Reduce rule [test -> comparison] with [None] and goto state 98
+State  : 9
+Stack  : single_stmt atom LPAREN factor . LexToken(COMMA,',',3,27)
+Action : Reduce rule [factorlist -> <empty>] with [] and goto state 118
 Result : <NoneType @ 0x8b8800> (None)
 
-State  : 87
-Stack  : single_stmt atom LPAREN test . LexToken(COMMA,',',3,27)
-Action : Reduce rule [argument -> test] with [None] and goto state 101
-Result : <NoneType @ 0x8b8800> (None)
-
-State  : 86
-Stack  : single_stmt atom LPAREN argument . LexToken(COMMA,',',3,27)
-Action : Reduce rule [arglist -> argument] with [None] and goto state 100
-Result : <NoneType @ 0x8b8800> (None)
-
-State  : 88
-Stack  : single_stmt atom LPAREN arglist . LexToken(COMMA,',',3,27)
-Action : Shift and goto state 115
-
-State  : 115
-Stack  : single_stmt atom LPAREN arglist COMMA . LexToken(NUMBER,2,3,28)
-Action : Shift and goto state 6
-
-State  : 6
-Stack  : single_stmt atom LPAREN arglist COMMA NUMBER . LexToken(RPAREN,')',3,29)
-Action : Reduce rule [atom -> NUMBER] with [2] and goto state 90
-Result : <NoneType @ 0x8b8800> (None)
-
-State  : 19
-Stack  : single_stmt atom LPAREN arglist COMMA atom . LexToken(RPAREN,')',3,29)
-Action : Reduce rule [power -> atom] with [None] and goto state 87
+State  : 74
+Stack  : single_stmt atom LPAREN factor factorlist . LexToken(COMMA,',',3,27)
+Action : Reduce rule [term -> factor factorlist] with [None,None] and goto state 117
 Result : <NoneType @ 0x8b8800> (None)
 
 State  : 20
-Stack  : single_stmt atom LPAREN arglist COMMA power . LexToken(RPAREN,')',3,29)
-Action : Reduce rule [comparison -> power] with [None] and goto state 86
+Stack  : single_stmt atom LPAREN term . LexToken(COMMA,',',3,27)
+Action : Reduce rule [termlist -> <empty>] with [] and goto state 114
 Result : <NoneType @ 0x8b8800> (None)
 
-State  : 32
-Stack  : single_stmt atom LPAREN arglist COMMA comparison . LexToken(RPAREN,')',3,29)
-Action : Reduce rule [test -> comparison] with [None] and goto state 98
-Result : <NoneType @ 0x8b8800> (None)
-
-State  : 87
-Stack  : single_stmt atom LPAREN arglist COMMA test . LexToken(RPAREN,')',3,29)
-Action : Reduce rule [argument -> test] with [None] and goto state 101
-Result : <NoneType @ 0x8b8800> (None)
-
-State  : 129
-Stack  : single_stmt atom LPAREN arglist COMMA argument . LexToken(RPAREN,')',3,29)
-Action : Reduce rule [arglist -> arglist COMMA argument] with [None,',',None] and goto state 99
-Result : <NoneType @ 0x8b8800> (None)
-
-State  : 88
-Stack  : single_stmt atom LPAREN arglist . LexToken(RPAREN,')',3,29)
-Action : Shift and goto state 116
-
-State  : 116
-Stack  : single_stmt atom LPAREN arglist RPAREN . LexToken(NEWLINE,'\n',3,30)
-Action : Reduce rule [trailer -> LPAREN arglist RPAREN] with ['(',None,')'] and goto state 93
-Result : <NoneType @ 0x8b8800> (None)
-
-State  : 57
-Stack  : single_stmt atom trailer . LexToken(NEWLINE,'\n',3,30)
-Action : Reduce rule [power -> atom trailer] with [None,None] and goto state 88
-Result : <NoneType @ 0x8b8800> (None)
-
-State  : 20
-Stack  : single_stmt power . LexToken(NEWLINE,'\n',3,30)
-Action : Reduce rule [comparison -> power] with [None] and goto state 86
-Result : <NoneType @ 0x8b8800> (None)
-
-State  : 32
-Stack  : single_stmt comparison . LexToken(NEWLINE,'\n',3,30)
-Action : Reduce rule [test -> comparison] with [None] and goto state 98
-Result : <NoneType @ 0x8b8800> (None)
-
-State  : 25
-Stack  : single_stmt test . LexToken(NEWLINE,'\n',3,30)
-Action : Reduce rule [testlist_multi -> test] with [None] and goto state 97
+State  : 90
+Stack  : single_stmt atom LPAREN term termlist . LexToken(COMMA,',',3,27)
+Action : Reduce rule [arith_expr -> term termlist] with [None,None] and goto state 113
 Result : <NoneType @ 0x8b8800> (None)
 
 State  : 38
-Stack  : single_stmt testlist_multi . LexToken(NEWLINE,'\n',3,30)
-Action : Reduce rule [testlist -> testlist_multi] with [None] and goto state 95
+Stack  : single_stmt atom LPAREN arith_expr . LexToken(COMMA,',',3,27)
+Action : Reduce rule [arithexprlist -> <empty>] with [] and goto state 110
 Result : <NoneType @ 0x8b8800> (None)
 
-State  : 34
+State  : 108
+Stack  : single_stmt atom LPAREN arith_expr arithexprlist . LexToken(COMMA,',',3,27)
+Action : Reduce rule [shift_expr -> arith_expr arithexprlist] with [None,None] and goto state 109
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 28
+Stack  : single_stmt atom LPAREN shift_expr . LexToken(COMMA,',',3,27)
+Action : Reduce rule [shiftexprlist -> <empty>] with [] and goto state 107
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 98
+Stack  : single_stmt atom LPAREN shift_expr shiftexprlist . LexToken(COMMA,',',3,27)
+Action : Reduce rule [and_expr -> shift_expr shiftexprlist] with [None,None] and goto state 106
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 11
+Stack  : single_stmt atom LPAREN and_expr . LexToken(COMMA,',',3,27)
+Action : Reduce rule [andexprlist -> <empty>] with [] and goto state 104
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 78
+Stack  : single_stmt atom LPAREN and_expr andexprlist . LexToken(COMMA,',',3,27)
+Action : Reduce rule [xor_expr -> and_expr andexprlist] with [None,None] and goto state 103
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 45
+Stack  : single_stmt atom LPAREN xor_expr . LexToken(COMMA,',',3,27)
+Action : Reduce rule [xorexprlist -> <empty>] with [] and goto state 101
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 114
+Stack  : single_stmt atom LPAREN xor_expr xorexprlist . LexToken(COMMA,',',3,27)
+Action : Reduce rule [expr -> xor_expr xorexprlist] with [None,None] and goto state 100
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 54
+Stack  : single_stmt atom LPAREN expr . LexToken(COMMA,',',3,27)
+Action : Reduce rule [compexprlist -> <empty>] with [] and goto state 88
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 134
+Stack  : single_stmt atom LPAREN expr compexprlist . LexToken(COMMA,',',3,27)
+Action : Reduce rule [comparison -> expr compexprlist] with [None,None] and goto state 87
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 35
+Stack  : single_stmt atom LPAREN comparison . LexToken(COMMA,',',3,27)
+Action : Reduce rule [not_test -> comparison] with [None] and goto state 86
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 58
+Stack  : single_stmt atom LPAREN not_test . LexToken(COMMA,',',3,27)
+Action : Reduce rule [andtestlist -> <empty>] with [] and goto state 83
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 138
+Stack  : single_stmt atom LPAREN not_test andtestlist . LexToken(COMMA,',',3,27)
+Action : Reduce rule [and_test -> not_test andtestlist] with [None,None] and goto state 82
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 63
+Stack  : single_stmt atom LPAREN and_test . LexToken(COMMA,',',3,27)
+Action : Reduce rule [ortestlist -> <empty>] with [] and goto state 80
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 141
+Stack  : single_stmt atom LPAREN and_test ortestlist . LexToken(COMMA,',',3,27)
+Action : Reduce rule [or_test -> and_test ortestlist] with [None,None] and goto state 79
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 22
+Stack  : single_stmt atom LPAREN or_test . LexToken(COMMA,',',3,27)
+Action : Reduce rule [test -> or_test] with [None] and goto state 77
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 180
+Stack  : single_stmt atom LPAREN test . LexToken(COMMA,',',3,27)
+Action : Reduce rule [argument -> test] with [None] and goto state 184
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 177
+Stack  : single_stmt atom LPAREN argument . LexToken(COMMA,',',3,27)
+Action : Shift and goto state 227
+
+State  : 227
+Stack  : single_stmt atom LPAREN argument COMMA . LexToken(NUMBER,2,3,28)
+Action : Shift and goto state 56
+
+State  : 56
+Stack  : single_stmt atom LPAREN argument COMMA NUMBER . LexToken(RPAREN,')',3,29)
+Action : Reduce rule [atom -> NUMBER] with [2] and goto state 139
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 49
+Stack  : single_stmt atom LPAREN argument COMMA atom . LexToken(RPAREN,')',3,29)
+Action : Reduce rule [trailerlist -> <empty>] with [] and goto state 129
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 117
+Stack  : single_stmt atom LPAREN argument COMMA atom trailerlist . LexToken(RPAREN,')',3,29)
+Action : Reduce rule [power -> atom trailerlist] with [None,None] and goto state 127
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 32
+Stack  : single_stmt atom LPAREN argument COMMA power . LexToken(RPAREN,')',3,29)
+Action : Reduce rule [factor -> power] with [None] and goto state 123
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 9
+Stack  : single_stmt atom LPAREN argument COMMA factor . LexToken(RPAREN,')',3,29)
+Action : Reduce rule [factorlist -> <empty>] with [] and goto state 118
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 74
+Stack  : single_stmt atom LPAREN argument COMMA factor factorlist . LexToken(RPAREN,')',3,29)
+Action : Reduce rule [term -> factor factorlist] with [None,None] and goto state 117
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 20
+Stack  : single_stmt atom LPAREN argument COMMA term . LexToken(RPAREN,')',3,29)
+Action : Reduce rule [termlist -> <empty>] with [] and goto state 114
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 90
+Stack  : single_stmt atom LPAREN argument COMMA term termlist . LexToken(RPAREN,')',3,29)
+Action : Reduce rule [arith_expr -> term termlist] with [None,None] and goto state 113
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 38
+Stack  : single_stmt atom LPAREN argument COMMA arith_expr . LexToken(RPAREN,')',3,29)
+Action : Reduce rule [arithexprlist -> <empty>] with [] and goto state 110
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 108
+Stack  : single_stmt atom LPAREN argument COMMA arith_expr arithexprlist . LexToken(RPAREN,')',3,29)
+Action : Reduce rule [shift_expr -> arith_expr arithexprlist] with [None,None] and goto state 109
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 28
+Stack  : single_stmt atom LPAREN argument COMMA shift_expr . LexToken(RPAREN,')',3,29)
+Action : Reduce rule [shiftexprlist -> <empty>] with [] and goto state 107
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 98
+Stack  : single_stmt atom LPAREN argument COMMA shift_expr shiftexprlist . LexToken(RPAREN,')',3,29)
+Action : Reduce rule [and_expr -> shift_expr shiftexprlist] with [None,None] and goto state 106
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 11
+Stack  : single_stmt atom LPAREN argument COMMA and_expr . LexToken(RPAREN,')',3,29)
+Action : Reduce rule [andexprlist -> <empty>] with [] and goto state 104
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 78
+Stack  : single_stmt atom LPAREN argument COMMA and_expr andexprlist . LexToken(RPAREN,')',3,29)
+Action : Reduce rule [xor_expr -> and_expr andexprlist] with [None,None] and goto state 103
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 45
+Stack  : single_stmt atom LPAREN argument COMMA xor_expr . LexToken(RPAREN,')',3,29)
+Action : Reduce rule [xorexprlist -> <empty>] with [] and goto state 101
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 114
+Stack  : single_stmt atom LPAREN argument COMMA xor_expr xorexprlist . LexToken(RPAREN,')',3,29)
+Action : Reduce rule [expr -> xor_expr xorexprlist] with [None,None] and goto state 100
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 54
+Stack  : single_stmt atom LPAREN argument COMMA expr . LexToken(RPAREN,')',3,29)
+Action : Reduce rule [compexprlist -> <empty>] with [] and goto state 88
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 134
+Stack  : single_stmt atom LPAREN argument COMMA expr compexprlist . LexToken(RPAREN,')',3,29)
+Action : Reduce rule [comparison -> expr compexprlist] with [None,None] and goto state 87
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 35
+Stack  : single_stmt atom LPAREN argument COMMA comparison . LexToken(RPAREN,')',3,29)
+Action : Reduce rule [not_test -> comparison] with [None] and goto state 86
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 58
+Stack  : single_stmt atom LPAREN argument COMMA not_test . LexToken(RPAREN,')',3,29)
+Action : Reduce rule [andtestlist -> <empty>] with [] and goto state 83
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 138
+Stack  : single_stmt atom LPAREN argument COMMA not_test andtestlist . LexToken(RPAREN,')',3,29)
+Action : Reduce rule [and_test -> not_test andtestlist] with [None,None] and goto state 82
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 63
+Stack  : single_stmt atom LPAREN argument COMMA and_test . LexToken(RPAREN,')',3,29)
+Action : Reduce rule [ortestlist -> <empty>] with [] and goto state 80
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 141
+Stack  : single_stmt atom LPAREN argument COMMA and_test ortestlist . LexToken(RPAREN,')',3,29)
+Action : Reduce rule [or_test -> and_test ortestlist] with [None,None] and goto state 79
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 22
+Stack  : single_stmt atom LPAREN argument COMMA or_test . LexToken(RPAREN,')',3,29)
+Action : Reduce rule [test -> or_test] with [None] and goto state 77
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 180
+Stack  : single_stmt atom LPAREN argument COMMA test . LexToken(RPAREN,')',3,29)
+Action : Reduce rule [argument -> test] with [None] and goto state 184
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 177
+Stack  : single_stmt atom LPAREN argument COMMA argument . LexToken(RPAREN,')',3,29)
+Action : Reduce rule [arglist -> argument] with [None] and goto state 181
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 255
+Stack  : single_stmt atom LPAREN argument COMMA arglist . LexToken(RPAREN,')',3,29)
+Action : Reduce rule [arglist -> argument COMMA arglist] with [None,',',None] and goto state 183
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 178
+Stack  : single_stmt atom LPAREN arglist . LexToken(RPAREN,')',3,29)
+Action : Shift and goto state 228
+
+State  : 228
+Stack  : single_stmt atom LPAREN arglist RPAREN . LexToken(NEWLINE,'\n',3,30)
+Action : Reduce rule [trailer -> LPAREN arglist RPAREN] with ['(',None,')'] and goto state 149
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 121
+Stack  : single_stmt atom trailer . LexToken(NEWLINE,'\n',3,30)
+Action : Reduce rule [trailerlist -> <empty>] with [] and goto state 129
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 187
+Stack  : single_stmt atom trailer trailerlist . LexToken(NEWLINE,'\n',3,30)
+Action : Reduce rule [trailerlist -> trailer trailerlist] with [None,None] and goto state 130
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 117
+Stack  : single_stmt atom trailerlist . LexToken(NEWLINE,'\n',3,30)
+Action : Reduce rule [power -> atom trailerlist] with [None,None] and goto state 127
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 32
+Stack  : single_stmt power . LexToken(NEWLINE,'\n',3,30)
+Action : Reduce rule [factor -> power] with [None] and goto state 123
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 9
+Stack  : single_stmt factor . LexToken(NEWLINE,'\n',3,30)
+Action : Reduce rule [factorlist -> <empty>] with [] and goto state 118
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 74
+Stack  : single_stmt factor factorlist . LexToken(NEWLINE,'\n',3,30)
+Action : Reduce rule [term -> factor factorlist] with [None,None] and goto state 117
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 20
+Stack  : single_stmt term . LexToken(NEWLINE,'\n',3,30)
+Action : Reduce rule [termlist -> <empty>] with [] and goto state 114
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 90
+Stack  : single_stmt term termlist . LexToken(NEWLINE,'\n',3,30)
+Action : Reduce rule [arith_expr -> term termlist] with [None,None] and goto state 113
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 38
+Stack  : single_stmt arith_expr . LexToken(NEWLINE,'\n',3,30)
+Action : Reduce rule [arithexprlist -> <empty>] with [] and goto state 110
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 108
+Stack  : single_stmt arith_expr arithexprlist . LexToken(NEWLINE,'\n',3,30)
+Action : Reduce rule [shift_expr -> arith_expr arithexprlist] with [None,None] and goto state 109
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 28
+Stack  : single_stmt shift_expr . LexToken(NEWLINE,'\n',3,30)
+Action : Reduce rule [shiftexprlist -> <empty>] with [] and goto state 107
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 98
+Stack  : single_stmt shift_expr shiftexprlist . LexToken(NEWLINE,'\n',3,30)
+Action : Reduce rule [and_expr -> shift_expr shiftexprlist] with [None,None] and goto state 106
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 11
+Stack  : single_stmt and_expr . LexToken(NEWLINE,'\n',3,30)
+Action : Reduce rule [andexprlist -> <empty>] with [] and goto state 104
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 78
+Stack  : single_stmt and_expr andexprlist . LexToken(NEWLINE,'\n',3,30)
+Action : Reduce rule [xor_expr -> and_expr andexprlist] with [None,None] and goto state 103
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 45
+Stack  : single_stmt xor_expr . LexToken(NEWLINE,'\n',3,30)
+Action : Reduce rule [xorexprlist -> <empty>] with [] and goto state 101
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 114
+Stack  : single_stmt xor_expr xorexprlist . LexToken(NEWLINE,'\n',3,30)
+Action : Reduce rule [expr -> xor_expr xorexprlist] with [None,None] and goto state 100
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 54
+Stack  : single_stmt expr . LexToken(NEWLINE,'\n',3,30)
+Action : Reduce rule [compexprlist -> <empty>] with [] and goto state 88
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 134
+Stack  : single_stmt expr compexprlist . LexToken(NEWLINE,'\n',3,30)
+Action : Reduce rule [comparison -> expr compexprlist] with [None,None] and goto state 87
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 35
+Stack  : single_stmt comparison . LexToken(NEWLINE,'\n',3,30)
+Action : Reduce rule [not_test -> comparison] with [None] and goto state 86
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 58
+Stack  : single_stmt not_test . LexToken(NEWLINE,'\n',3,30)
+Action : Reduce rule [andtestlist -> <empty>] with [] and goto state 83
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 138
+Stack  : single_stmt not_test andtestlist . LexToken(NEWLINE,'\n',3,30)
+Action : Reduce rule [and_test -> not_test andtestlist] with [None,None] and goto state 82
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 63
+Stack  : single_stmt and_test . LexToken(NEWLINE,'\n',3,30)
+Action : Reduce rule [ortestlist -> <empty>] with [] and goto state 80
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 141
+Stack  : single_stmt and_test ortestlist . LexToken(NEWLINE,'\n',3,30)
+Action : Reduce rule [or_test -> and_test ortestlist] with [None,None] and goto state 79
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 22
+Stack  : single_stmt or_test . LexToken(NEWLINE,'\n',3,30)
+Action : Reduce rule [test -> or_test] with [None] and goto state 77
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 16
+Stack  : single_stmt test . LexToken(NEWLINE,'\n',3,30)
+Action : Reduce rule [testlist -> test] with [None] and goto state 171
+Result : <NoneType @ 0x8b8800> (None)
+
+State  : 13
 Stack  : single_stmt testlist . LexToken(NEWLINE,'\n',3,30)
 Action : Reduce rule [eqtestlist -> <empty>] with [] and goto state 37
 Result : <NoneType @ 0x8b8800> (None)
 
-State  : 76
+State  : 86
 Stack  : single_stmt testlist eqtestlist . LexToken(NEWLINE,'\n',3,30)
 Action : Reduce rule [expr_stmt -> testlist eqtestlist] with [None,None] and goto state 36
 Result : <NoneType @ 0x8b8800> (None)
 
-State  : 40
+State  : 19
 Stack  : single_stmt expr_stmt . LexToken(NEWLINE,'\n',3,30)
 Action : Reduce rule [small_stmt -> expr_stmt] with [None] and goto state 29
 Result : <NoneType @ 0x8b8800> (None)
 
-State  : 5
+State  : 4
 Stack  : single_stmt small_stmt . LexToken(NEWLINE,'\n',3,30)
 Action : Reduce rule [small_stmts -> small_stmt] with [None] and goto state 27
 Result : <NoneType @ 0x8b8800> (None)
 
-State  : 47
+State  : 41
 Stack  : single_stmt small_stmts . LexToken(NEWLINE,'\n',3,30)
-Action : Shift and goto state 79
+Action : Shift and goto state 110
 
-State  : 79
+State  : 110
 Stack  : single_stmt small_stmts NEWLINE . LexToken(ENDMARKER,None,3,-100)
 Action : Reduce rule [simple_stmt -> small_stmts NEWLINE] with [None,'\n'] and goto state 24
 Result : <NoneType @ 0x8b8800> (None)
 
-State  : 33
+State  : 12
 Stack  : single_stmt simple_stmt . LexToken(ENDMARKER,None,3,-100)
 Action : Reduce rule [stmt -> simple_stmt] with [None] and goto state 22
 Result : <NoneType @ 0x8b8800> (None)
 
-State  : 35
+State  : 33
 Stack  : single_stmt stmt . LexToken(ENDMARKER,None,3,-100)
 Action : Reduce rule [single_stmt -> single_stmt stmt] with [None,None] and goto state 3
 Result : <NoneType @ 0x8b8800> (None)
