@@ -4,7 +4,6 @@ tokens = lexer.tokens
 from subprocess import call
 import sys
 
-
 # file_input: (NEWLINE | stmt)* ENDMARKER
 def p_file_input(p):
 	"""file_input :	single_stmt ENDMARKER
@@ -15,10 +14,10 @@ def p_single_stmt(p):
 					|	single_stmt stmt
 					|
 	"""
+
 # funcdef: [decorators] 'def' NAME parameters ':' suite
 def p_funcdef(p):
     "funcdef : DEF NAME parameters COLON suite"
-
 
 # parameters: '(' [varargslist] ')'
 def p_parameters(p):
@@ -475,24 +474,13 @@ def p_testlist1(p):
 	"""testlist1 	: test
 					| test COMMA testlist1
 	"""
-
-
-
-
-
 # CORRECT UPTIL HERE ^
 
 # these 2 below are added to run without error for now, replace with exact rules.
 
-
-
-
-
 def p_stmts(p):
     """stmts : stmts stmt
              | stmt"""
-
-
 
 def p_error(p):
     raise SyntaxError(str(p))

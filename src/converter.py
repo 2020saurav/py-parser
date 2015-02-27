@@ -47,6 +47,8 @@ if __name__=="__main__":
 			i=0
 			value = getValue(line)
 			for child in children:
+				if(child=="<empty>"):
+					continue
 				nodeId+=1
 				stack.append((child,nodeId,item[2]))
 				if(value[i]!="None"):
@@ -60,3 +62,4 @@ if __name__=="__main__":
 			stack.pop()
 			pass
 	print "}"
+	assert(len(stack)==0)
