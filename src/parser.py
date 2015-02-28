@@ -21,8 +21,7 @@ def p_funcdef(p):
 
 # parameters: '(' [varargslist] ')'
 def p_parameters(p):
-    """parameters : LPAREN RPAREN
-                  | LPAREN varargslist RPAREN"""
+	"""parameters : LPAREN varargslist RPAREN"""
 
 #varargslist: ( | fpdef ['=' test] (',' fpdef ['=' test])* [',']) 
 
@@ -496,9 +495,14 @@ class G1Parser(object):
 
 if __name__=="__main__":
 	z = G1Parser()
-	data = open('../test/test1.py')
+	filename = sys.argv[1]
+	sourcefile = open(filename)
+	data = sourcefile.read()
 	sys.stderr = open('dump','w')
-	root =  z.parse(data.read())
+	root =  z.parse(data)
 	sys.stderr.close()
-	call(["python","converter.py"])
-	call(["dot","-Tpng","dot.dot","-o","dot.png"])
+	call(["python","bin/converter.py", filename])
+	s = filename
+	fname = s[s.find("/")+1:s.find(".py")]
+	call(["dot","-Tpng",fname+".dot","-o",fname+".png"])
+	call(["gnome-open",fname+".png"])

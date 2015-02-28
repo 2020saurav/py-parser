@@ -2,4 +2,10 @@ out/
 tutorial/
 *.pyc
 src/*.pyc
-bin/*.pyc
+src/*.out
+src/parsetab.py
+src/dot.dot
+src/data
+src/dot.png
+src/dump
+bin/*

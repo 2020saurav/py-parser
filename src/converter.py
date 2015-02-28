@@ -30,12 +30,14 @@ def getValue(x):
 	return value
 
 if __name__=="__main__":
+	s = sys.argv[1]
+	filename = s[s.find("/")+1:s.find(".py")]
 	lines = open('dump').readlines()
 	lines = [line for line in lines if isAction(line)]
 	lines = reversed(lines)
 	stack = [] # actually a list
 	nodeId = 0
-	sys.stdout = open('dot.dot','w')
+	sys.stdout = open(filename+'.dot','w')
 	stack.append(("program",0,None))
 	print "digraph G \n{\n"
 	print "\tnode0 [label=\"program\"];"
