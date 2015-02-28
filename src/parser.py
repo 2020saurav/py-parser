@@ -21,8 +21,7 @@ def p_funcdef(p):
 
 # parameters: '(' [varargslist] ')'
 def p_parameters(p):
-    """parameters : LPAREN RPAREN
-                  | LPAREN varargslist RPAREN"""
+    """parameters : LPAREN varargslist RPAREN"""
 
 #varargslist: ( | fpdef ['=' test] (',' fpdef ['=' test])* [',']) 
 
