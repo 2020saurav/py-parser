@@ -1,0 +1,192 @@
+PLY: PARSE DEBUG START
+
+State  : 0
+Stack  : . LexToken(PRINT,'print',1,0)
+Action : Reduce rule [single_stmt -> <empty>] with [] and goto state 4
+Result : <NoneType @ 0x920190> (None)
+
+State  : 2
+Stack  : single_stmt . LexToken(PRINT,'print',1,0)
+Action : Shift and goto state 24
+
+State  : 24
+Stack  : single_stmt PRINT . LexToken(STRING,'"Hello World!"',1,6)
+Action : Shift and goto state 62
+
+State  : 62
+Stack  : single_stmt PRINT STRING . LexToken(NEWLINE,None,1,-100)
+Action : Reduce rule [stringlist -> STRING] with [<str @ 0x7f0cfa102068>] and goto state 141
+Result : <NoneType @ 0x920190> (None)
+
+State  : 29
+Stack  : single_stmt PRINT stringlist . LexToken(NEWLINE,None,1,-100)
+Action : Reduce rule [atom -> stringlist] with [None] and goto state 140
+Result : <NoneType @ 0x920190> (None)
+
+State  : 49
+Stack  : single_stmt PRINT atom . LexToken(NEWLINE,None,1,-100)
+Action : Reduce rule [trailerlist -> <empty>] with [] and goto state 128
+Result : <NoneType @ 0x920190> (None)
+
+State  : 117
+Stack  : single_stmt PRINT atom trailerlist . LexToken(NEWLINE,None,1,-100)
+Action : Reduce rule [power -> atom trailerlist] with [None,None] and goto state 126
+Result : <NoneType @ 0x920190> (None)
+
+State  : 32
+Stack  : single_stmt PRINT power . LexToken(NEWLINE,None,1,-100)
+Action : Reduce rule [factor -> power] with [None] and goto state 122
+Result : <NoneType @ 0x920190> (None)
+
+State  : 9
+Stack  : single_stmt PRINT factor . LexToken(NEWLINE,None,1,-100)
+Action : Reduce rule [factorlist -> <empty>] with [] and goto state 117
+Result : <NoneType @ 0x920190> (None)
+
+State  : 74
+Stack  : single_stmt PRINT factor factorlist . LexToken(NEWLINE,None,1,-100)
+Action : Reduce rule [term -> factor factorlist] with [None,None] and goto state 116
+Result : <NoneType @ 0x920190> (None)
+
+State  : 20
+Stack  : single_stmt PRINT term . LexToken(NEWLINE,None,1,-100)
+Action : Reduce rule [termlist -> <empty>] with [] and goto state 113
+Result : <NoneType @ 0x920190> (None)
+
+State  : 90
+Stack  : single_stmt PRINT term termlist . LexToken(NEWLINE,None,1,-100)
+Action : Reduce rule [arith_expr -> term termlist] with [None,None] and goto state 112
+Result : <NoneType @ 0x920190> (None)
+
+State  : 38
+Stack  : single_stmt PRINT arith_expr . LexToken(NEWLINE,None,1,-100)
+Action : Reduce rule [arithexprlist -> <empty>] with [] and goto state 109
+Result : <NoneType @ 0x920190> (None)
+
+State  : 108
+Stack  : single_stmt PRINT arith_expr arithexprlist . LexToken(NEWLINE,None,1,-100)
+Action : Reduce rule [shift_expr -> arith_expr arithexprlist] with [None,None] and goto state 108
+Result : <NoneType @ 0x920190> (None)
+
+State  : 28
+Stack  : single_stmt PRINT shift_expr . LexToken(NEWLINE,None,1,-100)
+Action : Reduce rule [shiftexprlist -> <empty>] with [] and goto state 106
+Result : <NoneType @ 0x920190> (None)
+
+State  : 98
+Stack  : single_stmt PRINT shift_expr shiftexprlist . LexToken(NEWLINE,None,1,-100)
+Action : Reduce rule [and_expr -> shift_expr shiftexprlist] with [None,None] and goto state 105
+Result : <NoneType @ 0x920190> (None)
+
+State  : 11
+Stack  : single_stmt PRINT and_expr . LexToken(NEWLINE,None,1,-100)
+Action : Reduce rule [andexprlist -> <empty>] with [] and goto state 103
+Result : <NoneType @ 0x920190> (None)
+
+State  : 78
+Stack  : single_stmt PRINT and_expr andexprlist . LexToken(NEWLINE,None,1,-100)
+Action : Reduce rule [xor_expr -> and_expr andexprlist] with [None,None] and goto state 102
+Result : <NoneType @ 0x920190> (None)
+
+State  : 45
+Stack  : single_stmt PRINT xor_expr . LexToken(NEWLINE,None,1,-100)
+Action : Reduce rule [xorexprlist -> <empty>] with [] and goto state 100
+Result : <NoneType @ 0x920190> (None)
+
+State  : 114
+Stack  : single_stmt PRINT xor_expr xorexprlist . LexToken(NEWLINE,None,1,-100)
+Action : Reduce rule [expr -> xor_expr xorexprlist] with [None,None] and goto state 99
+Result : <NoneType @ 0x920190> (None)
+
+State  : 54
+Stack  : single_stmt PRINT expr . LexToken(NEWLINE,None,1,-100)
+Action : Reduce rule [compexprlist -> <empty>] with [] and goto state 87
+Result : <NoneType @ 0x920190> (None)
+
+State  : 134
+Stack  : single_stmt PRINT expr compexprlist . LexToken(NEWLINE,None,1,-100)
+Action : Reduce rule [comparison -> expr compexprlist] with [None,None] and goto state 86
+Result : <NoneType @ 0x920190> (None)
+
+State  : 35
+Stack  : single_stmt PRINT comparison . LexToken(NEWLINE,None,1,-100)
+Action : Reduce rule [not_test -> comparison] with [None] and goto state 85
+Result : <NoneType @ 0x920190> (None)
+
+State  : 58
+Stack  : single_stmt PRINT not_test . LexToken(NEWLINE,None,1,-100)
+Action : Reduce rule [andtestlist -> <empty>] with [] and goto state 82
+Result : <NoneType @ 0x920190> (None)
+
+State  : 138
+Stack  : single_stmt PRINT not_test andtestlist . LexToken(NEWLINE,None,1,-100)
+Action : Reduce rule [and_test -> not_test andtestlist] with [None,None] and goto state 81
+Result : <NoneType @ 0x920190> (None)
+
+State  : 63
+Stack  : single_stmt PRINT and_test . LexToken(NEWLINE,None,1,-100)
+Action : Reduce rule [ortestlist -> <empty>] with [] and goto state 79
+Result : <NoneType @ 0x920190> (None)
+
+State  : 141
+Stack  : single_stmt PRINT and_test ortestlist . LexToken(NEWLINE,None,1,-100)
+Action : Reduce rule [or_test -> and_test ortestlist] with [None,None] and goto state 78
+Result : <NoneType @ 0x920190> (None)
+
+State  : 22
+Stack  : single_stmt PRINT or_test . LexToken(NEWLINE,None,1,-100)
+Action : Reduce rule [test -> or_test] with [None] and goto state 76
+Result : <NoneType @ 0x920190> (None)
+
+State  : 16
+Stack  : single_stmt PRINT test . LexToken(NEWLINE,None,1,-100)
+Action : Reduce rule [testlist -> test] with [None] and goto state 169
+Result : <NoneType @ 0x920190> (None)
+
+State  : 94
+Stack  : single_stmt PRINT testlist . LexToken(NEWLINE,None,1,-100)
+Action : Reduce rule [print_stmt -> PRINT testlist] with ['print',None] and goto state 46
+Result : <NoneType @ 0x920190> (None)
+
+State  : 48
+Stack  : single_stmt print_stmt . LexToken(NEWLINE,None,1,-100)
+Action : Reduce rule [small_stmt -> print_stmt] with [None] and goto state 29
+Result : <NoneType @ 0x920190> (None)
+
+State  : 4
+Stack  : single_stmt small_stmt . LexToken(NEWLINE,None,1,-100)
+Action : Reduce rule [small_stmts -> small_stmt] with [None] and goto state 26
+Result : <NoneType @ 0x920190> (None)
+
+State  : 41
+Stack  : single_stmt small_stmts . LexToken(NEWLINE,None,1,-100)
+Action : Shift and goto state 110
+
+State  : 110
+Stack  : single_stmt small_stmts NEWLINE . LexToken(ENDMARKER,None,1,-100)
+Action : Reduce rule [simple_stmt -> small_stmts NEWLINE] with [None,None] and goto state 23
+Result : <NoneType @ 0x920190> (None)
+
+State  : 12
+Stack  : single_stmt simple_stmt . LexToken(ENDMARKER,None,1,-100)
+Action : Reduce rule [stmt -> simple_stmt] with [None] and goto state 21
+Result : <NoneType @ 0x920190> (None)
+
+State  : 33
+Stack  : single_stmt stmt . LexToken(ENDMARKER,None,1,-100)
+Action : Reduce rule [single_stmt -> single_stmt stmt] with [None,None] and goto state 3
+Result : <NoneType @ 0x920190> (None)
+
+State  : 2
+Stack  : single_stmt . LexToken(ENDMARKER,None,1,-100)
+Action : Shift and goto state 3
+
+State  : 3
+Stack  : single_stmt ENDMARKER . $end
+Action : Reduce rule [file_input -> single_stmt ENDMARKER] with [None,None] and goto state 1
+Result : <NoneType @ 0x920190> (None)
+
+State  : 1
+Stack  : file_input . $end
+Done   : Returning <NoneType @ 0x920190> (None)
+PLY: PARSE DEBUG END
