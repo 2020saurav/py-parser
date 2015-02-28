@@ -452,7 +452,7 @@ def p_testcolonlist(p):
 # classdef: 'class' NAME ['(' [testlist] ')'] ':' suite
 def p_classdef(p):
 	"""classdef 	: CLASS NAME COLON suite
-					| CLASS NAME LAPREN RPAREN COLON suite
+					| CLASS NAME LPAREN RPAREN COLON suite
 					| CLASS NAME LPAREN testlist RPAREN COLON suite
 	"""
 
@@ -472,7 +472,10 @@ def p_testlist1(p):
 	"""testlist1 	: test
 					| test COMMA testlist1
 	"""
-# our new symbol
+# CORRECT UPTIL HERE ^
+
+# these 2 below are added to run without error for now, replace with exact rules.
+
 def p_stmts(p):
 	"""stmts 	: stmts stmt
 				| stmt"""
