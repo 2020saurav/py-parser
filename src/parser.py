@@ -337,8 +337,6 @@ def p_factor(p):
 				| TILDE factor
 	"""
 
-# without lak:
-
 # power: atom trailer* ['**' factor]
 def p_power(p):
 	"""power 	: atom trailerlist
@@ -363,7 +361,7 @@ def p_atom(p):
 				| LSQB listmaker RSQB
 				| LBRACE RBRACE
 				| LBRACE dictorsetmaker RBRACE
-				| BACKQUOTE testlist1
+				| BACKQUOTE testlist1 BACKQUOTE
 				| NAME
 				| NUMBER
 				| FNUMBER
@@ -392,7 +390,6 @@ def p_testlist_comp(p):
 def p_trailer(p):
 	"""trailer 	: LPAREN RPAREN
 				| LPAREN arglist RPAREN
-				| LSQB RSQB
 				| LSQB subscriptlist RSQB
 				| DOT NAME
 	"""
@@ -455,6 +452,7 @@ def p_testcolonlist(p):
 # classdef: 'class' NAME ['(' [testlist] ')'] ':' suite
 def p_classdef(p):
 	"""classdef 	: CLASS NAME COLON suite
+					| CLASS NAME LAPREN RPAREN COLON suite
 					| CLASS NAME LPAREN testlist RPAREN COLON suite
 	"""
 
@@ -474,13 +472,10 @@ def p_testlist1(p):
 	"""testlist1 	: test
 					| test COMMA testlist1
 	"""
-# CORRECT UPTIL HERE ^
-
-# these 2 below are added to run without error for now, replace with exact rules.
-
+# our new symbol
 def p_stmts(p):
-    """stmts : stmts stmt
-             | stmt"""
+	"""stmts 	: stmts stmt
+				| stmt"""
 
 def p_error(p):
     raise SyntaxError(str(p))
