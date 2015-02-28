@@ -17,7 +17,8 @@ make
 ```
 bin/parser test/test[\d+].py
 ```
-The parser will call the converter and then call dot to finally output the png file of parse tree. The output will be saved in base directory.
+
+&emsp; The parser will call the converter and then call dot to finally output the png file of parse tree. The output will be saved in base directory.
 
 3. To clean the executables and other helper files, run make clean.
 ```
