@@ -9,3 +9,7 @@ src/data
 src/dot.png
 src/dump
 bin/*
+dump
+parser.out
+parsetab.py
+test*
