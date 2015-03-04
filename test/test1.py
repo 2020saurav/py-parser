@@ -1,1 +1,4 @@
-print "Hello World!"
+def f():
+	print a
+
+	

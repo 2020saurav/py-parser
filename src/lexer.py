@@ -287,7 +287,6 @@ def filter(lexer, addEndMarker = True):
 		lineno = 1
 		if tok is not None:
 			lineno = tok.lineno
-		yield newToken("NEWLINE", lineno)
 		yield newToken("ENDMARKER", lineno)
 
 # To merge ply's lexer with indent feature
@@ -298,6 +297,7 @@ class G1Lexer(object):
 		self.token_stream = None
 	def input(self, data, addEndMarker=True):
 		self.lexer.parenthesisCount = 0
+		data+="\n"
 		self.lexer.input(data)
 		self.token_stream = filter(self.lexer, addEndMarker)
 	def token(self):
