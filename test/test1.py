@@ -1,4 +1,1 @@
-def f():
-	print a
-
-	
+a= ["a","b"]

@@ -26,6 +26,11 @@ def right(x):
 
 def getValue(x):
 	value = x[x.find("with [")+6:x.find("] and")]
+	value = value.replace("\\","\\\\")
+	value = value.replace('"','\\\"')
+	# conflicts when '[',']' is in string.
+	# Handling this is not required as this is used for printing purpose only
+	# value = value.replace("','","''") # remove comma 
 	value = value.split(",")
 	return value
 
@@ -41,6 +46,7 @@ if __name__=="__main__":
 	sys.stdout = open(filename+'.dot','w')
 	stack.append(("program",0,None))
 	print "digraph G \n{\n"
+	# print '\tsize="20,20";\n'
 	print "\tnode0 [label=\"program\"];"
 	for line in lines:
 		if isReduce(line):

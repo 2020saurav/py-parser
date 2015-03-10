@@ -506,4 +506,4 @@ if __name__=="__main__":
 	s = filename
 	fname = s[s.find("/")+1:s.find(".py")]
 	call(["dot","-Tpng",fname+".dot","-o",fname+".png"])
-	call(["gnome-open",fname+".png"])
+	# call(["gnome-open",fname+".png"])
