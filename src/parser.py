@@ -1,3 +1,4 @@
+#!/usr/bin/python
 import yacc
 import lexer # our lexer
 tokens = lexer.tokens

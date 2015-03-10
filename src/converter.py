@@ -30,6 +30,7 @@ def getValue(x):
 	return value
 
 if __name__=="__main__":
+	
 	s = sys.argv[1]
 	filename = s[s.find("/")+1:s.find(".py")]
 	lines = open('dump').readlines()

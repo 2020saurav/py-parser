@@ -1,7 +1,7 @@
 parser: src/*
 	cp src/* bin/
 	python -m py_compile bin/*.py
-	mv bin/parser.pyc bin/parser
+	mv bin/parser.py bin/parser
 	chmod +x bin/parser
 
 clean:
