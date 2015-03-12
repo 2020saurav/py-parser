@@ -253,19 +253,25 @@ def assignIndentations(token_stream):
 		lastSeenWhitespace = False
 		if token.must_indent:
 			if not (depth > levels[-1]):
-				raise IndentationError("Expected an indented block")
+				# raise IndentationError("Expected an indented block")
+				print "Indentation Error in line no "+str(token.lineno)
+				sys.exit()
 			levels.append(depth)
 			yield INDENT(token.lineno)
 		elif token.atLineStart:
 			if depth == levels[-1]:
 				pass
 			elif depth > levels[-1]:
-				raise IndentationError("IndentationError: not in new block")
+				print "Indentation Error in line no "+str(token.lineno)
+				sys.exit()
+				# raise IndentationError("IndentationError: not in new block")
 			else:
 				try:
 					i = levels.index(depth)
 				except ValueError:
-					raise IndentationError("Inconsistent Indentation")
+					print "Indentation Error in line no "+str(token.lineno)
+					sys.exit()
+					# raise IndentationError("Inconsistent Indentation")
 				for z in range(i+1, len(levels)):
 					yield DEDENT(token.lineno)
 					levels.pop()

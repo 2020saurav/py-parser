@@ -1,2 +1,2 @@
 def func(a , b):
-	return
+	return 1

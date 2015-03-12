@@ -472,16 +472,14 @@ def p_testlist1(p):
 	"""testlist1 	: test
 					| test COMMA testlist1
 	"""
-# CORRECT UPTIL HERE ^
-
-# these 2 below are added to run without error for now, replace with exact rules.
 
 def p_stmts(p):
 	"""stmts 	: stmts stmt
 				| stmt"""
 
 def p_error(p):
-    raise SyntaxError(str(p))
+    print "Syntax Error near '"+str(p.value)+ "' in line "+str(p.lineno)
+    sys.exit()
 
 class G1Parser(object):
 	def __init__(self, mlexer=None):
@@ -506,4 +504,4 @@ if __name__=="__main__":
 	s = filename
 	fname = s[s.find("/")+1:s.find(".py")]
 	call(["dot","-Tpng",fname+".dot","-o",fname+".png"])
-	# call(["gnome-open",fname+".png"])
+	call(["gnome-open",fname+".png"])
