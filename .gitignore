@@ -8,7 +8,7 @@ src/dot.dot
 src/data
 src/dot.png
 src/dump
-bin/*
+bin/
 dump
 parser.out
 parsetab.py

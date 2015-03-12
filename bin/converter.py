@@ -28,25 +28,14 @@ def getValue(x):
 	value = x[x.find("with [")+6:x.find("] and")]
 	value = value.replace("\\","\\\\")
 	value = value.replace('"','\\\"')
-	ans = []
-	i = 0
-	while i < len(value):
-		if(value[i]==','):
-			i+=1
-		S = ""
-		count = 0
-		if value[i]!="'":
-			while i<len(value) and value[i]!=',':
-				S+=value[i]
-				i+=1
-			count = 2
-		while(count!=2):
-			S += value[i]
-			if(value[i]=="'"):
-				count+=1
-			i+=1
-		ans.append(S)
-	return ans
+	# conflicts when '[',']' is in string.
+	# Handling this is not required as this is used for printing purpose only
+	value = value.replace("','","'$'") # remove comma 
+	value = value.split(",")
+	for i in range(0,len(value)):
+		if value[i] == "'$'":
+			value[i] = "','"
+	return value
 
 if __name__=="__main__":
 	

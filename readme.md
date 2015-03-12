@@ -17,13 +17,16 @@ make
 ```
 bin/parser test/test[\d+].py
 ```
-
 &emsp; The parser will call the converter and then call dot to finally output the png file of parse tree. The output will be saved in base directory.
 
 3. To clean the executables and other helper files, run make clean.
 ```
 make clean
 ```
+
+* To generate tree on a png file manually, use *dot* command.
+```dot -Tpng dotfilename.dot -o pngfilename.png``` for png format output or,
+```dot -Tps dotfilename.dot -o psfilename.ps``` for ps format output.
 
 ### Directory Structure
 _______________________
